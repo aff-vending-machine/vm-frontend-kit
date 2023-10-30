@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../app.css';
+  import { version } from '$app/environment';
 </script>
 
 <svelte:head>
@@ -9,3 +10,4 @@
 </svelte:head>
 
 <slot />
+<div class="absolute bottom-0 right-1 text-[0.6rem] text-gray-400">ver. {version}</div>

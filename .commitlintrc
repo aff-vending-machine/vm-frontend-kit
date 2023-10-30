@@ -1,0 +1,16 @@
+{
+  "extends": ["@commitlint/config-conventional"],
+  "rules": {
+    "subject-empty": [2, "never"],
+    "subject-case": [2, "never", ["sentence-case"]],
+    "subject-full-stop": [2, "never", "."],
+    "subject-max-length": [2, "always", 50],
+    "header-max-length": [2, "always", 72],
+    "type-case": [2, "always", "lower-case"],
+    "type-empty": [2, "never"],
+    "scope-case": [2, "always", "lower-case"],
+    "body-max-line-length": [2, "always", 72],
+    "body-leading-blank": [2, "always"],
+    "footer-leading-blank": [1, "always"]
+  }
+}

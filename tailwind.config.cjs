@@ -6,12 +6,11 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,svelte}'],
   theme: {
     extend: {
-      colors: {
-      },
+      colors: {},
       animation: {
         wiggle: 'wiggle 1s ease-in-out 1',
         'fill-in-5s': 'fill 5s linear 1',
-        'notify': 'notify 5s cubic-bezier(0.4, 0, 0.2, 1) 0ms backwards',
+        notify: 'notify 5s cubic-bezier(0.4, 0, 0.2, 1) 0ms backwards',
       },
       keyframes: {
         wiggle: {
@@ -27,7 +26,7 @@ module.exports = {
           '10%': { transform: 'translateY(0%)', opacity: 100 },
           '90%': { transform: 'translateY(0%)', opacity: 100 },
           '100%': { transform: 'translateY(-25%)', opacity: 0 },
-        }
+        },
       },
     },
   },

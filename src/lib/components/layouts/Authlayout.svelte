@@ -10,9 +10,10 @@
     try {
       const token = await service.authenticated();
       access.set(token);
-      goto('/main', { replaceState: true, noScroll: true });
     } catch (e) {
       goto('/login', { replaceState: true, noScroll: true });
     }
   });
 </script>
+
+<slot />

@@ -19,8 +19,6 @@
   {/each}
 </div>
 
-<main>
-  <slot />
-</main>
+<slot />
 
 <div class="absolute bottom-0 right-1 text-[0.6rem] text-gray-400">ver. {version}</div>

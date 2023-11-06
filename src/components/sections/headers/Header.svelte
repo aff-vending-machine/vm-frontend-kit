@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Breadcrumb from '$lib/components/navigations/breadcrumbs/Breadcrumb.svelte';
+  import Breadcrumb from '$components/navigations/breadcrumbs/Breadcrumb.svelte';
   import { page } from '$app/stores';
   // export let active: boolean;
   // export let text = '';

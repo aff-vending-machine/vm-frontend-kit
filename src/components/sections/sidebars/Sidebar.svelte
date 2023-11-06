@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte';
+  // import Icon from '@iconify/svelte';
   // import { createEventDispatcher } from 'svelte';
 
   export let title: string;
@@ -27,7 +27,7 @@
   <div class="app-brand demo">
     <a href="/main" class="flex flex-row items-baseline">
       <span class="">
-        <Icon icon="mdi:close" class="h-6 w-6 text-gray-500 hover:text-red-500" />
+        <!-- <Icon icon="mdi:close" class="h-6 w-6 text-gray-500 hover:text-red-500" /> -->
       </span>
       {#if !showFull}
         <span class="bold ms-2">{title}</span>

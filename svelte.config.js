@@ -1,3 +1,4 @@
+// import adapter from '@sveltejs/adapter-auto';
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
@@ -16,7 +17,7 @@ const config = {
       fallback: 'index.html',
     }),
     alias: {
-      $types: 'src/types',
+      $components: 'src/components',
     },
     version: {
       name: process.env.npm_package_version,

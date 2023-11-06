@@ -1,10 +1,33 @@
 <!-- Breadcrumb -->
 <script lang="ts">
-  import { generateBreadcrumbItems } from '$lib/utils/breadcrumb';
   export let home = true;
   export let path: string;
 
-  let items = generateBreadcrumbItems(path, home);
+  $: items = generateBreadcrumbItems(path, home);
+
+  function generateBreadcrumbItems(path: string, home: boolean) {
+    const items = path.split('/').map((p: string, index: number, a: string[]) => {
+      path = '';
+      for (let i = 0; i < index; i++) {
+        path += a[i] + '/';
+      }
+      path += p;
+      return {
+        link: path,
+        text: p,
+      };
+    });
+    items.shift();
+
+    if (home) {
+      items.unshift({
+        link: '/',
+        text: 'Home',
+      });
+    }
+
+    return items;
+  }
 </script>
 
 <!-- HTML -->

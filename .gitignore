@@ -7,11 +7,13 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# modules
 node_modules
 dist
 dist-ssr
 *.local
 
+# default gitignore
 /build
 /.svelte-kit
 /package
@@ -23,7 +25,7 @@ dist-ssr
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# Editor directories and files
+# editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -37,6 +39,7 @@ vite.config.ts.timestamp-*
 # sonarcube
 .scannerwork
 
+# firebase
 .firebase
 .firebaserc
 firebase.json

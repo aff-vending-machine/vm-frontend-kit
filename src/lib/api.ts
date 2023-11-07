@@ -16,34 +16,38 @@ type Protocol<T> = {
 };
 
 const requester = async <T = any>(method: string, path: string, { params, data, token }: Fetcher = {}): Promise<T> => {
-  const opts: RequestInit = { method };
-  const headers = {} as Record<string, string>;
-  const url = new URL(path, config.apiUrl);
+  try {
+    const opts: RequestInit = { method };
+    const headers = {} as Record<string, string>;
+    const url = new URL(path, config.apiUrl);
 
-  if (params) {
-    url.search = new URLSearchParams(params).toString();
+    if (params) {
+      url.search = new URLSearchParams(params).toString();
+    }
+
+    if (data) {
+      headers['Content-Type'] = 'application/json';
+      opts.body = JSON.stringify(data);
+    }
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    opts.headers = headers;
+
+    const request = new Request(url, opts);
+    const response = await fetch(request);
+    const result = (await response.json()) as Protocol<T>;
+
+    if (result.status === 'error') {
+      throw error(result.code, result.message || 'Network response was not OK');
+    }
+
+    return result.data!;
+  } catch (e: unknown) {
+    throw error(500, 'There has been a problem with API operation');
   }
-
-  if (data) {
-    headers['Content-Type'] = 'application/json';
-    opts.body = JSON.stringify(data);
-  }
-
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
-  opts.headers = headers;
-
-  const request = new Request(url, opts);
-  const response = await fetch(request);
-
-  const result = (await response.json()) as Protocol<T>;
-  if (!response.ok) {
-    throw error(response.status, response.statusText);
-  }
-
-  return result.data!;
 };
 
 const get = <T = any>(path: string, token?: string) => {

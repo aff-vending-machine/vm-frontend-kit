@@ -13,12 +13,6 @@ export type Auth = {
   refresh_token: string;
 };
 
-export type AuthUser = {
-  user_id: number;
-  username: string;
-  role: string;
-};
-
 export class AuthService {
   private static instance: AuthService;
   static getInstance(): AuthService {
@@ -51,7 +45,7 @@ export class AuthService {
       storage(AUTHENTICATED_REMEMBERED, null);
 
       const err = e as HttpError_1;
-      return Promise.reject(err.body.message);
+      return Promise.reject(err.body?.message);
     }
   }
 

@@ -14,6 +14,9 @@ devDependencies:
   '@commitlint/cz-commitlint':
     specifier: ^18.2.0
     version: 18.2.0(commitizen@4.3.0)(inquirer@8.2.6)(typescript@5.2.2)
+  '@iconify/svelte':
+    specifier: ^3.1.4
+    version: 3.1.4(svelte@4.2.2)
   '@playwright/test':
     specifier: ^1.39.0
     version: 1.39.0
@@ -98,6 +101,9 @@ devDependencies:
   svelte-check:
     specifier: ^3.5.2
     version: 3.5.2(postcss@8.4.31)(sass@1.69.5)(svelte@4.2.2)
+  svelte-hamburgers:
+    specifier: ^4.2.0
+    version: 4.2.0(svelte@4.2.2)
   tailwindcss:
     specifier: ^3.3.5
     version: 3.3.5
@@ -666,6 +672,21 @@ packages:
     resolution:
       { integrity: sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q== }
     engines: { node: '>=6.9.0' }
+    dev: true
+
+  /@iconify/svelte@3.1.4(svelte@4.2.2):
+    resolution:
+      { integrity: sha512-YDwQlN46ka8KPRayDb7TivmkAPizfTXi6BSRNqa1IV0+byA907n8JcgQafA7FD//pW5XCuuAhVx6uRbKTo+CfA== }
+    peerDependencies:
+      svelte: '*'
+    dependencies:
+      '@iconify/types': 2.0.0
+      svelte: 4.2.2
+    dev: true
+
+  /@iconify/types@2.0.0:
+    resolution:
+      { integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg== }
     dev: true
 
   /@jest/schemas@29.6.3:
@@ -5666,6 +5687,15 @@ packages:
       espree: 9.6.1
       postcss: 8.4.31
       postcss-scss: 4.0.9(postcss@8.4.31)
+      svelte: 4.2.2
+    dev: true
+
+  /svelte-hamburgers@4.2.0(svelte@4.2.2):
+    resolution:
+      { integrity: sha512-6Iq0uHXHeQZMvsn6Ft84qdSpf+PfmhwdyuSVoJeGHG6UfazB5ffJoMmahs9y9THAtvnBl+Hzus5BOy80PzWy0w== }
+    peerDependencies:
+      svelte: ^3.46.4 || ^4.0.0
+    dependencies:
       svelte: 4.2.2
     dev: true
 

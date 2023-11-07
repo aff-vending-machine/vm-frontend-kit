@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { version } from '$app/environment';
-  import notification from '$lib/stores/notification';
-  import Notification from '$components/overlays/notifications/Notification.svelte';
+  import alert from '$lib/stores/alert';
+  import Alert from '$components/overlays/alerts/Alert.svelte';
 
   import '../app.css';
 </script>
@@ -12,13 +11,11 @@
   <meta name="theme-color" content="#000000" />
 </svelte:head>
 
-<!-- Display notifications -->
+<!-- Display alerts -->
 <div class="fixed right-4 top-4 z-50 space-y-2">
-  {#each $notification as { id, type, message }}
-    <Notification {type} {message} on:remove={() => notification.remove(id)} />
+  {#each $alert as { id, type, message }}
+    <Alert {type} {message} on:remove={() => alert.remove(id)} />
   {/each}
 </div>
 
 <slot />
-
-<div class="absolute right-1 top-0 text-[0.6rem] text-gray-400">ver. {version}</div>

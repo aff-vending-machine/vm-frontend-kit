@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { version } from '$app/environment';
   import notification from '$lib/stores/notification';
   import Notification from '$components/overlays/notifications/Notification.svelte';
 
@@ -20,5 +19,3 @@
 </div>
 
 <slot />
-
-<div class="absolute right-1 top-0 text-[0.6rem] text-gray-400">ver. {version}</div>

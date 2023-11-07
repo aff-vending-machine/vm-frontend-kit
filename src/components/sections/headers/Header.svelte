@@ -1,13 +1,14 @@
 <script lang="ts">
-  import Breadcrumb from '$components/navigations/breadcrumbs/Breadcrumb.svelte';
-  import { page } from '$app/stores';
-  // export let active: boolean;
-  // export let text = '';
+  import sidebar from '$lib/stores/sidebar';
+  import { Hamburger } from 'svelte-hamburgers';
 </script>
 
-<div class="flex flex-col-reverse justify-between space-x-2 sm:flex-row">
-  <Breadcrumb path={$page.url.pathname} />
-  <div class="flex justify-end space-x-8 sm:justify-between">
+<div class="flex justify-between space-x-2 bg-white shadow-lg lg:rounded-lg">
+  <div class="ml-4 flex h-12 items-center">
     <!-- <Navbar bind:active /> -->
+    <span />xxx
   </div>
+  <span class=" lg:hidden">
+    <Hamburger open={$sidebar} --color="gray" on:click={sidebar.toggle} />
+  </span>
 </div>

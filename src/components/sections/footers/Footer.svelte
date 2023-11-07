@@ -1,17 +1,22 @@
 <script lang="ts">
+  import { version } from '$app/environment';
+
   let year = new Date().getFullYear();
 </script>
 
-<footer class="rounded-lg bg-white p-4 shadow dark:bg-gray-800 md:flex md:items-center md:justify-between md:p-6">
-  <span class="text-sm text-gray-500 dark:text-gray-400 sm:text-center"
-    >© {year} <a href="https://www.at44.co.th/" class="hover:underline">AT44</a>. All Rights Reserved.
-  </span>
-  <ul class="mt-3 flex flex-wrap items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
+<footer class="flex w-full items-center justify-center whitespace-nowrap lg:justify-between">
+  <small class="text-sm text-gray-500 dark:text-gray-300">
+    Copyright © {year} <a href="https://www.at44.co.th/" class="mx-1 hover:underline">AT44 co., ltd.</a> All Rights Reserved.
+  </small>
+  <ul class="hidden space-x-4 text-sm text-gray-500 dark:text-gray-300 lg:flex">
     <li>
-      <a href="https://www.at44.co.th/about-us/" class="mr-4 hover:underline md:mr-6">About</a>
+      <a href="https://www.at44.co.th/about-us/" class="hover:underline">About</a>
     </li>
     <li>
       <a href="https://www.at44.co.th/contact-us/" class="hover:underline">Contact</a>
+    </li>
+    <li>
+      <span>v{version}</span>
     </li>
   </ul>
 </footer>

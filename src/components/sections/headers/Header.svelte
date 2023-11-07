@@ -1,14 +1,21 @@
 <script lang="ts">
+  import Language from '$components/utitlites/Language.svelte';
+  import Profile from '$components/utitlites/Profile.svelte';
+  import Theme from '$components/utitlites/Theme.svelte';
   import sidebar from '$lib/stores/sidebar';
   import { Hamburger } from 'svelte-hamburgers';
 </script>
 
-<div class="flex justify-between space-x-2 bg-white shadow-lg lg:rounded-lg">
-  <div class="ml-4 flex h-12 items-center">
-    <!-- <Navbar bind:active /> -->
-    <span />xxx
+<div class="flex justify-between bg-white px-4 shadow-lg lg:rounded-lg">
+  <div class="flex h-12 items-center space-x-2">
+    <span class="lg:hidden">
+      <Hamburger open={$sidebar} --color="gray" on:click={sidebar.toggle} />
+    </span>
   </div>
-  <span class=" lg:hidden">
-    <Hamburger open={$sidebar} --color="gray" on:click={sidebar.toggle} />
-  </span>
+
+  <div class="flex h-12 items-center space-x-4">
+    <Language />
+    <Theme />
+    <Profile />
+  </div>
 </div>

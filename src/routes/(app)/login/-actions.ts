@@ -1,7 +1,7 @@
 import { AuthService } from '$lib/services/auth';
 import { useSWR } from '$lib/stores/swr';
 import access, { type TokenData } from '$lib/stores/access';
-import notification from '$lib/stores/notification';
+import alert from '$lib/stores/alert';
 import { goto } from '$app/navigation';
 
 const authService = AuthService.getInstance();
@@ -27,11 +27,11 @@ export const actions = {
       const token = await authService.login(username, password, remember);
       access.set(token);
 
-      notification.add('success', 'Login Successful');
+      alert.add('success', 'Login Successful');
       swr.success(token);
       return goto('/main/dashboard', { replaceState: true, noScroll: true });
     } catch (e: unknown) {
-      notification.add('error', 'Login Failed');
+      alert.add('error', 'Login Failed');
       return swr.failure(e);
     }
   },

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { NotificationType } from '$lib/stores/notification';
+  import type { AlertType } from '$lib/stores/alert';
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
-  export let type: NotificationType = 'info';
+  export let type: AlertType = 'info';
   export let message = '';
 
   let timeout: number;
@@ -16,7 +16,7 @@
 
   $: spec = getSpec(type);
 
-  function getSpec(type: NotificationType) {
+  function getSpec(type: AlertType) {
     switch (type) {
       case 'info':
         return {

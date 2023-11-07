@@ -21,9 +21,9 @@
 
 <div class:hidden={!$sidebar || !isMobile} class="absolute bottom-0 left-0 right-0 top-0 z-10 bg-gray-500 opacity-50" />
 <aside
-  class="group z-30 h-full w-56 flex-shrink-0 overflow-y-auto bg-white shadow shadow-gray-300 transition-all hover:w-56 dark:bg-gray-800"
+  class="group z-30 h-full w-0 flex-shrink-0 overflow-y-auto bg-white shadow shadow-gray-300 transition-all hover:w-56 dark:bg-gray-800"
   class:lg:w-20={!$sidebar}
-  class:w-0={!$sidebar}
+  class:w-56={$sidebar}
   class:fixed={isMobile}
   use:clickOutside
   on:click-outside={handleClickOutside}

@@ -1,97 +1,96 @@
-import { AuthAPI } from '$lib/api/auth';
-import { browserClear, browserSet } from '$lib/utils/browser';
-import { LOCAL_ACCESS_TOKEN, LOCAL_AUTHENTICATED_REMEMBERED, LOCAL_REFRESH_TOKEN } from '$lib/utils/constants';
-import { parseJWT, isExpired } from '$lib/utils/conv';
-import { type TokenData, parseTokenData } from '$types/auth';
-import type { AxiosError } from 'axios';
+import { storage } from '$lib/utils/local-storage';
+import { parseJWT } from '$lib/utils/jwt';
+import { isExpired } from '$lib/utils/check';
+import api from '$lib/api';
+import type { HttpError_1 } from '@sveltejs/kit';
+import { ACCESS_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN } from '$lib/constants';
+import type { TokenData } from '$lib/stores/access';
+
+const ROOT_PATH = 'auth';
+
+export type Auth = {
+  access_token: string;
+  refresh_token: string;
+};
 
 export class AuthService {
   private static instance: AuthService;
-
   static getInstance(): AuthService {
     if (!AuthService.instance) {
-      const api = new AuthAPI();
-      AuthService.instance = new AuthService(api);
+      AuthService.instance = new AuthService(ROOT_PATH);
     }
 
     return AuthService.instance;
   }
 
-  private constructor(private api: AuthAPI) {}
+  private constructor(private PATH: string) {}
 
   async login(username: string, password: string, remember?: boolean): Promise<TokenData> {
     try {
-      const data = await this.api.login(username, password);
-
-      browserSet(LOCAL_ACCESS_TOKEN, data.access_token);
+      const data = await api.post<Auth>(`${this.PATH}/login`, { username, password });
+      storage(ACCESS_TOKEN, data.access_token);
 
       if (remember) {
-        browserSet(LOCAL_AUTHENTICATED_REMEMBERED, 'TRUE');
-        browserSet(LOCAL_REFRESH_TOKEN, data.refresh_token);
+        storage(AUTHENTICATED_REMEMBERED, 'TRUE');
+        storage(REFRESH_TOKEN, data.refresh_token);
       } else {
-        browserClear(LOCAL_AUTHENTICATED_REMEMBERED);
+        storage(AUTHENTICATED_REMEMBERED, null);
       }
 
-      const token: TokenData = parseJWT(data.access_token);
-      const result = parseTokenData(token);
-
+      const result = parseJWT(data.access_token);
       return Promise.resolve(result);
     } catch (e: unknown) {
-      return Promise.reject(e);
+      storage(ACCESS_TOKEN, null);
+      storage(REFRESH_TOKEN, null);
+      storage(AUTHENTICATED_REMEMBERED, null);
+
+      const err = e as HttpError_1;
+      return Promise.reject(err.body?.message);
     }
   }
 
   async authenticated(): Promise<TokenData> {
-    const accessToken = localStorage.getItem(LOCAL_ACCESS_TOKEN);
-    const refreshToken = localStorage.getItem(LOCAL_REFRESH_TOKEN);
-
-    if (!accessToken) {
-      return Promise.reject('no access token');
-    }
-
-    let token = parseJWT(accessToken);
-    let result = parseTokenData(token);
-
-    if (isExpired(result.iat, result.exp)) {
-      if (!refreshToken) {
-        return Promise.reject('no refresh token');
+    try {
+      const accessToken = storage(ACCESS_TOKEN);
+      const refreshToken = storage(REFRESH_TOKEN);
+      if (!accessToken) {
+        return Promise.reject('no access token');
       }
-
-      token = parseJWT(refreshToken);
-      result = parseTokenData(token);
+      let result = parseJWT(accessToken);
 
       if (isExpired(result.iat, result.exp)) {
-        return Promise.reject('refresh token is expired');
-      }
+        if (!refreshToken) {
+          return Promise.reject('no refresh token');
+        }
+        result = parseJWT(refreshToken);
 
-      try {
-        const data = await this.api.refreshToken(refreshToken);
-
-        browserSet(LOCAL_ACCESS_TOKEN, data.access_token);
-        browserSet(LOCAL_REFRESH_TOKEN, data.refresh_token);
-
-        token = parseJWT(data.access_token);
-        result = parseTokenData(token);
-      } catch (e: unknown) {
-        const err = e as AxiosError;
-
-        // Unauthorized ignore case
-        if (err.response?.status == 401) {
-          return Promise.reject(Error('unauthorized'));
+        if (isExpired(result.iat, result.exp)) {
+          return Promise.reject('refresh token is expired');
         }
 
-        const error = Error('service is not available');
-        return Promise.reject(error);
-      }
-    }
+        const data = await api.post(`${this.PATH}/refresh`, refreshToken);
 
-    return Promise.resolve(result);
+        storage(ACCESS_TOKEN, data.access_token);
+        storage(REFRESH_TOKEN, data.refresh_token);
+
+        result = parseJWT(data.access_token);
+      }
+
+      return Promise.resolve(result);
+    } catch (e: unknown) {
+      storage(ACCESS_TOKEN, null);
+      storage(REFRESH_TOKEN, null);
+      storage(AUTHENTICATED_REMEMBERED, null);
+
+      const err = e as HttpError_1;
+      return Promise.reject(err.body.message);
+    }
   }
 
   async logout(): Promise<void> {
-    browserClear(LOCAL_ACCESS_TOKEN);
-    browserClear(LOCAL_REFRESH_TOKEN);
-    browserClear(LOCAL_AUTHENTICATED_REMEMBERED);
+    storage(ACCESS_TOKEN, null);
+    storage(REFRESH_TOKEN, null);
+    storage(AUTHENTICATED_REMEMBERED, null);
 
     return Promise.resolve();
   }

@@ -41,7 +41,7 @@ const requester = async <T = any>(method: string, path: string, { params, data, 
     const result = (await response.json()) as Protocol<T>;
 
     if (result.status === 'error') {
-      throw error(result.code, result.message || 'Network response was not OK');
+      return Promise.reject(error(result.code, result.message || 'Network response was not OK'));
     }
 
     return result.data!;

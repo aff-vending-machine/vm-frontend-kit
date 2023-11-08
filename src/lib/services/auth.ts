@@ -1,6 +1,5 @@
 import { storage } from '$lib/utils/local-storage';
-import { parseJWT } from '$lib/utils/jwt';
-import { isExpired } from '$lib/utils/check';
+import { getAccessToken, parseJWT } from '$lib/utils/jwt';
 import api from '$lib/api';
 import type { HttpError_1 } from '@sveltejs/kit';
 import { ACCESS_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN } from '$lib/constants';
@@ -49,33 +48,10 @@ export class AuthService {
     }
   }
 
-  async authenticated(): Promise<TokenData> {
+  async authenticate(): Promise<TokenData> {
     try {
-      const accessToken = storage(ACCESS_TOKEN);
-      const refreshToken = storage(REFRESH_TOKEN);
-      if (!accessToken) {
-        return Promise.reject('no access token');
-      }
-      let result = parseJWT(accessToken);
-
-      if (isExpired(result.iat, result.exp)) {
-        if (!refreshToken) {
-          return Promise.reject('no refresh token');
-        }
-        result = parseJWT(refreshToken);
-
-        if (isExpired(result.iat, result.exp)) {
-          return Promise.reject('refresh token is expired');
-        }
-
-        const data = await api.post(`${this.PATH}/refresh`, refreshToken);
-
-        storage(ACCESS_TOKEN, data.access_token);
-        storage(REFRESH_TOKEN, data.refresh_token);
-
-        result = parseJWT(data.access_token);
-      }
-
+      const accessToken = await getAccessToken();
+      const result = parseJWT(accessToken);
       return Promise.resolve(result);
     } catch (e: unknown) {
       storage(ACCESS_TOKEN, null);

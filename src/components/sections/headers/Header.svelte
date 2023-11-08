@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Language from '$components/utitlites/Language.svelte';
-  import Profile from '$components/utitlites/Profile.svelte';
-  import Theme from '$components/utitlites/Theme.svelte';
+  import Language from '$components/elements/switchers/Language.svelte';
+  import Profile from '$components/sections/profiles/Profile.svelte';
+  import Theme from '$components/elements/switchers/Theme.svelte';
   import sidebar from '$lib/stores/sidebar';
   import { Hamburger } from 'svelte-hamburgers';
 </script>

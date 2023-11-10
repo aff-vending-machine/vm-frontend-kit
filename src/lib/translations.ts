@@ -32,6 +32,16 @@ const config = {
       routes: ['/console'],
       loader: async () => (await import('./i18n/th/console.json')).default,
     },
+    {
+      locale: 'en',
+      key: 'sidebar',
+      loader: async () => (await import('./i18n/en/sidebar.json')).default,
+    },
+    {
+      locale: 'th',
+      key: 'sidebar',
+      loader: async () => (await import('./i18n/th/sidebar.json')).default,
+    },
   ],
 };
 

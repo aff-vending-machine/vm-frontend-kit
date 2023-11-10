@@ -1,13 +1,14 @@
 <script lang="ts">
   import sidebar from '$lib/stores/sidebar';
   import SidebarMenu from './SidebarMenu.svelte';
-  import { menulist } from './sidebar';
   import Icon from '@iconify/svelte';
   import { clickOutside } from '$lib/hooks/useClickOutside';
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
   import { page } from '$app/stores';
   import { onDestroy } from 'svelte';
+  import { t } from '$lib/translations';
+  import { menulist } from '$lib/sidebar';
 
   export let title: string;
   let size: number;
@@ -18,7 +19,7 @@
     if (isMobile) sidebar.close();
   }
 
-  const unsubscribe = page.subscribe(() => sidebar.close());
+  const unsubscribe = page.subscribe(() => isMobile && sidebar.close());
 
   onDestroy(() => {
     unsubscribe();
@@ -44,7 +45,7 @@
     <div class="flex h-16 flex-nowrap items-center justify-center">
       <a href="/console" class=" text-gray-900 group-hover:inline-block dark:text-gray-200" class:hidden={!$sidebar}>
         <span class="whitespace-nowrap text-center">
-          {title}
+          {$t(title)}
         </span>
       </a>
       {#if !isMobile}

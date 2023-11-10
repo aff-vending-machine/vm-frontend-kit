@@ -1,0 +1,15 @@
+{
+  "console": "Console",
+  "machine": "Machine",
+  "machine-info": "Info",
+  "machine-slot": "Slot",
+  "machine-payment": "Payment",
+  "report": "Report",
+  "report-stock": "Stocks",
+  "report-transaction": "Transactions",
+  "product": "Product",
+  "product-group": "Group",
+  "product-item": "Item",
+  "transaction": "Transaction",
+  "staff": "Staff"
+}

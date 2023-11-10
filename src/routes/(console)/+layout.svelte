@@ -10,7 +10,7 @@
   access.set(data.token);
 </script>
 
-<div class="flex h-screen bg-slate-200 dark:bg-gray-900" class:overflow-y-hidden={$drawer}>
+<div class="flex h-full bg-slate-200 dark:bg-gray-900" class:overflow-y-hidden={$drawer}>
   <Sidebar title="Vending Machine" />
   <div class="flex flex-1 flex-col lg:px-8 lg:py-2">
     <Header />

@@ -1,9 +1,10 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
-  import type { SidebarSubMenuType } from './sidebar';
   import { quintOut } from 'svelte/easing';
   import { slide } from 'svelte/transition';
   import { page } from '$app/stores';
+  import { t } from '$lib/translations';
+  import type { SidebarSubMenuType } from '$lib/sidebar';
 
   export let title: string;
   export let icon: string;
@@ -30,7 +31,7 @@
       class:bg-blue-100={active}
     >
       <Icon {icon} class="h-6 w-6" />
-      <span class="ml-4 group-hover:block" class:hidden={iconOnly}>{title}</span>
+      <span class="ml-4 group-hover:block" class:hidden={iconOnly}>{$t(title)}</span>
     </a>
     {#if active}
       <span class="w-3 bg-white" />
@@ -47,7 +48,7 @@
     >
       <span class="inline-flex items-center py-4">
         <Icon {icon} class="h-6 w-6" />
-        <span class="ml-4 group-hover:block" class:hidden={iconOnly}>{title}</span>
+        <span class="ml-4 group-hover:block" class:hidden={iconOnly}>{$t(title)}</span>
       </span>
       <span class="float-right transition-all group-hover:block" class:rotate-90={open} class:hidden={iconOnly}>
         <Icon icon="mdi:chevron-right" class="h-6 w-6" />
@@ -81,7 +82,7 @@
                 class="ml-2 text-gray-500 hover:text-emerald-600 dark:hover:text-gray-200"
                 class:text-blue-500={subactive(item.link)}
               >
-                {item.title}
+                {$t(item.title)}
               </span>
             </a>
           </li>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import selector from '$lib/stores/selector';
   import Language from '$components/elements/switchers/Language.svelte';
   import Profile from '$components/sections/profiles/Profile.svelte';
   import Theme from '$components/elements/switchers/Theme.svelte';
@@ -11,6 +12,8 @@
     <span class="lg:hidden">
       <Hamburger open={$sidebar} --color="gray" on:click={sidebar.toggle} />
     </span>
+    <span>{$selector.branch?.name || 'All Branches'}</span>
+    <span>{$selector.machine?.name || 'All Machines'}</span>
   </div>
 
   <div class="flex h-12 items-center space-x-4">

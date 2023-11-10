@@ -29,7 +29,7 @@ export const actions = {
 
       alert.add('success', 'Login Successful');
       swr.success(token);
-      return goto('/main/dashboard', { replaceState: true, noScroll: true });
+      return goto('/console', { replaceState: true, noScroll: true });
     } catch (e: unknown) {
       alert.add('error', 'Login Failed');
       return swr.failure(e);

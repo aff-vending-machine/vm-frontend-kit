@@ -1,11 +1,12 @@
 import { CRUDService } from '$lib/utils/base/api';
+import type { Branch } from './branch';
 
 const ROOT_PATH = 'machines';
 
 export type Machine = {
   id: number;
   branch_id: number;
-  // branch: StoreBranch;
+  branch: Branch;
   // slots: MachineSlot[];
   created_at: Date;
   updated_at: Date;

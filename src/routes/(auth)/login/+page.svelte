@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { swr, actions } from './-actions';
+  import { swr, actions } from './@actions';
 </script>
 
 <svelte:head>

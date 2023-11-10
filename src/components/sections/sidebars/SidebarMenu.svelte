@@ -9,7 +9,7 @@
   export let icon: string;
   export let link: string | undefined = undefined;
   export let submenu: SidebarSubMenuType[] = [];
-  export let iconOnly: boolean = true;
+  export let iconOnly: boolean = false;
 
   let open = false;
 
@@ -22,9 +22,9 @@
 </script>
 
 {#if link}
-  <li class="relative">
+  <li class="flex flex-nowrap">
     <a
-      class="inline-flex w-full items-center px-6 py-4 text-sm font-semibold transition-colors duration-150 hover:text-emerald-700 dark:hover:text-gray-200"
+      class="flex flex-grow items-center whitespace-nowrap px-6 py-4 text-sm font-semibold transition-colors duration-150 hover:text-emerald-700 dark:hover:text-gray-200"
       href={link}
       class:text-blue-500={active}
       class:bg-blue-100={active}
@@ -33,8 +33,8 @@
       <span class="ml-4 group-hover:block" class:hidden={iconOnly}>{title}</span>
     </a>
     {#if active}
-      <span class="absolute right-0 h-full w-4 bg-white" />
-      <span class="absolute right-0 h-full w-1 rounded-l bg-blue-300" />
+      <span class="w-3 bg-white" />
+      <span class="w-1 flex-shrink rounded-l bg-blue-300" />
     {/if}
   </li>
 {:else}

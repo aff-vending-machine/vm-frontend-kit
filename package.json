@@ -48,6 +48,7 @@
     "test:integration": "playwright test",
     "test:unit": "vitest",
     "prepare": "husky install && chmod ug+x .husky/*",
+    "prehook": " npx husky add .husky/commit-msg 'npx --no -- commitlint --edit $1' && npx husky add .husky/pre-commit 'pnpm exec lint-staged' && npx husky add .husky/pre-push 'pnpm check'",
     "precommit": "pnpm format && pnpm lint",
     "commit": "git-cz",
     "release": "commit-and-tag-version --no-verify --skip.tag"

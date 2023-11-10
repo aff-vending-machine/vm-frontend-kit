@@ -6,7 +6,7 @@ export async function load() {
   try {
     const token = await AuthService.getInstance().authenticate();
     access.set(token);
-    return goto('/main/dashboard');
+    return goto('/console');
   } catch (e) {
     return goto('/login');
   }

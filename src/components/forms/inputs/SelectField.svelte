@@ -1,9 +1,5 @@
 <script lang="ts">
-  type SelectOptionsType = {
-    label: string;
-    value: unknown;
-    filter?: unknown;
-  };
+  import type { SelectOptionsType } from '$lib/utils/options';
 
   export let id: string;
   export let label: string;
@@ -24,10 +20,10 @@
     {disabled}
     bind:value
     on:change
-    class="w-full min-w-[120px] rounded border border-gray-300 px-2 py-1 text-sm text-gray-700"
+    class="w-full min-w-[120px] rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700"
   >
     {#if unselected}
-      <option value="">{placeholder}</option>
+      <option class="text-gray-500" value="">{placeholder}</option>
     {/if}
     {#each options as option}
       <option value={option.value}>{option.label}</option>

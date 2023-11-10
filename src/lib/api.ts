@@ -15,6 +15,8 @@ type Protocol<T> = {
   message?: string;
 };
 
+const cache: Record<string, any> = {};
+
 const requester = async <T = any>(method: string, path: string, { query, data, token }: Fetcher = {}): Promise<T> => {
   try {
     const opts: RequestInit = { method };
@@ -23,6 +25,13 @@ const requester = async <T = any>(method: string, path: string, { query, data, t
 
     if (query) {
       url.search = query;
+    }
+
+    const key = url.href;
+    if (method === 'GET') {
+      if (cache[key] && Date.now() - cache[key].timestamp < 60 * 60 * 1000) {
+        return Promise.resolve(cache[key].data);
+      }
     }
 
     if (data) {
@@ -44,7 +53,10 @@ const requester = async <T = any>(method: string, path: string, { query, data, t
       return Promise.reject(error(result.code, result.message || 'Network response was not OK'));
     }
 
-    return result.data!;
+    if (method === 'GET') {
+      cache[key] = { data: result.data!, timestamp: Date.now() };
+    }
+    return Promise.resolve(result.data!);
   } catch (e: unknown) {
     throw error(500, 'There has been a problem with API operation');
   }

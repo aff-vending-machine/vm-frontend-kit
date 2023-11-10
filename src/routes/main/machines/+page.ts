@@ -1,12 +1,16 @@
+import { BranchService } from '$lib/services/branch';
 import { MachineService } from '$lib/services/machine';
 
 export async function load({ url }) {
-  try {
-    const query = url.searchParams.toString();
-    const machineService = MachineService.getInstance();
-    const machines = await machineService.find(query);
-    return { machines };
-  } catch (e: unknown) {
-    return { machines: [], error: e };
-  }
+  const machineService = MachineService.getInstance();
+  const branchService = BranchService.getInstance();
+
+  const query = url.searchParams.toString();
+
+  return {
+    machines: await machineService.find(query),
+    options: {
+      branches: await branchService.find().then(r => r.map(c => ({ value: c.id, label: c.name }))),
+    },
+  };
 }

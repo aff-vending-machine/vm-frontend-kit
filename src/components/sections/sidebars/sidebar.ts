@@ -18,23 +18,23 @@ export const menulist: SidebarMenuType[] = [
   },
   {
     icon: 'mdi:shape-plus-outline',
-    title: 'Catalog',
+    title: 'Machine',
     submenu: [
       {
-        title: 'Products',
-        link: '/main/catalog/products',
+        title: 'List',
+        link: '/main/machines',
       },
       {
-        title: 'Categories',
-        link: '/main/catalog/categories',
+        title: 'Reports',
+        link: '/main/machines/reports',
       },
       {
         title: 'Attributes',
-        link: '/main/catalog/attributes',
+        link: '/main/machines/attributes',
       },
       {
-        title: 'Coupons',
-        link: '/main/catalog/coupons',
+        title: 'Payments',
+        link: '/main/machines/payments',
       },
     ],
   },

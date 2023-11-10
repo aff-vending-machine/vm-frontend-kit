@@ -8,7 +8,7 @@ export async function load() {
   const machineService = MachineService.getInstance();
   return {
     token: await authService.authenticate(),
-    branches: await branchService.count(),
-    machines: await machineService.count(),
+    branches: await branchService.find(),
+    machines: await machineService.find(),
   };
 }

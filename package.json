@@ -47,8 +47,11 @@
     "format": "prettier --ignore-path .gitignore --write .",
     "test:integration": "playwright test",
     "test:unit": "vitest",
+    "hook:commit-msg": "npx husky add .husky/commit-msg 'npx --no -- commitlint --edit $1'",
+    "hook:pre-commit": "npx husky add .husky/pre-commit 'pnpm exec lint-staged'",
+    "hook:pre-push": "npx husky add .husky/pre-push 'pnpm check'",
+    "hook": "pnpm hook:commit-msg && pnpm hook:pre-commit && pnpm hook:pre-push && chmod ug+x .husky/*",
     "prepare": "husky install && chmod ug+x .husky/*",
-    "prehook": " npx husky add .husky/commit-msg 'npx --no -- commitlint --edit $1' && npx husky add .husky/pre-commit 'pnpm exec lint-staged' && npx husky add .husky/pre-push 'pnpm check'",
     "precommit": "pnpm format && pnpm lint",
     "commit": "git-cz",
     "release": "commit-and-tag-version --no-verify --skip.tag"

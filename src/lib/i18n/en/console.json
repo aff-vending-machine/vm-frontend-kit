@@ -1,0 +1,10 @@
+{
+  "select-a-branch": "Select a Branch",
+  "all-branches": "All Branches",
+  "select-a-machine": "Select a Machine",
+  "all-machines": "All Machines",
+  "machines-in-selected-branch": "Only Branch {{name}}",
+  "branch": "Branch",
+  "location": "Location",
+  "total-machines": "Total Machines"
+}

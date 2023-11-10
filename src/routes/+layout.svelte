@@ -3,6 +3,19 @@
   import Alert from '$components/overlays/alerts/Alert.svelte';
 
   import '../app.css';
+  import { onDestroy } from 'svelte';
+  import language from '$lib/stores/language';
+  import { loadTranslations } from '$lib/translations';
+
+  export let data;
+
+  const unsubscribe = language.subscribe(lang => {
+    loadTranslations(lang, data.pathname);
+  });
+
+  onDestroy(() => {
+    unsubscribe();
+  });
 </script>
 
 <svelte:head>

@@ -2,6 +2,7 @@
   import type { Branch } from '$lib/services/branch';
   import type { Machine } from '$lib/services/machine';
   import selector from '$lib/stores/selector';
+  import { t } from '$lib/translations';
   import { actions } from '../@actions';
 
   export let branches: Branch[];
@@ -19,6 +20,23 @@
   });
 </script>
 
+<button
+  class="w-full cursor-pointer rounded-lg border-2 border-gray-700 bg-white p-4 text-left shadow-sm shadow-gray-500 hover:shadow-xl"
+  on:click={actions.selectAllBranches()}
+>
+  <h4 class="text-lg">{$t('console.all-machines')}</h4>
+</button>
+{#if !!$selector.branch}
+  <button
+    class="w-full cursor-pointer rounded-lg border-2 border-gray-700 bg-white p-4 text-left shadow-sm shadow-gray-500 hover:shadow-xl"
+    on:click={actions.selectAllMachines($selector.branch.id)}
+  >
+    <h4 class="text-lg">{$t('console.machines-in-selected-branch', { name: $selector.branch.name })}</h4>
+  </button>
+{:else}
+  <div class="col-span-1" />
+{/if}
+<div class="lg:col-span-1 xl:col-span-2" />
 {#each sortedMachines as machine}
   <button
     class="w-full cursor-pointer rounded-lg border border-gray-500 p-4 text-left shadow-gray-500 hover:shadow-xl"
@@ -31,8 +49,8 @@
   >
     <h4 class="text-lg">{machine.name}</h4>
     <div class="overflow-hidden text-ellipsis whitespace-nowrap">
-      <p class="text-sm text-gray-500">Branch: {branch(machine.branch_id)?.name}</p>
-      <p class="text-sm text-gray-500">Locationzzzzzzzzz: {machine.location}</p>
+      <p class="text-sm text-gray-500">{$t('console.branch')}: {branch(machine.branch_id)?.name}</p>
+      <p class="text-sm text-gray-500">{$t('console.location')}: {machine.location}</p>
     </div>
   </button>
 {/each}

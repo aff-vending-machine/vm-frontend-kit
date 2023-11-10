@@ -12,7 +12,7 @@ export type SelectorData = {
 const selector: Writable<SelectorData> = writable({});
 
 function clear(onlyMachine = false) {
-  if (onlyMachine) storage(SELECT_BRANCH_ID, null);
+  if (!onlyMachine) storage(SELECT_BRANCH_ID, null);
   storage(SELECT_MACHINE_ID, null);
 
   selector.update(s => {

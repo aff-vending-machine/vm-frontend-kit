@@ -1,5 +1,5 @@
 import { goto } from '$app/navigation';
-import selector from '$lib/stores/selector.js';
+import selector from '$lib/stores/selector';
 
 export async function load({ parent }) {
   const data = await parent();

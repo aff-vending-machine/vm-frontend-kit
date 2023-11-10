@@ -8,9 +8,12 @@ export const actions = {
     selector.clear();
     goto(`/admin/branches`);
   },
-  selectBranch: (branch: Branch) => (_: MouseEvent) => {
-    selector.selectBranch(branch);
-    goto(`/console/branches/${branch.id}`);
+  selectBranch: (branch: Branch, isMatched: boolean) => (_: MouseEvent) => {
+    if (isMatched) {
+      goto(`/console/branches/${branch.id}`);
+    } else {
+      selector.selectBranch(branch);
+    }
   },
   selectAllMachines: (branch_id: number) => (_: MouseEvent) => {
     selector.clear(true);

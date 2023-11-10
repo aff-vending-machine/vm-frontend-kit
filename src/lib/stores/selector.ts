@@ -45,6 +45,7 @@ function reload(branches: Branch[], machines: Machine[]) {
       selectMachine(machine);
     }
   } catch (e) {
+    console.log(e);
     clear();
   }
 }

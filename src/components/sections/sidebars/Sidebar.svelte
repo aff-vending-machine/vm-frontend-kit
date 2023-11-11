@@ -7,10 +7,11 @@
   import { quintOut } from 'svelte/easing';
   import { page } from '$app/stores';
   import { onDestroy } from 'svelte';
-  import { t } from '$lib/translations';
   import { menulist } from '$lib/sidebar';
+  import { t } from '$lib/translations';
 
   export let title: string;
+  export let branch: string;
   let size: number;
 
   $: isMobile = size < 1024;
@@ -45,7 +46,7 @@
     <div class="flex h-16 flex-nowrap items-center justify-center">
       <a href="/console" class=" text-gray-900 group-hover:inline-block dark:text-gray-200" class:hidden={!$sidebar}>
         <span class="whitespace-nowrap text-center">
-          {$t(title)}
+          {title}
         </span>
       </a>
       {#if !isMobile}
@@ -62,7 +63,7 @@
     </div>
 
     <ul class="mt-8" class:hidden={!$sidebar && isMobile}>
-      {#each menulist as item}
+      {#each menulist($t, branch) as item}
         <SidebarMenu {...item} iconOnly={!$sidebar} />
       {/each}
     </ul>

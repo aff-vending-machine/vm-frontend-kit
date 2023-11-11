@@ -1,11 +1,11 @@
 import api from '$lib/api';
 import { ACCESS_TOKEN, REFRESH_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN_PATH } from '$lib/constants';
-import type { TokenData } from '$lib/stores/access';
+import type { AccessStore } from '$lib/stores/access';
 import type { HttpError_1 } from '@sveltejs/kit';
 import { isExpired } from './check';
 import { storage } from './local-storage';
 
-const parseTokenData = (token: TokenData) => {
+const parseTokenData = (token: AccessStore) => {
   token.iat = convertToDate(token.iat);
   token.exp = convertToDate(token.exp);
 
@@ -19,7 +19,7 @@ const convertToDate = (date: Date | string | number): Date => {
   return new Date(date);
 };
 
-export const parseJWT = (token: string): TokenData => {
+export const parseJWT = (token: string): AccessStore => {
   if (!token && token.indexOf('.') < 0) {
     throw new Error('Invalid JWT token');
   }
@@ -34,7 +34,7 @@ export const parseJWT = (token: string): TokenData => {
       .join(''),
   );
 
-  const tokenData = JSON.parse(jsonPayload) as TokenData;
+  const tokenData = JSON.parse(jsonPayload) as AccessStore;
   return parseTokenData(tokenData);
 };
 

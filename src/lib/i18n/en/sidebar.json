@@ -1,10 +1,12 @@
 {
   "console": "Console",
+  "branch": "Branch",
   "machine": "Machine",
   "machine-info": "Info",
   "machine-slot": "Slot",
   "machine-payment": "Payment",
   "report": "Report",
+  "report-info": "Info",
   "report-stock": "Stocks",
   "report-transaction": "Transactions",
   "product": "Product",

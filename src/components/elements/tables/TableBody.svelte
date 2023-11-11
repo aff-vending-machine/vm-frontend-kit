@@ -26,7 +26,7 @@
 <tbody class="divide-y divide-gray-200 border-t border-gray-100">
   {#each source as data, index}
     <tr
-      class="even:bg-secondary-50 hover:bg-primary-100 cursor-pointer space-x-4 odd:bg-white"
+      class="cursor-pointer space-x-4 odd:bg-white even:bg-gray-50 hover:bg-blue-100"
       on:click={() => dispatch('select', { index, data })}
     >
       {#each columns as column}

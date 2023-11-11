@@ -1,12 +1,11 @@
 <script lang="ts">
   import { clickOutside } from '$lib/hooks/useClickOutside';
-  import access from '$lib/stores/access';
   import Icon from '@iconify/svelte';
-  import { onMount } from 'svelte';
+
+  export let username: string;
+  export let role: string;
 
   let showUI = false;
-  let username = '';
-  let role = '';
 
   function handleDropdown() {
     showUI = !showUI;
@@ -15,11 +14,6 @@
   function close() {
     showUI = false;
   }
-
-  onMount(() => {
-    username = $access.name;
-    role = $access.role;
-  });
 </script>
 
 <div class=" flex flex-row items-center justify-center" use:clickOutside on:click-outside={close}>

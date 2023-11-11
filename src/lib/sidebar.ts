@@ -12,75 +12,70 @@ export type SidebarSubMenuType = {
   role?: string;
 };
 
-export const menulist: SidebarMenuType[] = [
+export const menulist = (t: (s: string) => string, branch: string) => [
   {
     icon: 'mdi:view-dashboard',
-    title: 'sidebar.console',
-    link: '/console',
+    title: t('sidebar.console'),
+    link: `/console/${branch}`,
   },
   {
     icon: 'mdi:finance',
-    title: 'sidebar.report',
+    title: t('sidebar.report'),
     submenu: [
       {
-        title: 'sidebar.report-info',
-        link: '/console/reports',
+        title: t('sidebar.report-info'),
+        link: `/console/${branch}/reports`,
       },
       {
-        title: 'sidebar.report-stock',
-        link: '/console/reports/stocks',
+        title: t('sidebar.report-stock'),
+        link: `/console/${branch}/reports/stocks`,
       },
       {
-        title: 'sidebar.report-transaction',
-        link: '/console/reports/transactions',
+        title: t('sidebar.report-transaction'),
+        link: `/console/${branch}/reports/transactions`,
       },
     ],
   },
   {
-    icon: 'icon-park-outline:branch-one',
-    title: 'sidebar.branch',
-    link: '/console/branches',
-  },
-  {
     icon: 'game-icons:vending-machine',
-    title: 'sidebar.machine',
+    title: t('sidebar.machine'),
     submenu: [
       {
-        title: 'sidebar.machine-info',
-        link: '/console/machines',
+        title: t('sidebar.machine-info'),
+        link: `/console/${branch}/machines`,
       },
       {
-        title: 'sidebar.machine-slot',
-        link: '/main/machines/slots',
+        title: t('sidebar.machine-slot'),
+        link: `/console/${branch}/machines/slots`,
       },
       {
-        title: 'sidebar.machine-payment',
-        link: '/main/machines/payments',
+        title: t('sidebar.machine-payment'),
+        link: `/console/${branch}/machines/payments`,
       },
     ],
   },
   {
     icon: 'fluent-mdl2:product-variant',
-    title: 'sidebar.product',
+    title: t('sidebar.product'),
     submenu: [
       {
-        title: 'sidebar.product-group',
-        link: '/console/products/groups',
+        title: t('sidebar.product-group'),
+        link: `/console/${branch}/products/groups`,
       },
       {
-        title: 'sidebar.product-group',
-        link: '/console/products/items',
+        title: t('sidebar.product-item'),
+        link: `/console/${branch}/products/items`,
       },
     ],
   },
   {
     icon: 'mdi:clipboard-text-outline',
-    title: 'sidebar.transaction',
-    link: '/console/transactions',
+    title: t('sidebar.transaction'),
+    link: `/console/${branch}/transactions`,
   },
   {
     icon: 'mdi:account-group-outline',
-    title: 'sidebar.staff',
-    link: '/console/staffs',
+    title: t('sidebar.staff'),
+    link: `/console/${branch}/staffs`,
   },
 ];

@@ -1,10 +1,9 @@
 import { storage } from '$lib/utils/local-storage';
-import { parseJWT } from '$lib/utils/jwt';
-import { isExpired } from '$lib/utils/check';
+import { getAccessToken, parseJWT } from '$lib/utils/jwt';
 import api from '$lib/api';
 import type { HttpError_1 } from '@sveltejs/kit';
 import { ACCESS_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN } from '$lib/constants';
-import type { TokenData } from '$lib/stores/access';
+import type { AccessStore } from '$lib/stores/access';
 
 const ROOT_PATH = 'auth';
 
@@ -25,7 +24,7 @@ export class AuthService {
 
   private constructor(private PATH: string) {}
 
-  async login(username: string, password: string, remember?: boolean): Promise<TokenData> {
+  async login(username: string, password: string, remember?: boolean): Promise<AccessStore> {
     try {
       const data = await api.post<Auth>(`${this.PATH}/login`, { username, password });
       storage(ACCESS_TOKEN, data.access_token);
@@ -44,38 +43,16 @@ export class AuthService {
       storage(REFRESH_TOKEN, null);
       storage(AUTHENTICATED_REMEMBERED, null);
 
-      const err = e as HttpError_1;
-      return Promise.reject(err.body?.message);
+      // const err = e as HttpError_1;
+      // return Promise.reject(err.body?.message);
+      return Promise.reject('Login failed');
     }
   }
 
-  async authenticated(): Promise<TokenData> {
+  async authenticate(): Promise<AccessStore> {
     try {
-      const accessToken = storage(ACCESS_TOKEN);
-      const refreshToken = storage(REFRESH_TOKEN);
-      if (!accessToken) {
-        return Promise.reject('no access token');
-      }
-      let result = parseJWT(accessToken);
-
-      if (isExpired(result.iat, result.exp)) {
-        if (!refreshToken) {
-          return Promise.reject('no refresh token');
-        }
-        result = parseJWT(refreshToken);
-
-        if (isExpired(result.iat, result.exp)) {
-          return Promise.reject('refresh token is expired');
-        }
-
-        const data = await api.post(`${this.PATH}/refresh`, refreshToken);
-
-        storage(ACCESS_TOKEN, data.access_token);
-        storage(REFRESH_TOKEN, data.refresh_token);
-
-        result = parseJWT(data.access_token);
-      }
-
+      const accessToken = await getAccessToken();
+      const result = parseJWT(accessToken);
       return Promise.resolve(result);
     } catch (e: unknown) {
       storage(ACCESS_TOKEN, null);
@@ -83,7 +60,7 @@ export class AuthService {
       storage(AUTHENTICATED_REMEMBERED, null);
 
       const err = e as HttpError_1;
-      return Promise.reject(err.body.message);
+      return Promise.reject(err.body?.message);
     }
   }
 

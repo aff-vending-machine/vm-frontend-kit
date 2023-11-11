@@ -2,7 +2,7 @@ import { writable, type Writable } from 'svelte/store';
 
 export type TokenType = 'access_token' | 'refresh_token';
 
-export type TokenData = {
+export type AccessStore = {
   jti: string;
   sub: string;
   iat: Date;
@@ -15,6 +15,6 @@ export type TokenData = {
   role: string;
 };
 
-const access: Writable<TokenData> = writable();
+const access: Writable<AccessStore> = writable();
 
-export default { ...access };
+export default access;

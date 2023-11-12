@@ -1,0 +1,5 @@
+{
+  "message": "Showing {{begin}} to {{end}} of {{total}} entries",
+  "next": "Next",
+  "previous": "Previous"
+}

@@ -27,7 +27,7 @@
   {#each source as data, index}
     <tr
       class="cursor-pointer space-x-4 odd:bg-white even:bg-gray-50 hover:bg-blue-100"
-      on:click={() => dispatch('select', { index, data })}
+      on:click={() => dispatch('select', { index, value: data })}
     >
       {#each columns as column}
         <td class="whitespace-nowrap px-6 py-4 text-sm">

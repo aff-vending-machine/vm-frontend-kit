@@ -5,7 +5,7 @@
   export let columns: ColumnType[];
 </script>
 
-<thead class="z-1 sticky start-0 top-0 bg-gray-50">
+<thead class="sticky -top-4 start-0 z-10 bg-gray-300 shadow-lg">
   <tr>
     {#each columns as column}
       <TableHeaderField {column} />

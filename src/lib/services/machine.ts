@@ -1,27 +1,7 @@
-import { CRUDService } from '$lib/utils/base/api';
-import type { Branch } from './branch';
+import { CRUDService } from '$lib/utils/base/api_1st';
+import type { Machine } from '$types/machine';
 
 const ROOT_PATH = 'machines';
-
-export type Machine = {
-  id: number;
-  branch_id: number;
-  branch: Branch;
-  // slots: MachineSlot[];
-  created_at: Date;
-  updated_at: Date;
-  name: string;
-  serial_number: string;
-  location: string;
-  type: string;
-  vendor: string;
-  status: string;
-  register_count: number;
-  sync_time?: Date;
-  sync_slot_time?: Date;
-  sync_channel_time?: Date;
-  sync_transaction_time?: Date;
-};
 
 export class MachineService extends CRUDService<Machine> {
   private static instance: MachineService;

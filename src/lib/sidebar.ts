@@ -64,7 +64,7 @@ export const menulist = (t: (s: string) => string, branch: string) => [
       },
       {
         title: t('sidebar.product-item'),
-        link: `/console/${branch}/products/items`,
+        link: `/console/${branch}/products`,
       },
     ],
   },

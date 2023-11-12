@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Machine } from '$lib/services/machine';
+  import type { Machine } from '$types/machine';
 
   export let source: Machine;
 </script>

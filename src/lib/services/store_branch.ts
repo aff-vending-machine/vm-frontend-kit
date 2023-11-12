@@ -1,17 +1,9 @@
-import { CRUDService } from '$lib/utils/base/api';
+import { CRUDService } from '$lib/utils/base/api_1st';
+import type { StoreBranch } from '$types/branch';
 
 const ROOT_PATH = 'branches';
 
-export type Branch = {
-  id: number;
-  created_at: Date;
-  updated_at: Date;
-  name: string;
-  location: string;
-  is_enable: boolean;
-};
-
-export class BranchService extends CRUDService<Branch> {
+export class BranchService extends CRUDService<StoreBranch> {
   private static instance: BranchService;
   static getInstance(): BranchService {
     if (!BranchService.instance) {

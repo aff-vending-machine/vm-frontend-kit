@@ -30,7 +30,7 @@
 
 <th
   scope="col"
-  class="sticky top-0 cursor-pointer whitespace-nowrap px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+  class="sticky -top-4 cursor-pointer whitespace-nowrap px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
   class:selected={column.key === sort.key}
   on:click={() => toggleSort(column)}
 >

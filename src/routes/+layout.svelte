@@ -2,18 +2,25 @@
   import alert from '$lib/stores/alert';
   import Alert from '$components/overlays/alerts/Alert.svelte';
 
-  import { onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import language from '$lib/stores/language';
-  import { loadTranslations } from '$lib/translations';
+  import { loadTranslations, loading } from '$lib/i18n/translations';
   import { page } from '$app/stores';
   import '../app.css';
 
-  const unsubscribe = language.subscribe(lang => {
-    loadTranslations(lang, $page.url.pathname);
-  });
+  onMount(() => {
+    const unsubLanguage = language.subscribe(lang => {
+      loadTranslations(lang, $page.url.pathname);
+    });
 
-  onDestroy(() => {
-    unsubscribe();
+    const unsubLoading = loading.subscribe(async $loading => {
+      if ($loading) await loading.toPromise();
+    });
+
+    return () => {
+      unsubLanguage();
+      unsubLoading();
+    };
   });
 </script>
 
@@ -23,5 +30,11 @@
     <Alert {type} {message} on:remove={() => alert.remove(id)} />
   {/each}
 </div>
+
+<svelte:head>
+  <meta name="description" content="The web application for vending machine" />
+  <meta name="theme-color" content="#000000" />
+  <meta http-equiv="cache-control" content="public" />
+</svelte:head>
 
 <slot />

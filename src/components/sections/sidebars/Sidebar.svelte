@@ -8,7 +8,7 @@
   import { page } from '$app/stores';
   import { onDestroy } from 'svelte';
   import { menulist } from '$lib/sidebar';
-  import { t } from '$lib/translations';
+  import { t } from '$lib/i18n/translations';
 
   export let title: string;
   export let branch: string;

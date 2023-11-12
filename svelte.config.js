@@ -18,9 +18,14 @@ const config = {
     }),
     alias: {
       $components: 'src/components',
+      $types: 'src/types',
     },
     version: {
       name: process.env.npm_package_version,
+    },
+    csp: {
+      mode: 'hash',
+      directives: { 'script-src': ['self'] },
     },
   },
 };

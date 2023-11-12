@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { login, swr } from '$lib/actions/login';
+  import { login, swr } from '$lib/actions/login.js';
   import { onMount } from 'svelte';
 
   export let data;
@@ -35,6 +35,7 @@
           placeholder="Enter your username"
           class="rounded-md border-gray-300 text-sm disabled:bg-gray-100"
           disabled={loading}
+          autocomplete="off"
         />
       </div>
       <div class="flex flex-col space-y-2">

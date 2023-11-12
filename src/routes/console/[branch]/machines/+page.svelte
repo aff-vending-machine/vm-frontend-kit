@@ -1,11 +1,15 @@
 <script lang="ts">
-  import Table from '$components/elements/tables/Table.svelte';
-  import Card from '$components/sections/cards/Card.svelte';
-  import type { Machine } from '$lib/services/machine';
+  import { onMount } from 'svelte';
+  import type { Machine } from '$types/machine';
   import drawer from '$lib/stores/drawer';
-  import Filters from './(__filters__)/Filters.svelte';
-  import { columns } from './(__table__)/_table';
+  import { viewOptions } from '$lib/utils/options';
+  import Card from '$components/sections/cards/Card.svelte';
   import Drawer from '$components/overlays/drawers/Drawer.svelte';
+  import ShareFilterSelection from '$components/shares/ShareFilterSelection.svelte';
+  import SharePagination from '$components/shares/SharePagination.svelte';
+  import Table from '$components/elements/tables/Table.svelte';
+  import { filter } from './filter';
+  import { columns } from './(__table__)/_table';
 
   export let data;
 
@@ -16,12 +20,16 @@
     selectedMachine = data;
     drawer.open();
   }
+
+  onMount(filter.mutate);
 </script>
 
 <Card let:Content>
   <Content>
     <h3 class="mb-2 font-semibold">Filter</h3>
-    <Filters />
+    <div class="mx-2 flex flex-col lg:flex-row">
+      <ShareFilterSelection key="limit" label="view" options={viewOptions} value={$filter.limit} />
+    </div>
   </Content>
   <div class="mt-4 border-b" />
   <Content>
@@ -30,7 +38,9 @@
       {#if data.machines}
         <Body {columns} source={data.machines} on:select={handleAction} />
       {/if}
-      <Footer />
+      <Footer>
+        <SharePagination limit={$filter.limit} colspan={columns.length} count={data.count} />
+      </Footer>
 
       {#if data.error}
         <div>{data.error.message}</div>

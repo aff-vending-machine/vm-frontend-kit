@@ -1,7 +1,8 @@
 import { goto } from '$app/navigation';
 import { AuthService } from '$lib/services/auth';
-import access, { type AccessStore } from '$lib/stores/access';
+import access from '$lib/stores/access';
 import useSWR from '$lib/stores/useSWR';
+import type { AccessStore } from '$types/access';
 import { get } from 'svelte/store';
 
 export const swr = useSWR<AccessStore>();

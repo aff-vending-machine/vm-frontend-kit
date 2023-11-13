@@ -35,7 +35,7 @@
         label="Group"
         placeholder="All Groups"
         unselected={0}
-        options={data.options?.groups}
+        options={data.options?.groups || []}
         value={$filter.group_id}
       />
       <div class="flex-1" />

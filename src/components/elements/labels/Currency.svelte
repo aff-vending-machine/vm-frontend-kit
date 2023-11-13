@@ -1,34 +1,30 @@
 <!-- Currency -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  let value: number;
-  let formattedValue: string;
-
   export let amount = 0;
-  export let alignment: 'left' | 'right' = 'right';
+  export let fractionDigits = 0;
+
+  // Reactive statement to format the value whenever `amount` or `fractionDigits` changes
+  $: formattedValue = formatValue(amount, fractionDigits);
 
   // Function to format the value as currency
-  function formatValue() {
+  function formatValue(amount: number, fractionDigits: number) {
     if (!amount) {
-      formattedValue = '฿0.00';
-      return;
+      return '-';
     }
 
-    value = parseFloat(amount.toFixed(2));
+    let value = parseFloat(amount.toFixed(fractionDigits));
     if (!Number.isNaN(value)) {
-      formattedValue = value.toLocaleString('th-TH', {
+      return value.toLocaleString('th-TH', {
         style: 'currency',
         currency: 'THB',
+        maximumFractionDigits: fractionDigits,
       });
     } else {
-      formattedValue = '฿0.00';
+      return '฿0';
     }
   }
-
-  // Run the formatValue function on component mount and whenever the amount changes
-  onMount(formatValue);
-  $: formatValue();
 </script>
 
-<span class={alignment === 'left' ? 'float-left' : 'float-right'}>{formattedValue}</span>
+<span class="float-right items-end text-right {$$props.class}">
+  {formattedValue}
+</span>

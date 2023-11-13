@@ -30,11 +30,13 @@
 
 <th
   scope="col"
-  class="sticky top-0 cursor-pointer whitespace-nowrap px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+  class="sticky -top-4 cursor-pointer whitespace-nowrap"
   class:selected={column.key === sort.key}
   on:click={() => toggleSort(column)}
 >
-  <div class="flex select-none justify-between">
-    <span class="font-medium text-gray-900">{column.title}</span>
+  <div class="border-y border-primary-300 px-6 py-4 text-sm font-bold uppercase tracking-wide text-gray-500">
+    <div class="flex select-none justify-center">
+      <span class="font-medium text-gray-900">{column.title}</span>
+    </div>
   </div>
 </th>

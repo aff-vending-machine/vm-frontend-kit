@@ -1,6 +1,7 @@
-export type SelectOptionsType = {
+export type SelectOptionsType<T = unknown> = {
   label: string;
   value: string | number;
+  data?: T;
 };
 
 export const viewOptions = [

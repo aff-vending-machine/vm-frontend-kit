@@ -1,3 +1,44 @@
 {
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "button": {
+    "add-product": "Add Product",
+    "add-slot": "Add Slot",
+    "add-group": "Add Product Group",
+    "add-user": "Add User",
+    "save": "Save",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "refresh": "Refresh",
+    "delete": "Delete",
+    "stock": "Stock",
+    "payment": "Payment",
+    "date": "Date",
+    "time": "Time",
+    "done": "Done",
+    "export": "Export"
+  },
+  "field": {
+    "start-date": "Start Date",
+    "end-date": "End Date",
+    "payment-channel": "Payment Channel",
+    "group-product": "Group Product",
+    "group-product-on": "Group",
+    "group-product-off": "Ungroup",
+    "product-group": "Product Group",
+    "limit": "Limit",
+    "search": "Search",
+    "report_from": "Report form",
+    "report_to": "to",
+    "instructions": "Instructions",
+    "last-time-sync": "last time sync",
+    "never": "never",
+    "no-filter": "no filter",
+    "branch": "Branch",
+    "machine": "Machine",
+    "stock": "Stock",
+    "role": "Role",
+    "status": "Status",
+    "changed": "Is edited"
+  }
 }

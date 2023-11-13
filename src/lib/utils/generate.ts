@@ -10,3 +10,8 @@ export function genKey(input: string): string {
 
   return formatted;
 }
+
+export function genError(e: unknown): Error {
+  // Ensure that the caught object is an instance of Error
+  return e instanceof Error ? e : new Error(String(e));
+}

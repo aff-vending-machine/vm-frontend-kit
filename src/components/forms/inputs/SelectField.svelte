@@ -7,12 +7,12 @@
   export let error: string | null = null;
   export let options: SelectOptionsType[];
   export let placeholder = 'Select an option';
-  export let unselected = false;
+  export let unselected: unknown = undefined;
   export let disabled = false;
   export let hidden = false;
 </script>
 
-<div class={$$props.class} class:hidden>
+<div class="mr-6" class:hidden>
   <label for={id} class="mb-1 block text-sm font-medium">{label}:</label>
   <select
     {id}
@@ -20,10 +20,10 @@
     {disabled}
     bind:value
     on:change
-    class="w-full min-w-[120px] rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700"
+    class="w-[calc(100%+24px)] min-w-[48px] rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700"
   >
-    {#if unselected}
-      <option class="text-gray-500" value="">{placeholder}</option>
+    {#if unselected !== undefined}
+      <option class="text-gray-500" value={unselected}>{placeholder}</option>
     {/if}
     {#each options as option}
       <option value={option.value}>{option.label}</option>

@@ -50,6 +50,12 @@ devDependencies:
   cssnano:
     specifier: ^6.0.1
     version: 6.0.1(postcss@8.4.31)
+  date-picker-svelte:
+    specifier: ^2.9.0
+    version: 2.9.0(svelte@4.2.2)
+  dayjs:
+    specifier: ^1.11.10
+    version: 1.11.10
   eslint:
     specifier: ^8.53.0
     version: 8.53.0
@@ -2214,9 +2220,23 @@ packages:
     engines: { node: '>=8' }
     dev: true
 
+  /date-picker-svelte@2.9.0(svelte@4.2.2):
+    resolution:
+      { integrity: sha512-aNZYzeJ8TtNxw3pdHHAkmTf1dnbBX6JZTkZY1IP4J7ufJcRKtF40Pga8S3ZD8EWuX2DWRW6kRFqoyXzWyoH81Q== }
+    peerDependencies:
+      svelte: ^3.24.0 || ^4.0.0
+    dependencies:
+      svelte: 4.2.2
+    dev: true
+
   /dateformat@3.0.3:
     resolution:
       { integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q== }
+    dev: true
+
+  /dayjs@1.11.10:
+    resolution:
+      { integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ== }
     dev: true
 
   /debug@4.3.4:

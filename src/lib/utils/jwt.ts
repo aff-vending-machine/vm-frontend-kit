@@ -1,23 +1,9 @@
 import api from '$lib/api';
 import { ACCESS_TOKEN, REFRESH_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN_PATH } from '$lib/constants';
-import type { AccessStore } from '$lib/stores/access';
 import type { HttpError_1 } from '@sveltejs/kit';
 import { isExpired } from './check';
 import { storage } from './local-storage';
-
-const parseTokenData = (token: AccessStore) => {
-  token.iat = convertToDate(token.iat);
-  token.exp = convertToDate(token.exp);
-
-  return token;
-};
-
-const convertToDate = (date: Date | string | number): Date => {
-  if (date instanceof Date) return date;
-  if (typeof date === 'number') return new Date(date * 1000);
-  if (typeof date === 'string') return new Date(parseInt(date) * 1000);
-  return new Date(date);
-};
+import { parseTokenData, type AccessStore } from '$types/access';
 
 export const parseJWT = (token: string): AccessStore => {
   if (!token && token.indexOf('.') < 0) {

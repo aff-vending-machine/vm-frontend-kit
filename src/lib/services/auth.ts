@@ -1,16 +1,12 @@
 import { storage } from '$lib/utils/local-storage';
 import { getAccessToken, parseJWT } from '$lib/utils/jwt';
 import api from '$lib/api';
-import type { HttpError_1 } from '@sveltejs/kit';
 import { ACCESS_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN } from '$lib/constants';
-import type { AccessStore } from '$lib/stores/access';
+import { genError } from '$lib/utils/generate';
+import type { Auth } from '$types/auth';
+import type { AccessStore } from '$types/access';
 
 const ROOT_PATH = 'auth';
-
-export type Auth = {
-  access_token: string;
-  refresh_token: string;
-};
 
 export class AuthService {
   private static instance: AuthService;
@@ -43,8 +39,7 @@ export class AuthService {
       storage(REFRESH_TOKEN, null);
       storage(AUTHENTICATED_REMEMBERED, null);
 
-      // const err = e as HttpError_1;
-      // return Promise.reject(err.body?.message);
+      // return Promise.reject(genError(e));
       return Promise.reject('Login failed');
     }
   }
@@ -54,13 +49,12 @@ export class AuthService {
       const accessToken = await getAccessToken();
       const result = parseJWT(accessToken);
       return Promise.resolve(result);
-    } catch (e: unknown) {
+    } catch (e) {
       storage(ACCESS_TOKEN, null);
       storage(REFRESH_TOKEN, null);
       storage(AUTHENTICATED_REMEMBERED, null);
 
-      const err = e as HttpError_1;
-      return Promise.reject(err.body?.message);
+      return Promise.reject(genError(e));
     }
   }
 

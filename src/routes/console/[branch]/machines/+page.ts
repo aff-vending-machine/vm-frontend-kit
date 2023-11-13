@@ -1,21 +1,26 @@
 import { MachineService } from '$lib/services/machine';
+import { genError } from '$lib/utils/generate';
 
-const machineService = MachineService.getInstance();
+const machineAPI = MachineService.getInstance();
 
-export async function load({ url, params, parent }) {
+export async function load({ url, parent }) {
   try {
-    const { mapper } = await parent();
-    if (!mapper) return { error: new Error('unexpected') };
-
+    const { branch_id } = await parent();
     const query = new URLSearchParams(url.searchParams);
-    const branch_id = mapper[params.branch];
+    const query2 = new URLSearchParams(url.searchParams);
     if (branch_id > 0) query.set('branch_id', branch_id.toString());
 
-    const machines = await machineService.find(query.toString());
+    query2.delete('limit');
+    query2.delete('offset');
 
-    return { machines };
+    return {
+      machines: machineAPI.find(query.toString()),
+      count: machineAPI.count(query2.toString()),
+    };
   } catch (e) {
-    const error = e instanceof Error ? e : new Error(String(e));
-    return { error };
+    return {
+      error: genError(e),
+      count: 0,
+    };
   }
 }

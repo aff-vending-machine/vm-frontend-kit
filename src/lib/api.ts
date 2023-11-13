@@ -23,6 +23,8 @@ const requester = async <T = any>(method: string, path: string, { query, data, t
     const headers = {} as Record<string, string>;
     const url = new URL(path, config.apiUrl);
 
+    // headers["Cache-Control"] = 'public, max-age=3600';
+
     if (query) {
       url.search = query;
     }

@@ -1,5 +1,5 @@
 export type TableFieldType = 'string' | 'image' | 'number' | 'currency' | 'date' | 'component' | 'array';
-export type MediaType = 'all' | 'mobile' | 'tablet' | 'desktop';
+export type MediaType = 'all' | 'mobile' | 'tablet' | 'desktop' | 'mobile|tablet' | 'tablet|desktop' | 'mobile|desktop';
 
 export type ColumnType = {
   key: string;

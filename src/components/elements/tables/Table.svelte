@@ -5,6 +5,6 @@
   import Footer from './TableFooter.svelte';
 </script>
 
-<table class="w-full border-collapse select-none overflow-y-auto overflow-x-hidden bg-white font-mono text-gray-500">
+<table class="w-full border-collapse select-none overflow-x-auto overflow-y-auto bg-white font-mono text-gray-500">
   <slot {Header} {Body} {Loading} {Footer} />
 </table>

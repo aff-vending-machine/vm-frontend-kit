@@ -6,3 +6,5 @@ export function debounce(func: (...args: unknown[]) => void, wait: number) {
     timer = window.setTimeout(() => func(null, args), wait);
   };
 }
+
+export const forceUpdate = async (_: unknown) => {};

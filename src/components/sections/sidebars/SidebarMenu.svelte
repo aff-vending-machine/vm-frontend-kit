@@ -26,15 +26,15 @@
     <a
       class="flex flex-grow items-center whitespace-nowrap px-6 py-4 text-sm font-semibold transition-colors duration-150 hover:text-emerald-700 dark:hover:text-gray-200"
       href={link}
-      class:text-blue-500={active}
-      class:bg-blue-100={active}
+      class:text-primary-500={active}
+      class:bg-primary-100={active}
     >
       <Icon {icon} class="h-6 w-6" />
       <span class="ml-4 group-hover:block" class:hidden={iconOnly}>{title}</span>
     </a>
     {#if active}
       <span class="w-3 bg-white" />
-      <span class="w-1 flex-shrink rounded-l bg-blue-300" />
+      <span class="w-1 flex-shrink rounded-l bg-primary-300" />
     {/if}
   </li>
 {:else}
@@ -42,8 +42,8 @@
     <button
       class="inline-flex h-14 w-full items-center justify-between px-6 py-3 text-sm font-semibold transition-colors duration-150 hover:text-emerald-600 focus:outline-none dark:hover:text-gray-200"
       on:click={handleToggle}
-      class:text-blue-500={active}
-      class:bg-blue-100={active}
+      class:text-primary-500={active}
+      class:bg-primary-100={active}
     >
       <span class="inline-flex items-center py-4">
         <Icon {icon} class="h-6 w-6" />
@@ -54,7 +54,7 @@
       </span>
       {#if active}
         <span class="absolute right-0 h-14 w-4 bg-white" />
-        <span class="absolute right-0 h-14 w-1 rounded-l bg-blue-300" />
+        <span class="absolute right-0 h-14 w-1 rounded-l bg-primary-300" />
       {/if}
     </button>
     {#if open}
@@ -73,13 +73,13 @@
               class:font-extrabold={subactive(item.link)}
             >
               {#if subactive(item.link)}
-                <Icon icon="mdi:circle-multiple" class="h-4 w-4 text-blue-500" />
+                <Icon icon="mdi:circle-multiple" class="h-4 w-4 text-primary-500" />
               {:else}
                 <Icon icon="mdi:minus" class="h-4 w-4" />
               {/if}
               <span
                 class="ml-2 text-gray-500 hover:text-emerald-600 dark:hover:text-gray-200"
-                class:text-blue-500={subactive(item.link)}
+                class:text-primary-500={subactive(item.link)}
               >
                 {item.title}
               </span>

@@ -1,3 +1,5 @@
+import { isIsoDate } from './check';
+
 export const convertToDate = (date: Date | string | number): Date => {
   if (date instanceof Date) return date;
   if (typeof date === 'number') return new Date(date * 1000);
@@ -17,4 +19,13 @@ export const convertToQuery = (obj: Record<string, string>) => {
       res[key] = obj[key].toString();
       return res;
     }, {});
+};
+
+export const toDate = (str: string | null, _default: Date): Date => {
+  if (!str || !isIsoDate(str)) return _default;
+  try {
+    return new Date(str);
+  } catch (e) {
+    return _default;
+  }
 };

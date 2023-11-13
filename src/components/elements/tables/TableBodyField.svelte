@@ -6,6 +6,7 @@
   import type { TableFieldType } from './@table';
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
+  export let index: number;
   export let value: any;
   export let type: TableFieldType;
   export let source: unknown;
@@ -13,7 +14,7 @@
 
 <!-- HTML -->
 {#if type === 'component'}
-  <svelte:component this={value} {source} on:action />
+  <svelte:component this={value} {index} {source} on:action />
 {:else if type === 'image'}
   <Image src={value} alt={value} class="h-auto w-16" />
 {:else if type === 'number'}

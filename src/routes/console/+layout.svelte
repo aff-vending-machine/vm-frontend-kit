@@ -3,12 +3,17 @@
   import { onMount } from 'svelte';
 
   export let data;
+  let ready = false;
 
   onMount(async () => {
     if (!data.isAuthenticated) {
       await goto('/login');
+    } else {
+      ready = true;
     }
   });
 </script>
 
-<slot />
+{#if ready}
+  <slot />
+{/if}

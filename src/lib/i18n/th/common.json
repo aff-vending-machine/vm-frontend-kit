@@ -1,3 +1,44 @@
 {
-  "loading": "กรุณารอซักครู่..."
+  "loading": "กรุณารอซักครู่...",
+  "button": {
+    "add-product": "เพิ่มสินค้า",
+    "add-slot": "เพิ่มช่อง",
+    "add-group": "เพิ่มกลุ่มสินค้า",
+    "add-user": "เพิ่มพนักงาน",
+    "save": "บันทึก",
+    "edit": "แก้ไข",
+    "confirm": "ตกลง",
+    "cancel": "ยกเลิก",
+    "refresh": "รีเฟรช",
+    "delete": "ลบ",
+    "stock": "รายงานสรุปสินค้า",
+    "payment": "รายงานธุรกรรม",
+    "date": "วัน",
+    "time": "เวลา",
+    "done": "ยืนยัน",
+    "export": "นำออก"
+  },
+  "field": {
+    "start-date": "เริ่มวันที่",
+    "end-date": "สิ้นสุดวันที่",
+    "payment-channel": "ช่องทางชำระเงิน",
+    "group-product": "รวมกลุ่มสินค้าชุดเดียวกัน",
+    "group-product-on": "รวมกลุ่มสินค้า",
+    "group-product-off": "แยกตามช่องสินค้า",
+    "product-group": "กลุ่มสินค้า",
+    "limit": "จำกัดข้อมูล",
+    "search": "ค้นหา",
+    "report_from": "รายงานจาก",
+    "report_to": "ถึง",
+    "instructions": "ชุดคำสั่ง",
+    "last-time-sync": "ข้อมูลล่าสุด",
+    "never": "ไม่มี",
+    "no-filter": "ไม่กรอง",
+    "branch": "สาขา",
+    "machine": "หมายเลขเครื่อง",
+    "stock": "สินค้า",
+    "role": "ตำแหน่ง",
+    "status": "สถานะ",
+    "changed": "การแก้ไข"
+  }
 }

@@ -21,18 +21,18 @@
       case 'info':
         return {
           icon: 'mdi:information-outline',
-          bg: 'bg-blue-100',
-          bar: 'bg-blue-500',
-          txt: 'text-blue-700',
+          bg: 'bg-primary-100',
+          bar: 'bg-primary-500',
+          txt: 'text-primary-700',
           color: 'blue',
         };
 
       case 'success':
         return {
           icon: 'mdi:check-circle-outline',
-          bg: 'bg-green-100',
-          bar: 'bg-green-500',
-          txt: 'text-green-700',
+          bg: 'bg-secondary-100',
+          bar: 'bg-secondary-500',
+          txt: 'text-secondary-700',
           color: 'green',
         };
 
@@ -77,7 +77,7 @@
       <!-- <Icon icon="mdi:close" class="h-4 w-4 text-gray-500 hover:text-red-500" /> -->
     </button>
   </div>
-  <div class="bg-secondary-200 relative flex h-0.5 w-full overflow-hidden rounded-full">
+  <div class="relative flex h-0.5 w-full overflow-hidden rounded-full bg-secondary-200">
     <div
       role="progressbar"
       aria-valuenow={100}

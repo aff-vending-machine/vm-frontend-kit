@@ -4,6 +4,7 @@
 
   import { onMount } from 'svelte';
   import language from '$lib/stores/language';
+  import { windowWidth } from '$lib/stores/media';
   import { loadTranslations, loading } from '$lib/i18n/translations';
   import { page } from '$app/stores';
   import '../app.css';
@@ -36,5 +37,7 @@
   <meta name="theme-color" content="#000000" />
   <meta http-equiv="cache-control" content="public" />
 </svelte:head>
+
+<svelte:window bind:innerWidth={$windowWidth} />
 
 <slot />

@@ -5,7 +5,7 @@
 </script>
 
 {#if source.is_enable}
-  <span class="rounded-full bg-green-500 px-3 py-2 text-xs text-white"> enable </span>
+  <span class="rounded-full bg-secondary-500 px-3 py-2 text-xs text-white"> enable </span>
 {:else}
   <span class="rounded-full bg-gray-500 px-3 py-2 text-xs text-white"> disable </span>
 {/if}

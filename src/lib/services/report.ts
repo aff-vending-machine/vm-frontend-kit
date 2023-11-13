@@ -12,22 +12,22 @@ import {
 
 const ROOT_PATH = 'report';
 
-export class AuthService {
-  private static instance: AuthService;
-  static getInstance(): AuthService {
-    if (!AuthService.instance) {
-      AuthService.instance = new AuthService(ROOT_PATH);
+export class ReportService {
+  private static instance: ReportService;
+  static getInstance(): ReportService {
+    if (!ReportService.instance) {
+      ReportService.instance = new ReportService(ROOT_PATH);
     }
 
-    return AuthService.instance;
+    return ReportService.instance;
   }
 
   private constructor(private PATH: string) {}
 
-  async summary(params?: Record<string, string>): Promise<MachineReport[]> {
+  async summary(query?: string): Promise<MachineReport[]> {
     try {
       const token = await getAccessToken();
-      const list = await api.post<MachineReport[]>(`${this.PATH}/summary`, { params, token });
+      const list = await api.get<MachineReport[]>(`${this.PATH}/summary`, { query, token });
       const result = list.map(parseMachineReport);
       return Promise.resolve(result);
     } catch (e) {
@@ -35,20 +35,20 @@ export class AuthService {
     }
   }
 
-  async stocks(machine_id: number, params?: Record<string, string>): Promise<StockReport[]> {
+  async stocks(machine_id: number, query?: string): Promise<StockReport[]> {
     try {
       const token = await getAccessToken();
-      const list = await api.post<StockReport[]>(`${this.PATH}/${machine_id}/stocks`, { params, token });
+      const list = await api.get<StockReport[]>(`${this.PATH}/${machine_id}/stocks`, { query, token });
       const result = list.map(parseStockReport);
       return Promise.resolve(result);
     } catch (e) {
       return Promise.reject(genError(e));
     }
   }
-  async transactions(machine_id: number, params?: Record<string, string>): Promise<TransactionReport[]> {
+  async transactions(machine_id: number, query?: string): Promise<TransactionReport[]> {
     try {
       const token = await getAccessToken();
-      const list = await api.post<TransactionReport[]>(`${this.PATH}/${machine_id}/transactions`, { params, token });
+      const list = await api.get<TransactionReport[]>(`${this.PATH}/${machine_id}/transactions`, { query, token });
       const result = list.map(parseTransactionReport);
       return Promise.resolve(result);
     } catch (e) {

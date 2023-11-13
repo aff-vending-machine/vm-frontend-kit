@@ -52,6 +52,16 @@ const config = {
       key: 'pagination',
       loader: async () => (await import('./th/pagination.json')).default,
     },
+    {
+      locale: 'en',
+      key: 'report',
+      loader: async () => (await import('./en/report.json')).default,
+    },
+    {
+      locale: 'th',
+      key: 'report',
+      loader: async () => (await import('./th/report.json')).default,
+    },
   ],
 };
 

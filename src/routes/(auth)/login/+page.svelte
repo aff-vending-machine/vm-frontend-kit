@@ -61,7 +61,7 @@
       </div>
       <div class="text-center">
         {#if loading}
-          <p class="text-xs text-blue-500">Loading...</p>
+          <p class="text-xs text-primary-500">Loading...</p>
         {/if}
 
         {#if error}
@@ -69,7 +69,7 @@
         {/if}
       </div>
       <button
-        class="w-full rounded-md bg-purple-500 p-2 text-sm text-white shadow shadow-purple-300
+        class="w-full rounded-md bg-secondary-500 p-2 text-sm text-white shadow shadow-secondary-300
         disabled:bg-gray-100 disabled:text-gray-400 disabled:shadow-gray-300"
         type="submit"
         disabled={loading}

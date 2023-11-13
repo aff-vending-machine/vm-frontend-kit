@@ -1,11 +1,11 @@
 import { SELECT_BRANCH_ID, SELECT_MACHINE_ID } from '$lib/constants';
-import type { Branch } from '$lib/services/store_branch';
-import type { Machine } from '$lib/services/machine';
 import { storage } from '$lib/utils/local-storage';
+import type { StoreBranch } from '$types/branch';
+import type { Machine } from '$types/machine';
 import { writable, type Writable } from 'svelte/store';
 
 export type SelectorData = {
-  branch?: Branch;
+  branch?: StoreBranch;
   machine?: Machine;
 };
 
@@ -23,7 +23,7 @@ function clear(onlyMachine = false) {
   });
 }
 
-function reload(branches: Branch[], machines: Machine[]) {
+function reload(branches: StoreBranch[], machines: Machine[]) {
   const bid = storage(SELECT_BRANCH_ID);
   const mid = storage(SELECT_MACHINE_ID);
 
@@ -50,7 +50,7 @@ function reload(branches: Branch[], machines: Machine[]) {
   }
 }
 
-function selectBranch(branch: Branch) {
+function selectBranch(branch: StoreBranch) {
   storage(SELECT_BRANCH_ID, branch.id.toString());
   selector.update(s => ({ ...s, branch }));
 }

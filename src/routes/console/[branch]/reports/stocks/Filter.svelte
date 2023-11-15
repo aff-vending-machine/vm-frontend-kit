@@ -8,9 +8,9 @@
   import ShareFilterDateTime from '$components/shares/ShareFilterDateTime.svelte';
 
   import 'dayjs/locale/th';
-  import ToggleField from '$components/forms/inputs/ToggleField.svelte';
   import ShareFilterSelection from '$components/shares/ShareFilterSelection.svelte';
   import type { SelectOptionsType } from '$lib/utils/options';
+  import ShareFilterToggle from '$components/shares/ShareFilterToggle.svelte';
 
   export let from: Date;
   export let to: Date;
@@ -34,11 +34,11 @@
   />
   <ShareFilterDateTime key="from" label={$t('common.field.start-date')} value={from} />
   <ShareFilterDateTime key="to" label={$t('common.field.end-date')} value={to} />
-  <ToggleField
-    id="toggle-group"
+  <ShareFilterToggle
+    key="group"
     label={$t('common.field.group-product')}
     labelOn={$t('common.field.group-product-on')}
     labelOff={$t('common.field.group-product-off')}
-    bind:value={group}
+    value={group}
   />
 </div>

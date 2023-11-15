@@ -1,6 +1,7 @@
 <script lang="ts">
+  import type { SelectOptionsType } from '$lib/utils/options.ts';
   import ShareFilterSelection from '$components/shares/ShareFilterSelection.svelte';
-  import { viewOptions, type SelectOptionsType } from '$lib/utils/options';
+  import { viewOptions } from '$lib/utils/options';
 
   export let limit: number;
   export let groupId: number;

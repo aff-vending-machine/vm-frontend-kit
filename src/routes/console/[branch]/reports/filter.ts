@@ -1,24 +1,31 @@
+import { page } from '$app/stores';
 import useFilter from '$lib/stores/useFilter';
-import dayjs from 'dayjs';
+import { parseDate } from '$lib/utils/convert';
+import { defaultForm, defaultTo } from '$lib/utils/generate';
+import { get } from 'svelte/store';
 
 type FilterType = {
-  from: string;
-  to: string;
+  from: Date;
+  to: Date;
 };
 
-const date = dayjs().set('second', 0).set('minute', 0).set('hour', 21);
-export const defaultForm = date.add(-1, 'day').toISOString();
-export const defaultTo = date.toISOString();
-
-const updater = (_: FilterType, params: URLSearchParams) => ({
-  from: params.get('from') ?? defaultForm,
-  to: params.get('to') ?? defaultTo,
+export const filter = useFilter<FilterType>({
+  from: defaultForm,
+  to: defaultTo,
 });
 
-export const filter = useFilter<FilterType>(
-  {
-    from: '',
-    to: '',
-  },
-  updater,
-);
+export const bindFilter = () => {
+  return page.subscribe(async p => {
+    const searchParams = get(page).url.searchParams;
+
+    const currentFrom = parseDate(searchParams.get('from'), defaultForm);
+    const currentTo = parseDate(searchParams.get('to'), defaultTo);
+
+    filter.update(() => ({
+      from: currentFrom,
+      to: currentTo,
+    }));
+
+    return p;
+  });
+};

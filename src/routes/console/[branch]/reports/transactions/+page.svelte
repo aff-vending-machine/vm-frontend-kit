@@ -2,21 +2,19 @@
   import { onMount } from 'svelte';
   import Card from '$components/sections/cards/Card.svelte';
   import Table from '$components/elements/tables/Table.svelte';
-  import { filter } from '../transactions/filter';
+  import { bindFilter, filter } from './filter';
   import { reportColumns } from './(__table__)/table';
   import { t } from '$lib/i18n/translations';
   import Filter from './Filter.svelte';
   import Action from './Action.svelte';
   import type { TransactionReport } from '$types/report';
   import useSWR from '$lib/stores/useSWR';
-  import { page } from '$app/stores';
   import overlay from '$lib/stores/overlay';
   import { exportCSV, exportXlsx } from '$lib/utils/export';
   import { convertToDate } from '$lib/utils/convert';
   import Modal from '$components/overlays/modals/Modal.svelte';
   import Export from '../(__modal__)/Export.svelte';
   import SummaryRow from './(__table__)/SummaryRow.svelte';
-  import { goto } from '$app/navigation';
 
   export let data;
   let transactions = useSWR<TransactionReport[]>();
@@ -25,22 +23,9 @@
   $: source = $transactions.data || [];
 
   onMount(() => {
-    const unsubscribe = page.subscribe(async p => {
-      let mid = $filter.machineId;
-      if (mid === 0 || data.options.machines.every(m => m.value !== mid)) {
-        mid = data.options.machines[0].value;
-        filter.update(f => ({ ...f, machineId: mid }));
-
-        const params = new URLSearchParams($page.url.searchParams);
-        params.set('machine_id', mid.toString());
-        params.sort();
-
-        await goto(`?${params.toString()}`, { keepFocus: true, invalidateAll: true });
-      } else {
-        transactions.mutate(() => data.fetch.transactions(mid));
-      }
-
-      return p;
+    const machineIds = data.options.machines.map(m => m.value);
+    const unsubscribe = bindFilter(machineIds, id => {
+      return transactions.mutate(() => data.fetch.transactions(id));
     });
 
     return () => {

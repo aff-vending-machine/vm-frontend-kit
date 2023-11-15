@@ -8,7 +8,7 @@
   import ShareFilterSelection from '$components/shares/ShareFilterSelection.svelte';
   import SharePagination from '$components/shares/SharePagination.svelte';
   import Table from '$components/elements/tables/Table.svelte';
-  import { filter } from './filter';
+  import { bindFilter, filter } from './filter';
   import { columns } from './(__table__)/_table';
 
   export let data;
@@ -21,7 +21,13 @@
     drawer.open();
   }
 
-  onMount(filter.mutate);
+  onMount(() => {
+    const unsubscribe = bindFilter(data.count);
+
+    return () => {
+      unsubscribe();
+    };
+  });
 </script>
 
 <Card let:Content>

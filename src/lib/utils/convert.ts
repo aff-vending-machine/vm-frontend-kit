@@ -21,11 +21,16 @@ export const convertToQuery = (obj: Record<string, string>) => {
     }, {});
 };
 
-export const toDate = (str: string | null, _default: Date): Date => {
+export const parseDate = (str: string | null, _default: Date): Date => {
   if (!str || !isIsoDate(str)) return _default;
   try {
     return new Date(str);
   } catch (e) {
     return _default;
   }
+};
+
+export const parseBoolean = (str: string | null, _default: boolean = false): boolean => {
+  if (!str || !(str === 'true' || str === 'false')) return _default;
+  return str === 'true';
 };

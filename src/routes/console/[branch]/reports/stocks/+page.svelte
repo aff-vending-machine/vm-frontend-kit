@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import Card from '$components/sections/cards/Card.svelte';
   import Table from '$components/elements/tables/Table.svelte';
-  import { filter } from './filter';
+  import { bindFilter, filter } from './filter';
   import { regroupData, reportColumns } from './(__table__)/_table';
   import SummaryRow from './(__table__)/SummaryRow.svelte';
   import { t } from '$lib/i18n/translations';
@@ -13,9 +13,7 @@
   import Export from '../(__modal__)/Export.svelte';
   import { exportCSV, exportXlsx } from '$lib/utils/export';
   import useSWR from '$lib/stores/useSWR';
-  import { page } from '$app/stores';
   import overlay from '$lib/stores/overlay';
-  import { goto } from '$app/navigation';
 
   export let data;
   let stocks = useSWR<StockReport[]>();
@@ -24,22 +22,9 @@
   $: source = regroupData($stocks.data || [], $filter.group);
 
   onMount(() => {
-    const unsubscribe = page.subscribe(async p => {
-      let mid = $filter.machineId;
-      if (mid === 0 || data.options.machines.every(m => m.value !== mid)) {
-        mid = data.options.machines[0].value;
-        filter.update(f => ({ ...f, machineId: mid }));
-
-        const params = new URLSearchParams($page.url.searchParams);
-        params.set('machine_id', mid.toString());
-        params.sort();
-
-        await goto(`?${params.toString()}`, { keepFocus: true, invalidateAll: true });
-      } else {
-        stocks.mutate(() => data.fetch.stocks(mid));
-      }
-
-      return p;
+    const machineIds = data.options.machines.map(m => m.value);
+    const unsubscribe = bindFilter(machineIds, id => {
+      return stocks.mutate(() => data.fetch.stocks(id));
     });
 
     return () => {

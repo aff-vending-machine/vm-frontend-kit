@@ -1,7 +1,7 @@
 import { MachineService } from '$lib/services/machine';
 import { ReportService } from '$lib/services/report';
 import { isIsoDate } from '$lib/utils/check';
-import { defaultForm, defaultTo } from './filter';
+import { defaultForm, defaultTo } from '$lib/utils/generate';
 
 export async function load({ url, parent }) {
   const fetchStocks = async (machineId: number) => {
@@ -15,7 +15,7 @@ export async function load({ url, parent }) {
     if (!query.has('from')) query.set('from', defaultForm.toISOString());
     if (!query.has('to')) query.set('to', defaultTo.toISOString());
 
-    query.delete('id');
+    query.delete('machine_id');
     query.sort();
 
     const stocks = await reportAPI.stocks(machineId, query.toString());
@@ -33,6 +33,7 @@ export async function load({ url, parent }) {
     const { branch_id } = await parent();
     const query = new URLSearchParams();
     if (branch_id > 0) query.set('branch_id', branch_id.toString());
+
     const machines = await machineAPI.find(query.toString());
     return machines.map(m => ({ label: m.name, value: m.id }));
   };

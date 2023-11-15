@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import Card from '$components/sections/cards/Card.svelte';
   import Table from '$components/elements/tables/Table.svelte';
-  import { filter } from './filter';
+  import { bindFilter, filter } from './filter';
   import { reportColumns } from './(__table__)/_table';
   import { t } from '$lib/i18n/translations';
   import Filter from './Filter.svelte';
@@ -12,7 +12,7 @@
 
   export let data;
 
-  onMount(filter.mutate);
+  $: columns = reportColumns($t);
 
   function handleAction(e: CustomEvent) {
     const type = e.detail?.type || 'transactions';
@@ -24,7 +24,13 @@
     goto(`/console/${$page.params.branch}/reports/${type}?${params.toString()}`);
   }
 
-  $: columns = reportColumns($t);
+  onMount(() => {
+    const unsubscribe = bindFilter();
+
+    return () => {
+      unsubscribe();
+    };
+  });
 </script>
 
 <Card let:Content let:Header>

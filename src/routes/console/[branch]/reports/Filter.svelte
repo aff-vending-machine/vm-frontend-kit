@@ -9,42 +9,28 @@
 
   import 'dayjs/locale/th';
 
-  export let from: string;
-  export let to: string;
-
   dayjs.extend(utc);
   dayjs.extend(timezone);
   dayjs.extend(relativeTime);
   dayjs.extend(localizedFormat);
   dayjs.tz.setDefault('Asia/Bangkok');
 
-  const today = dayjs(new Date());
+  export let from: Date;
+  export let to: Date;
 
-  if (from === '')
-    from = today
-      .set('millisecond', 0)
-      .set('second', 0)
-      .set('minute', 0)
-      .set('hour', 21)
-      .subtract(1, 'day')
-      .toISOString();
-  if (to === '') to = today.set('millisecond', 0).set('second', 0).set('minute', 0).set('hour', 21).toISOString();
-
-  $: startDateTime = dayjs(from).toDate();
-  $: endDateTime = dayjs(to).toDate();
-  $: localeTime = $locale.split('-')[0];
+  $: localeTime = $locale.split('-')[0] ?? 'th';
 </script>
 
-<div class="mb-2 flex flex-col sm:space-x-2 md:flex-row">
-  <ShareFilterDateTime key="from" label={$t('common.field.start-date')} bind:value={startDateTime} />
-  <ShareFilterDateTime key="to" label={$t('common.field.end-date')} bind:value={endDateTime} />
+<div class="mb-4 flex flex-col space-x-0 space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+  <ShareFilterDateTime key="from" label={$t('common.field.start-date')} bind:value={from} />
+  <ShareFilterDateTime key="to" label={$t('common.field.end-date')} bind:value={to} />
 </div>
 <div class="flex justify-end">
   <sub class="text-xs">
     *{$t('common.field.report_from')}
-    <span class="text-secondary-700">{dayjs(startDateTime).locale(localeTime).format('LLLL')}</span>
+    <span class="text-secondary-700">{dayjs(from).locale(localeTime).format('LLLL')}</span>
     {$t('common.field.report_to')}
-    <span class="text-secondary-700">{dayjs(endDateTime).locale(localeTime).format('LLLL')}</span>
-    ({dayjs(startDateTime).locale(localeTime).from(dayjs(endDateTime), true)})
+    <span class="text-secondary-700">{dayjs(to).locale(localeTime).format('LLLL')}</span>
+    ({dayjs(from).locale(localeTime).from(dayjs(to), true)})
   </sub>
 </div>

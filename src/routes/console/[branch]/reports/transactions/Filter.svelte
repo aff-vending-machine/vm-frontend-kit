@@ -13,8 +13,10 @@
 
   export let from: Date;
   export let to: Date;
-  export let channel_id: number;
+  export let channelId: number;
   export let channelOptions: SelectOptionsType[];
+  export let machineId: number;
+  export let machineOptions: SelectOptionsType[];
 
   dayjs.extend(utc);
   dayjs.extend(timezone);
@@ -24,12 +26,18 @@
 </script>
 
 <div class="mb-4 flex flex-col space-x-0 space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+  <ShareFilterSelection
+    key="machine_id"
+    label={$t('common.field.machine')}
+    value={machineId}
+    options={machineOptions}
+  />
   <ShareFilterDateTime key="from" label={$t('common.field.start-date')} value={from} />
   <ShareFilterDateTime key="to" label={$t('common.field.end-date')} value={to} />
   <ShareFilterSelection
     key="channel_id"
-    label={$t('common.field.group-product')}
-    value={channel_id}
+    label={$t('common.field.payment-channel')}
+    value={channelId}
     options={channelOptions}
     unselected={0}
     placeholder="All Payments"

@@ -7,7 +7,7 @@ export const isTablet = writable(false);
 export const isDesktop = writable(false);
 
 windowWidth.subscribe(w => {
-  isMobile.set(w <= 680); // xs
-  isTablet.set(w > 680 && w < 1280); // sm, md, lg
+  isMobile.set(w <= 640); // xs
+  isTablet.set(w > 640 && w < 1280); // sm, md, lg
   isDesktop.set(w > 1280); // xl
 });

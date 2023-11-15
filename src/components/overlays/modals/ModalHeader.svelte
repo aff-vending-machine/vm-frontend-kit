@@ -7,10 +7,7 @@
 </script>
 
 <div class="flex w-full items-center border-b border-gray-300 bg-gray-200 p-6">
-  <button
-    class="mr-4 flex h-8 w-8 items-center justify-center rounded-full bg-white text-center"
-    on:click={drawer.close}
-  >
+  <button class="mr-4 flex items-center justify-center rounded-full text-center" on:click={drawer.close}>
     <Icon icon="mdi:close" class="h-5 w-5 hover:text-red-500" />
   </button>
   <div class="flex flex-1 flex-col">

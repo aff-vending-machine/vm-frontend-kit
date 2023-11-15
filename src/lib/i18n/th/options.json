@@ -1,0 +1,23 @@
+{
+  "stock": {
+    "all": "ทั้งหมด",
+    "avaialble": "ยังมีอยู่",
+    "out-of-stocks": "หมดแล้ว",
+    "less-than-20": "น้อยกว่า 20%",
+    "full-stocks": "เต็ม"
+  },
+  "status": {
+    "all": "ทั้งหมด",
+    "enable": "เปิดใช้งาน",
+    "disable": "ปิด"
+  },
+  "changed": {
+    "all": "ทั้งหมด",
+    "changed": "มีการแก้ไข",
+    "not-changed": "ไม่มีการแก้ไข"
+  },
+  "export": {
+    "excel": "ไฟล์ Excel",
+    "csv": "ไฟล์ CSV"
+  }
+}

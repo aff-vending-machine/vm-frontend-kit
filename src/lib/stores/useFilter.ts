@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 
 export type FilterUpdate<T> = (filter: T, params: URLSearchParams) => T;
 
-export function useFilter<T>(init: T, updater: FilterUpdate<T>) {
+export function useFilter<T>(init: T, updater: FilterUpdate<T> = f => f) {
   const filter = writable<T>(init);
 
   const reload = (updater: FilterUpdate<T>) => {

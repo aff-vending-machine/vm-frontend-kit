@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { login, swr } from '$lib/actions/login.js';
+  import { login, swr } from './actions.js';
   import { onMount } from 'svelte';
 
   export let data;

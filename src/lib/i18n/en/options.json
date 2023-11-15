@@ -1,0 +1,23 @@
+{
+  "stock": {
+    "all": "All",
+    "avaialble": "Available",
+    "out-of-stocks": "Out of stocks",
+    "less-than-20": "Stock ≤ 20%",
+    "full-stocks": "Full Stocks"
+  },
+  "status": {
+    "all": "All",
+    "enable": "Enable",
+    "disable": "Disable"
+  },
+  "changed": {
+    "all": "All",
+    "changed": "Changed",
+    "not-changed": "Not changed"
+  },
+  "export": {
+    "excel": "Excel File",
+    "csv": "CSV File"
+  }
+}

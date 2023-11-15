@@ -4,7 +4,8 @@ import dayjs from 'dayjs';
 
 type FilterType = {
   id: number;
-  channel_id: number;
+  machineId: number;
+  channelId: number;
   from: Date;
   to: Date;
 };
@@ -16,7 +17,8 @@ export const defaultTo = date.toDate();
 const updater = (f: FilterType, params: URLSearchParams) => {
   return {
     id: parseInt(params.get('id') ?? '0') ?? f.id,
-    channel_id: parseInt(params.get('channel_id') ?? '0') ?? f.channel_id,
+    machineId: parseInt(params.get('machine_id') ?? '0'),
+    channelId: parseInt(params.get('channel_id') ?? '0') ?? f.channelId,
     from: toDate(params.get('from'), defaultForm),
     to: toDate(params.get('to'), defaultTo),
   };
@@ -25,7 +27,8 @@ const updater = (f: FilterType, params: URLSearchParams) => {
 export const filter = useFilter<FilterType>(
   {
     id: 0,
-    channel_id: 0,
+    machineId: 0,
+    channelId: 0,
     from: defaultForm,
     to: defaultTo,
   },

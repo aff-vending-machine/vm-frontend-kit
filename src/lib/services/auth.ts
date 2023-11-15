@@ -34,7 +34,7 @@ export class AuthService {
 
       const result = parseJWT(data.access_token);
       return Promise.resolve(result);
-    } catch (e: unknown) {
+    } catch (e) {
       storage(ACCESS_TOKEN, null);
       storage(REFRESH_TOKEN, null);
       storage(AUTHENTICATED_REMEMBERED, null);

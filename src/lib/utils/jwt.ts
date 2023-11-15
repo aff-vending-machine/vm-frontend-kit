@@ -32,6 +32,7 @@ export const getAccessToken = async (): Promise<string> => {
   try {
     const accessToken = storage(ACCESS_TOKEN);
     const refreshToken = storage(REFRESH_TOKEN);
+
     if (!accessToken) {
       return Promise.reject('no access token');
     }

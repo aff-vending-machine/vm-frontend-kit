@@ -17,7 +17,7 @@
   <select
     {id}
     name={id}
-    {disabled}
+    disabled={disabled || (!unselected && options.length === 1)}
     bind:value
     on:change
     class="w-full rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700 sm:w-[calc(100%+24px)]"

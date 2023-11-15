@@ -7,22 +7,81 @@
   import { t } from '$lib/i18n/translations';
   import Filter from './Filter.svelte';
   import Action from './Action.svelte';
+  import type { TransactionReport } from '$types/report';
+  import useSWR from '$lib/stores/useSWR';
+  import { page } from '$app/stores';
+  import overlay from '$lib/stores/overlay';
+  import { exportCSV, exportXlsx } from '$lib/utils/export';
+  import { convertToDate } from '$lib/utils/convert';
+  import Modal from '$components/overlays/modals/Modal.svelte';
+  import Export from '../(__modal__)/Export.svelte';
+  import SummaryRow from './(__table__)/SummaryRow.svelte';
+  import { goto } from '$app/navigation';
 
   export let data;
+  let transactions = useSWR<TransactionReport[]>();
 
   $: columns = reportColumns($t);
+  $: source = $transactions.data || [];
 
-  onMount(filter.mutate);
+  onMount(() => {
+    const unsubscribe = page.subscribe(async p => {
+      let mid = $filter.machineId;
+      if (mid === 0 || data.options.machines.every(m => m.value !== mid)) {
+        mid = data.options.machines[0].value;
+        filter.update(f => ({ ...f, machineId: mid }));
+
+        const params = new URLSearchParams($page.url.searchParams);
+        params.set('machine_id', mid.toString());
+        params.sort();
+
+        await goto(`?${params.toString()}`, { keepFocus: true, invalidateAll: true });
+      } else {
+        transactions.mutate(() => data.fetch.transactions(mid));
+      }
+
+      return p;
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  });
+
+  function toTransactionReportFile(transaction: TransactionReport) {
+    transaction.ordered_at = convertToDate(transaction.ordered_at);
+    transaction.payment_requested_at = convertToDate(transaction.payment_requested_at);
+    transaction.confirmed_paid_at = convertToDate(transaction.confirmed_paid_at);
+    transaction.received_item_at = convertToDate(transaction.received_item_at);
+
+    return transaction;
+  }
+
+  function handleDownload(e: CustomEvent) {
+    overlay.close();
+    const { filename, application } = e.detail;
+    const data = source.map(toTransactionReportFile);
+    switch (application) {
+      case 'csv':
+        return exportCSV(filename, data);
+
+      case 'xlsx':
+        return exportXlsx(filename, data);
+    }
+  }
 </script>
 
 <Card let:Content let:Header>
   <Content>
     <Header>Search Filter</Header>
-    {#await data.options.channel}
-      <div>loading</div>
-    {:then options}
-      <Filter from={$filter.from} to={$filter.to} channel_id={$filter.channel_id} channelOptions={options} />
-    {/await}
+    <Filter
+      from={$filter.from}
+      to={$filter.to}
+      channelId={$filter.channelId}
+      channelOptions={data.options.channel}
+      machineId={$filter.machineId}
+      machineOptions={data.options.machines}
+    />
   </Content>
   <Content>
     <Action />
@@ -30,16 +89,28 @@
   <Content>
     <Table let:Loading let:Header let:Body let:Footer>
       <Header {columns} />
-      {#await data.fetch.transactions()}
+      {#if $transactions.loading}
         <Loading {columns} />
-      {:then source}
+      {:else if $transactions.error}
+        <div>{$transactions.error}</div>
+      {:else}
         <Body {columns} {source} />
-      {:catch error}
-        <div>{error.message}</div>
-      {/await}
-      <Footer>
-        <!-- <SummaryRow {columns} data={source} /> -->
-      </Footer>
+        <Footer>
+          <SummaryRow {columns} {source} />
+        </Footer>
+      {/if}
     </Table>
   </Content>
 </Card>
+
+<Modal let:Body>
+  <Body>
+    <Export
+      name={data.options.machines.find(m => m.value === $filter.machineId)?.label ?? ''}
+      report="transactions"
+      from={$filter.from}
+      to={$filter.to}
+      on:download={handleDownload}
+    />
+  </Body>
+</Modal>

@@ -45,7 +45,7 @@
 
 <button
   class={`
-    inline-flex items-center justify-center border px-4 py-2 text-sm font-medium shadow-sm outline-none
+    inline-flex items-center justify-center border px-4 py-2 text-xs font-medium shadow-sm outline-none
     disabled:cursor-not-allowed disabled:opacity-50 
     ${buttonClasses()} ${$$props.class || ''}
   `}

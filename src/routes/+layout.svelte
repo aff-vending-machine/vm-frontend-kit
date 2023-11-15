@@ -5,20 +5,17 @@
   import { onMount } from 'svelte';
   import language from '$lib/stores/language';
   import { windowWidth } from '$lib/stores/media';
-  import { loading } from '$lib/stores/loading';
-  import { loadTranslations, loading as tloading } from '$lib/i18n/translations';
-  import { navigating, page } from '$app/stores';
+  import { loadTranslations, loading } from '$lib/i18n/translations';
+  import { page } from '$app/stores';
   import '../app.css';
-
-  $: loading.setNavigate(!!$navigating);
 
   onMount(() => {
     const unsubLanguage = language.subscribe(lang => {
       loadTranslations(lang, $page.url.pathname);
     });
 
-    const unsubLoading = tloading.subscribe(async $tloading => {
-      if ($tloading) await tloading.toPromise();
+    const unsubLoading = loading.subscribe(async $loading => {
+      if ($loading) await loading.toPromise();
     });
 
     return () => {

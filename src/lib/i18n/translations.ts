@@ -34,6 +34,16 @@ const config = {
     },
     {
       locale: 'en',
+      key: 'options',
+      loader: async () => (await import('./en/options.json')).default,
+    },
+    {
+      locale: 'th',
+      key: 'options',
+      loader: async () => (await import('./th/options.json')).default,
+    },
+    {
+      locale: 'en',
       key: 'sidebar',
       loader: async () => (await import('./en/sidebar.json')).default,
     },

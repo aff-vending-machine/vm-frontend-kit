@@ -2,7 +2,7 @@
   import Header from './DrawerHeader.svelte';
   import Body from './DrawerBody.svelte';
   import Footer from './DrawerFooter.svelte';
-  import drawer from '$lib/stores/drawer';
+  import drawer from '$lib/stores/overlay';
   import { fade, slide } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
 </script>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Machine } from '$types/machine';
-  import drawer from '$lib/stores/drawer';
+  import drawer from '$lib/stores/overlay';
   import { viewOptions } from '$lib/utils/options';
   import Card from '$components/sections/cards/Card.svelte';
   import Drawer from '$components/overlays/drawers/Drawer.svelte';

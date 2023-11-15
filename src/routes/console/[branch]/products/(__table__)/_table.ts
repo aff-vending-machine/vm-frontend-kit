@@ -1,5 +1,6 @@
 import type { ColumnType } from '$components/elements/tables/@table';
-import Title from '../(__table__)/Title.svelte';
+import Title from './Title.svelte';
+import Actions from './Actions.svelte';
 
 export const columns: ColumnType[] = [
   {
@@ -20,12 +21,18 @@ export const columns: ColumnType[] = [
     key: 'image_url',
     title: 'image',
     type: 'image',
-    responsive: 'tablet',
+    responsive: 'tablet|desktop',
   },
   {
-    key: 'price',
+    key: 'sale_price',
     title: 'price',
     type: 'currency',
     sortable: true,
+  },
+  {
+    key: 'actions',
+    title: 'actions',
+    type: 'component',
+    render: () => Actions,
   },
 ];

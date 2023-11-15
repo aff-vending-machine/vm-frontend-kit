@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { CatalogProduct } from '$types/catalog_product';
 
+  // ignored data
+  export let index: number;
+  $: _ = index;
+
   export let source: CatalogProduct;
 </script>
 

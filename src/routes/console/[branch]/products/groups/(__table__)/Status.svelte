@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { CatalogGroup } from '$types/catalog_group';
 
+  // ignored data
+  export let index: number;
+  $: _ = index;
+
   export let source: CatalogGroup;
 </script>
 

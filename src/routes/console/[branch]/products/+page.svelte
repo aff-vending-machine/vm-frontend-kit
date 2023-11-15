@@ -1,20 +1,17 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { CatalogProduct } from '$types/catalog_product';
-  import drawer from '$lib/stores/drawer';
-  import { viewOptions } from '$lib/utils/options';
-  import Button from '$components/elements/buttons/Button.svelte';
+  import drawer from '$lib/stores/overlay';
   import Card from '$components/sections/cards/Card.svelte';
   import Drawer from '$components/overlays/drawers/Drawer.svelte';
-  import ShareFilterSelection from '$components/shares/ShareFilterSelection.svelte';
   import SharePagination from '$components/shares/SharePagination.svelte';
   import Table from '$components/elements/tables/Table.svelte';
-  import { filter } from './filter';
+  import { filter, bindFilter } from './filter';
   import { columns } from './(__table__)/_table';
+  import Filter from './Filter.svelte';
+  import Action from './Action.svelte';
 
   export let data;
-
-  onMount(filter.mutate);
 
   let selectedProduct: CatalogProduct;
 
@@ -23,38 +20,35 @@
     selectedProduct = value;
     drawer.open();
   }
+
+  onMount(() => {
+    const unsubscribe = bindFilter(data.count);
+
+    return () => {
+      unsubscribe();
+    };
+  });
 </script>
 
 <Card let:Content>
   <Content>
     <h3 class="mb-2 font-semibold">Filter</h3>
-    <div class="mx-2 flex flex-col sm:flex-row sm:space-x-2">
-      <ShareFilterSelection key="limit" label="view" options={viewOptions} value={$filter.limit} />
-      <ShareFilterSelection
-        key="group_id"
-        label="Group"
-        placeholder="All Groups"
-        unselected={0}
-        options={data.options?.groups || []}
-        value={$filter.group_id}
-      />
-      <div class="flex-1" />
-      <Button class="">Create Product</Button>
-    </div>
+    <Filter limit={$filter.limit} groupId={$filter.groupId} groupOptions={data.options.groups} />
   </Content>
   <Content>
-    <Table let:Header let:Footer let:Body>
+    <Action />
+  </Content>
+  <Content>
+    <Table let:Loading let:Header let:Footer let:Body>
       <Header {columns} />
-      {#if data.products}
-        <Body {columns} source={data.products} on:select={handleAction} />
-      {/if}
-      <Footer>
-        <SharePagination limit={$filter.limit} colspan={columns.length} count={data.count} />
-      </Footer>
-
-      {#if data.error}
-        <div>{data.error.message}</div>
-      {/if}
+      {#await data.fetch.products()}
+        <Loading {columns} />
+      {:then source}
+        <Body {columns} {source} on:select={handleAction} />
+        <Footer>
+          <SharePagination limit={$filter.limit} page={$filter.page} colspan={columns.length} count={data.count} />
+        </Footer>
+      {/await}
     </Table>
   </Content>
 </Card>

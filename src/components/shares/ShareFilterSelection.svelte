@@ -13,7 +13,7 @@
 
   async function changeValue(event: Event) {
     const newValue = (event.target as HTMLSelectElement).value;
-    const params = $page.url.searchParams;
+    const params = new URLSearchParams($page.url.searchParams);
 
     if (newValue === '0') params.delete(key);
     else params.set(key, newValue);

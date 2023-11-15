@@ -1,5 +1,4 @@
-import { convertToAnyDate, convertToDate } from '$lib/utils/convert';
-import type { StoreBranch } from './branch';
+import type { StoreBranch } from './store_branch';
 import type { AccountRole } from './account_role';
 
 export type AccountUser = {
@@ -29,12 +28,4 @@ export type ChangeRole = {
 export type ChangePassword = {
   old_password: string;
   new_password: string;
-};
-
-export const parseAccountUser = (user: AccountUser) => {
-  user.created_at = convertToDate(user.created_at);
-  user.updated_at = convertToDate(user.updated_at);
-  user.last_login = convertToAnyDate(user.last_login);
-
-  return user;
 };

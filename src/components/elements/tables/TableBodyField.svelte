@@ -3,6 +3,7 @@
   import Image from '$components/elements/images/Image.svelte';
   import Currency from '$components/elements/labels/Currency.svelte';
   import Number from '$components/elements/labels/Number.svelte';
+  import dayjs from 'dayjs';
   import type { TableFieldType } from './@table';
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -22,7 +23,7 @@
 {:else if type === 'currency'}
   <Currency amount={value} />
 {:else if type === 'date'}
-  <time>{value}</time>
+  <time>{dayjs(value).format('DD MMM YYYY HH:mm:ss')}</time>
 {:else if type === 'array'}
   <span>{value.join(', ')}</span>
 {:else}

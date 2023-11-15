@@ -1,4 +1,3 @@
-import { convertToDate } from '$lib/utils/convert';
 import type { CatalogProduct } from './catalog_product';
 
 export type CatalogGroup = {
@@ -21,11 +20,4 @@ export type UpdateCatalogGroup = {
   name?: string;
   description?: string;
   is_enable?: boolean;
-};
-
-export const parseCatalogGroup = (group: CatalogGroup) => {
-  group.created_at = convertToDate(group.created_at);
-  group.updated_at = convertToDate(group.updated_at);
-
-  return group;
 };

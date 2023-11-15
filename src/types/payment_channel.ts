@@ -1,5 +1,3 @@
-import { convertToDate } from '$lib/utils/convert';
-
 export type PaymentChannel = {
   id: number;
   created_at: Date;
@@ -50,11 +48,4 @@ export type UpdatePaymentChannel = {
 
 export type ChangePaymentChannelStatus = {
   is_enable: boolean;
-};
-
-export const parsePaymentChannel = (channel: PaymentChannel) => {
-  channel.created_at = convertToDate(channel.created_at);
-  channel.updated_at = convertToDate(channel.updated_at);
-
-  return channel;
 };

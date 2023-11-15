@@ -1,4 +1,5 @@
 import { CRUDService } from '$lib/utils/base/api_1st';
+import { convertToDate } from '$lib/utils/convert';
 import type { CatalogGroup } from '$types/catalog_group';
 
 const ROOT_PATH = 'groups';
@@ -16,4 +17,11 @@ export class CatalogGroupService extends CRUDService<CatalogGroup> {
   private constructor(PATH: string) {
     super(PATH);
   }
+
+  protected remap = (data: CatalogGroup) => {
+    data.created_at = convertToDate(data.created_at);
+    data.updated_at = convertToDate(data.updated_at);
+
+    return data;
+  };
 }

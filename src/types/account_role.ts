@@ -1,5 +1,3 @@
-import { convertToDate } from '$lib/utils/convert';
-
 export type AccountRole = {
   id: number;
   created_at: Date;
@@ -20,11 +18,4 @@ export type CreateAccountRole = {
 
 export type UpdateAccountRole = {
   permissions?: Permission[];
-};
-
-export const parseAccountRole = (role: AccountRole) => {
-  role.created_at = convertToDate(role.created_at);
-  role.updated_at = convertToDate(role.updated_at);
-
-  return role;
 };

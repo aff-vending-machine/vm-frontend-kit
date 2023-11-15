@@ -50,14 +50,6 @@ export type CartItem = {
   received: number;
 };
 
-export const parseMachineReport = (machine: MachineReport) => {
-  return machine;
-};
-
-export const parseStockReport = (stock: StockReport) => {
-  return stock;
-};
-
 export const parseStockReportCSV = (stock: StockReport) => {
   return {
     code: stock.code,
@@ -68,15 +60,6 @@ export const parseStockReportCSV = (stock: StockReport) => {
     promptpay: stock.total_payments['promptpay'] || 0,
     total_price: stock.total_price,
   };
-};
-
-export const parseTransactionReport = (transaction: TransactionReport) => {
-  transaction.ordered_at = convertToDate(transaction.ordered_at);
-  transaction.payment_requested_at = convertToDate(transaction.payment_requested_at);
-  transaction.confirmed_paid_at = convertToDate(transaction.confirmed_paid_at);
-  transaction.received_item_at = convertToDate(transaction.received_item_at);
-
-  return transaction;
 };
 
 export const parseTransactionReportCSV = (transaction: TransactionReport) => {

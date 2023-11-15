@@ -14,7 +14,7 @@
   });
 </script>
 
-<thead class="sticky -top-4 start-0 z-10 bg-primary-50">
+<thead class="sticky -top-4 start-0 bg-primary-50">
   <tr>
     {#each fillterdColumns as column}
       <TableHeaderField {column} />

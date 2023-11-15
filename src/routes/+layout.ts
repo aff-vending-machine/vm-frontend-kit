@@ -5,6 +5,7 @@ import { loadTranslations } from '$lib/i18n/translations';
 import { genError } from '$lib/utils/generate.js';
 
 export const ssr = false;
+export const prerender = true;
 
 const authService = AuthService.getInstance();
 

@@ -35,7 +35,7 @@
   $: localeTime = $locale.split('-')[0];
 </script>
 
-<div class="mb-2 flex flex-row space-x-2 sm:flex-col">
+<div class="mb-2 flex flex-col sm:space-x-2 md:flex-row">
   <ShareFilterDateTime key="from" label={$t('common.field.start-date')} bind:value={startDateTime} />
   <ShareFilterDateTime key="to" label={$t('common.field.end-date')} bind:value={endDateTime} />
 </div>

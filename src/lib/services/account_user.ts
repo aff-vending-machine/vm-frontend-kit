@@ -1,5 +1,6 @@
 import api from '$lib/api';
 import { CRUDService } from '$lib/utils/base/api_1st';
+import { convertToDate, convertToAnyDate } from '$lib/utils/convert';
 import { genError } from '$lib/utils/generate';
 import { getAccessToken } from '$lib/utils/jwt';
 import type { ChangePassword, ChangeRole, AccountUser } from '$types/account_user';
@@ -19,6 +20,14 @@ export class UserService extends CRUDService<AccountUser> {
   private constructor(PATH: string) {
     super(PATH);
   }
+
+  protected remap = (data: AccountUser) => {
+    data.created_at = convertToDate(data.created_at);
+    data.updated_at = convertToDate(data.updated_at);
+    data.last_login = convertToAnyDate(data.last_login);
+
+    return data;
+  };
 
   // ChangeRole // POST 	{users/:id/change-role}
   async changeRoleByID(id: number, payload: ChangeRole): Promise<void> {

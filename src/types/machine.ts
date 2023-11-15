@@ -1,4 +1,4 @@
-import type { StoreBranch } from './branch';
+import type { StoreBranch } from './store_branch';
 import type { MachineSlot } from './machine_slot';
 
 export type Machine = {

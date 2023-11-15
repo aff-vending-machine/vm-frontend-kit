@@ -1,4 +1,3 @@
-import { convertToDate } from '$lib/utils/convert';
 import type { CatalogProduct } from './catalog_product';
 
 export type MachineSlot = {
@@ -36,10 +35,3 @@ export type BulkUpdateMachineSlot = {
   capacity?: number;
   is_enable?: boolean;
 }[];
-
-export const parseMachineSlot = (slot: MachineSlot) => {
-  slot.created_at = convertToDate(slot.created_at);
-  slot.updated_at = convertToDate(slot.updated_at);
-
-  return slot;
-};

@@ -1,6 +1,6 @@
 import { SELECT_BRANCH_ID, SELECT_MACHINE_ID } from '$lib/constants';
 import { storage } from '$lib/utils/local-storage';
-import type { StoreBranch } from '$types/branch';
+import type { StoreBranch } from '$types/store_branch';
 import type { Machine } from '$types/machine';
 import { writable, type Writable } from 'svelte/store';
 

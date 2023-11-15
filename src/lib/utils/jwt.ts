@@ -3,7 +3,8 @@ import { ACCESS_TOKEN, REFRESH_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN_PA
 import type { HttpError_1 } from '@sveltejs/kit';
 import { isExpired } from './check';
 import { storage } from './local-storage';
-import { parseTokenData, type AccessStore } from '$types/access';
+import type { AccessStore } from '$types/access';
+import { convertToDate } from './convert';
 
 export const parseJWT = (token: string): AccessStore => {
   if (!token && token.indexOf('.') < 0) {
@@ -21,7 +22,10 @@ export const parseJWT = (token: string): AccessStore => {
   );
 
   const tokenData = JSON.parse(jsonPayload) as AccessStore;
-  return parseTokenData(tokenData);
+  tokenData.iat = convertToDate(tokenData.iat);
+  tokenData.exp = convertToDate(tokenData.exp);
+
+  return tokenData;
 };
 
 export const getAccessToken = async (): Promise<string> => {

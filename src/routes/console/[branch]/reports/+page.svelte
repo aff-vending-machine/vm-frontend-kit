@@ -9,7 +9,6 @@
   import Filter from './Filter.svelte';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import { forceUpdate } from '$lib/utils/debounce';
   import { filterColumns } from '$lib/utils/check';
 
   export let data;
@@ -26,6 +25,7 @@
     goto(`/console/${$page.params.branch}/reports/${type}?${params.toString()}`);
   }
 
+  $: loading = !data.summary && !data.error;
   $: columns = filterColumns(reportColumns($t));
   $: totalCreditCard = data.summary?.reduce((total, row) => total + row.total_payments['creditcard'], 0);
   $: totalPromptPay = data.summary?.reduce((total, row) => total + row.total_payments['promptpay'], 0);
@@ -38,19 +38,14 @@
     <Filter from={$filter.from} to={$filter.to} />
   </Content>
   <Content>
-    <Table let:Header let:Footer let:Body>
+    <Table let:Header let:Footer let:Body let:Loading>
       <Header {columns} />
-
-      {#if !data.summary && !data.error}
-        <div>Loading</div>
+      {#if loading}
+        <Loading {columns} />
       {/if}
-
-      {#await forceUpdate(data.summary) then _}
-        {#if data.summary}
-          <Body {columns} source={data.summary} on:select={handleAction} />
-        {/if}
-      {/await}
-
+      {#if data.summary}
+        <Body {columns} source={data.summary} on:select={handleAction} />
+      {/if}
       {#if data.error}
         <div>{data.error.message}</div>
       {/if}

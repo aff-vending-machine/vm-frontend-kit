@@ -20,7 +20,7 @@
     {disabled}
     bind:value
     on:change
-    class="w-[calc(100%+24px)] min-w-[48px] rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700"
+    class="w-full rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700 sm:w-[calc(100%+24px)]"
   >
     {#if unselected !== undefined}
       <option class="text-gray-500" value={unselected}>{placeholder}</option>

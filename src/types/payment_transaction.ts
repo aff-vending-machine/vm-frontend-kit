@@ -1,5 +1,4 @@
-import { convertToDate, convertToAnyDate } from '$lib/utils/convert';
-import type { StoreBranch } from './branch';
+import type { StoreBranch } from './store_branch';
 import type { Machine } from './machine';
 import type { PaymentChannel } from './payment_channel';
 
@@ -37,18 +36,4 @@ export type PaymentTransaction = {
   is_error: boolean;
   error?: string;
   error_at?: Date;
-};
-
-export const parsePaymentTransaction = (payment: PaymentTransaction) => {
-  payment.created_at = convertToDate(payment.created_at);
-  payment.updated_at = convertToDate(payment.updated_at);
-  payment.ordered_at = convertToDate(payment.ordered_at);
-  payment.payment_requested_at = convertToAnyDate(payment.payment_requested_at);
-  payment.cancelled_at = convertToAnyDate(payment.cancelled_at);
-  payment.confirmed_paid_at = convertToAnyDate(payment.confirmed_paid_at);
-  payment.refund_at = convertToAnyDate(payment.refund_at);
-  payment.received_item_at = convertToAnyDate(payment.received_item_at);
-  payment.error_at = convertToAnyDate(payment.error_at);
-
-  return payment;
 };

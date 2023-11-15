@@ -8,11 +8,14 @@ export abstract class CRUDService<T> {
     private SUB_PATH: string,
   ) {}
 
+  protected abstract remap: (data: T) => T;
+
   async find(root_id: number, query?: string): Promise<T[]> {
     try {
       const token = await getAccessToken();
       const data = await api.get<T[]>(`${this.ROOT_PATH}/${root_id}/${this.SUB_PATH}`, { query, token });
-      return Promise.resolve<T[]>(data);
+      const result = data.map(this.remap);
+      return Promise.resolve<T[]>(result);
     } catch (e) {
       return Promise.reject(genError(e));
     }
@@ -32,7 +35,8 @@ export abstract class CRUDService<T> {
     try {
       const token = await getAccessToken();
       const data = await api.get<T>(`${this.ROOT_PATH}/${root_id}/${this.SUB_PATH}/${id}`, { token });
-      return Promise.resolve<T>(data);
+      const result = this.remap(data);
+      return Promise.resolve<T>(result);
     } catch (e) {
       return Promise.reject(genError(e));
     }

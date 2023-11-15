@@ -2,24 +2,19 @@
   import { onMount } from 'svelte';
   import type { Machine } from '$types/machine';
   import drawer from '$lib/stores/overlay';
-  import { viewOptions } from '$lib/utils/options';
   import Card from '$components/sections/cards/Card.svelte';
   import Drawer from '$components/overlays/drawers/Drawer.svelte';
-  import ShareFilterSelection from '$components/shares/ShareFilterSelection.svelte';
   import SharePagination from '$components/shares/SharePagination.svelte';
   import Table from '$components/elements/tables/Table.svelte';
   import { bindFilter, filter } from './filter';
   import { columns } from './(__table__)/_table';
+  import Filter from './Filter.svelte';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
 
   export let data;
 
   let selectedMachine: Machine;
-
-  function handleAction(e: CustomEvent) {
-    const { data } = e.detail;
-    selectedMachine = data;
-    drawer.open();
-  }
 
   onMount(() => {
     const unsubscribe = bindFilter(data.count);
@@ -28,29 +23,40 @@
       unsubscribe();
     };
   });
+
+  function handleAction(e: CustomEvent) {
+    const { data } = e.detail;
+    selectedMachine = data;
+    console.log(data);
+    drawer.open();
+  }
+
+  function handleSelect(e: CustomEvent) {
+    const { value } = e.detail;
+    const params = new URLSearchParams();
+    params.set('machine_id', value.id.toString());
+
+    goto(`/console/${$page.params.branch}/machines/slots?${params.toString()}`);
+  }
 </script>
 
-<Card let:Content>
+<Card let:Header let:Content>
   <Content>
-    <h3 class="mb-2 font-semibold">Filter</h3>
-    <div class="mx-2 flex flex-col lg:flex-row">
-      <ShareFilterSelection key="limit" label="view" options={viewOptions} value={$filter.limit} />
-    </div>
+    <Header>Search Filter</Header>
+    <Filter limit={$filter.limit} />
   </Content>
   <div class="mt-4 border-b" />
   <Content>
-    <Table let:Header let:Footer let:Body>
+    <Table let:Loading let:Header let:Footer let:Body>
       <Header {columns} />
-      {#if data.machines}
-        <Body {columns} source={data.machines} on:select={handleAction} />
-      {/if}
-      <Footer>
-        <SharePagination limit={$filter.limit} colspan={columns.length} count={data.count} />
-      </Footer>
-
-      {#if data.error}
-        <div>{data.error.message}</div>
-      {/if}
+      {#await data.fetch.machines()}
+        <Loading {columns} />
+      {:then source}
+        <Body {columns} {source} on:action={handleAction} on:select={handleSelect} />
+        <Footer>
+          <SharePagination limit={$filter.limit} page={$filter.page} colspan={columns.length} count={data.count} />
+        </Footer>
+      {/await}
     </Table>
   </Content>
 </Card>

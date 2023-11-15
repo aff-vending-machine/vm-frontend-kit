@@ -7,6 +7,14 @@ export async function load({ url, parent }) {
     const { branch_id } = await parent();
     const query = new URLSearchParams(url.searchParams);
     if (branch_id > 0) query.set('branch_id', branch_id.toString());
+    if (!query.get('limit')) query.set('limit', '10');
+    if (query.get('page')) {
+      const page = parseInt(query.get('page')!);
+      const limit = parseInt(query.get('limit')!);
+      const offset = ((page || 1) - 1) * limit;
+      query.set('offset', offset.toString());
+    }
+
     query.sort();
 
     const machines = await machineAPI.find(query.toString());
@@ -26,7 +34,7 @@ export async function load({ url, parent }) {
 
   return {
     fetch: {
-      products: fetchMachines,
+      machines: fetchMachines,
     },
     count: await fetchMachineCount(),
   };

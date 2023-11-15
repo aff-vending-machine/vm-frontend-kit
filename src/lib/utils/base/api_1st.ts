@@ -28,10 +28,10 @@ export abstract class CRUDService<T> {
     }
   }
 
-  async findByID(id: number): Promise<T> {
+  async findByID(id: number, query?: string): Promise<T> {
     try {
       const token = await getAccessToken();
-      const data = await api.get<T>(`${this.ROOT_PATH}/${id}`, { token });
+      const data = await api.get<T>(`${this.ROOT_PATH}/${id}`, { query, token });
       const result = this.remap(data);
       return Promise.resolve<T>(result);
     } catch (e) {

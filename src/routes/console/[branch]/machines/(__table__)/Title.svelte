@@ -6,5 +6,5 @@
 
 <div class="flex flex-col">
   <span class="text-lg">{source.name}</span>
-  <span class="text-xs">{source.location}</span>
+  <span class="text-xs">{source.serial_number}</span>
 </div>

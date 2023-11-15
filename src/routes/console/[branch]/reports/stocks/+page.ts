@@ -3,9 +3,11 @@ import { ReportService } from '$lib/services/report';
 import { isIsoDate } from '$lib/utils/check';
 import { defaultForm, defaultTo } from '$lib/utils/generate';
 
+const reportAPI = ReportService.getInstance();
+const machineAPI = MachineService.getInstance();
+
 export async function load({ url, parent }) {
   const fetchStocks = async (machineId: number) => {
-    const reportAPI = ReportService.getInstance();
     const { branch_id } = await parent();
     const query = new URLSearchParams(url.searchParams);
 
@@ -29,7 +31,6 @@ export async function load({ url, parent }) {
   };
 
   const fetchMachineOptions = async () => {
-    const machineAPI = MachineService.getInstance();
     const { branch_id } = await parent();
     const query = new URLSearchParams();
     if (branch_id > 0) query.set('branch_id', branch_id.toString());

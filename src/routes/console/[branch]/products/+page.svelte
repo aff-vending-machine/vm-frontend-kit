@@ -30,9 +30,9 @@
   });
 </script>
 
-<Card let:Content>
+<Card let:Header let:Content>
   <Content>
-    <h3 class="mb-2 font-semibold">Filter</h3>
+    <Header>Search Filter</Header>
     <Filter limit={$filter.limit} groupId={$filter.groupId} groupOptions={data.options.groups} />
   </Content>
   <Content>

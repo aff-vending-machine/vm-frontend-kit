@@ -12,6 +12,12 @@ export const columns: ColumnType[] = [
     render: () => Title,
   },
   {
+    key: 'location',
+    title: 'location',
+    type: 'string',
+    sortable: true,
+  },
+  {
     key: 'status',
     title: 'status',
     type: 'component',
@@ -23,7 +29,6 @@ export const columns: ColumnType[] = [
     key: 'actions',
     title: 'actions',
     type: 'component',
-    sortable: true,
     render: () => Actions,
   },
 ];

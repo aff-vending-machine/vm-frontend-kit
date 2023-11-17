@@ -1,19 +1,22 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import Card from '$components/sections/cards/Card.svelte';
-  import Table from '$components/elements/tables/Table.svelte';
-  import { bindFilter, filter } from './filter';
+
+  import Export from '../(__modal__)/Export.svelte';
+
   import { regroupData, reportColumns } from './(__table__)/_table';
   import SummaryRow from './(__table__)/SummaryRow.svelte';
-  import { t } from '$lib/i18n/translations';
-  import Filter from './Filter.svelte';
   import Action from './Action.svelte';
-  import type { StockReport } from '$types/report';
+  import { bindFilter, filter } from './filter';
+  import Filter from './Filter.svelte';
+
+  import Table from '$components/elements/tables/Table.svelte';
   import Modal from '$components/overlays/modals/Modal.svelte';
-  import Export from '../(__modal__)/Export.svelte';
-  import { exportCSV, exportXlsx } from '$lib/utils/export';
-  import useSWR from '$lib/stores/useSWR';
+  import Card from '$components/sections/cards/Card.svelte';
+  import { t } from '$lib/i18n/translations';
   import overlay from '$lib/stores/overlay';
+  import useSWR from '$lib/stores/useSWR';
+  import { exportCSV, exportXlsx } from '$lib/utils/export';
+  import type { StockReport } from '$types/report';
 
   export let data;
   let stocks = useSWR<StockReport[]>();

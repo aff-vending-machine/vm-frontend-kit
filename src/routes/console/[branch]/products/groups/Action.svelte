@@ -1,8 +1,9 @@
 <script lang="ts">
+  import Icon from '@iconify/svelte';
+
   import Button from '$components/elements/buttons/Button.svelte';
   import { t } from '$lib/i18n/translations';
   import overlay from '$lib/stores/overlay';
-  import Icon from '@iconify/svelte';
 </script>
 
 <div class="flex justify-end">

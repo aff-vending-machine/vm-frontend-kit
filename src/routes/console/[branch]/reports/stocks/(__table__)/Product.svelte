@@ -1,7 +1,6 @@
 <script lang="ts">
   import Currency from '$components/elements/labels/Currency.svelte';
   import { t } from '$lib/i18n/translations';
-  import { forceUpdate } from '$lib/utils/debounce';
   import type { StockReport } from '$types/report';
 
   export let index: number;
@@ -10,13 +9,11 @@
   $: _ = index;
 </script>
 
-{#await forceUpdate(source) then _}
-  <div class="flex max-w-xs flex-col">
-    <sup class="text-[0.6rem]">{source.code}</sup>
-    <span class="font-semibold text-primary-500">{source.name}</span>
-    <span class="mt-4 flex justify-end text-xs">
-      <span class="mr-2">{$t('report.columns.sold-short')} {source.sold} x</span>
-      <Currency amount={source.sale_price} />
-    </span>
-  </div>
-{/await}
+<div class="flex max-w-xs flex-col">
+  <sup class="text-[0.6rem]">{source.code}</sup>
+  <span class="font-semibold text-primary-500">{source.name}</span>
+  <span class="mt-4 flex justify-end text-xs">
+    <span class="mr-2">{$t('report.columns.sold-short')} {source.sold} x</span>
+    <Currency amount={source.sale_price} />
+  </span>
+</div>

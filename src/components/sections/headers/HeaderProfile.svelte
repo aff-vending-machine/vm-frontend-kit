@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { clickOutside } from '$lib/hooks/useClickOutside';
   import Icon from '@iconify/svelte';
+
+  import { clickOutside } from '$lib/hooks/useClickOutside';
 
   export let username: string;
   export let role: string;

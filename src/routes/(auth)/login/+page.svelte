@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  import { login, swr } from './actions.js';
   import { onMount } from 'svelte';
+
+  import { login, swr } from './actions';
+
+  import { goto } from '$app/navigation';
 
   export let data;
 
@@ -16,13 +18,13 @@
 </script>
 
 <svelte:head>
-  <title>Login | Vending Machine</title>
+  <title>Login | Vending Machine Portal</title>
 </svelte:head>
 
 <div class="flex h-screen items-center justify-center bg-gray-100">
   <div class="min-w-[24rem] rounded-lg bg-white p-6 shadow">
     <div class="my-2 text-center">
-      <h1 class="text-xl font-bold tracking-wider text-gray-500">Vending Machine</h1>
+      <h1 class="text-xl font-bold tracking-wider text-gray-500">Portal</h1>
     </div>
     <div class="h-8"></div>
     <form class="flex flex-col space-y-4" use:login>

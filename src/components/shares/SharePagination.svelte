@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import Pagination from '$components/navigations/paginations/Pagination.svelte';
   import { page as storePage } from '$app/stores';
+  import Pagination from '$components/navigations/paginations/Pagination.svelte';
 
   export let limit: number;
   export let page: number;

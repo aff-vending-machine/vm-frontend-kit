@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+
   import { goto } from '$app/navigation';
 
   export let data;
@@ -14,5 +15,5 @@
 </script>
 
 <svelte:head>
-  <title>Vending Machine</title>
+  <title>Vending Machine Portal</title>
 </svelte:head>

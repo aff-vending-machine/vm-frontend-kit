@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { clickOutside } from '$lib/hooks/useClickOutside';
-  import Header from './ModalHeader.svelte';
   import Body from './ModalBody.svelte';
   import Footer from './ModalFooter.svelte';
+  import Header from './ModalHeader.svelte';
+
+  import { clickOutside } from '$lib/hooks/useClickOutside';
   import modal from '$lib/stores/overlay';
 
   export let closeOnClickOutside = true;

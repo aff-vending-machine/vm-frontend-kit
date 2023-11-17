@@ -1,9 +1,10 @@
 <!-- Pagination -->
 <script lang="ts">
-  import Button from '$components/elements/buttons/Button.svelte';
-  import { t } from '$lib/i18n/translations';
   import { createEventDispatcher } from 'svelte';
   import { derived, writable } from 'svelte/store';
+
+  import Button from '$components/elements/buttons/Button.svelte';
+  import { t } from '$lib/i18n/translations';
 
   export let page = 1;
   export let itemsPerPage: number;

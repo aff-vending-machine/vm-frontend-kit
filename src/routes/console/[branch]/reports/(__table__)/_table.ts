@@ -1,7 +1,8 @@
-import type { ColumnType } from '$components/elements/tables/@table';
-import Title from './Title.svelte';
-import Summary from './Summary.svelte';
 import Actions from './Actions.svelte';
+import Summary from './Summary.svelte';
+import Title from './Title.svelte';
+
+import type { ColumnType } from '$components/elements/tables/table';
 
 export const reportColumns: (t: (key: string) => string) => ColumnType[] = (t: (key: string) => string) => [
   { key: 'name', type: 'string', title: t('report.columns.machine-name'), sortable: true, responsive: 'desktop' },

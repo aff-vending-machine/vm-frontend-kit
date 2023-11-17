@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { genKey } from '$lib/utils/generate';
-  import Sidebar from '$components/sections/sidebars/Sidebar.svelte';
-  import Header from '$components/sections/headers/Header.svelte';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import Footer from '$components/sections/footers/Footer.svelte';
+  import Header from '$components/sections/headers/Header.svelte';
+  import Sidebar from '$components/sections/sidebars/Sidebar.svelte';
   import access from '$lib/stores/access';
   import sidebar from '$lib/stores/sidebar';
-  import { page } from '$app/stores';
-  import { goto } from '$app/navigation';
+  import { genKey } from '$lib/utils/generate';
 
   export let data;
 
@@ -18,11 +18,11 @@
 </script>
 
 <div class="flex h-screen bg-gray-100">
-  <Sidebar title="Vending Machine" branch={$page.params.branch || 'all'} />
-  <div class="flex flex-1 flex-col lg:px-8 lg:py-2">
+  <Sidebar title="Portal Center" branch={$page.params.branch || 'all'} />
+  <div class="flex flex-1 flex-col xl:px-8 xl:py-2">
     <Header let:Content>
       <Content let:Hamburger>
-        <span class="lg:hidden"> <Hamburger open={$sidebar} --color="gray" on:click={sidebar.toggle} /></span>
+        <span class="xl:hidden"> <Hamburger open={$sidebar} --color="gray" on:click={sidebar.toggle} /></span>
 
         {#if $page.params.branch && data.branches}
           {#if data.branches.length > 1}
@@ -46,8 +46,8 @@
         {/if}
       </Content>
       <Content let:Language let:Theme let:Profile>
-        <Language />
-        <Theme />
+        <Language class="hidden sm:block" />
+        <Theme class="hidden sm:block" />
         <Profile username={$access.name} role={$access.role} />
       </Content>
     </Header>

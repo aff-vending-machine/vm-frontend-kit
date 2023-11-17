@@ -1,7 +1,8 @@
 <script lang="ts">
   import dayjs from 'dayjs';
-  import { page } from '$app/stores';
+
   import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import DateTimeField from '$components/forms/inputs/DateTimeField.svelte';
 
   export let key: string;

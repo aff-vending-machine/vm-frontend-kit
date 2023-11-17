@@ -1,8 +1,9 @@
-import type { ColumnType } from '$components/elements/tables/@table';
 import Cart from './Cart.svelte';
 import No from './No.svelte';
 import Order from './Order.svelte';
 import Reference from './Reference.svelte';
+
+import type { ColumnType } from '$components/elements/tables/table';
 
 export const reportColumns: (t: (key: string) => string) => ColumnType[] = (t: (key: string) => string) => [
   {

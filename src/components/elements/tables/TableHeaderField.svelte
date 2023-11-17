@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ColumnSortType, ColumnType } from './@table';
+  import type { ColumnSortType, ColumnType } from './table';
 
   export let column: ColumnType;
 

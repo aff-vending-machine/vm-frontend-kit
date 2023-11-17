@@ -1,6 +1,7 @@
 <script lang="ts">
-  import drawer from '$lib/stores/overlay';
   import Icon from '@iconify/svelte';
+
+  import drawer from '$lib/stores/overlay';
 
   export let title: string;
   export let subtitle: string;

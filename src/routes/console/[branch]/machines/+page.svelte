@@ -1,16 +1,18 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { Machine } from '$types/machine';
-  import drawer from '$lib/stores/overlay';
-  import Card from '$components/sections/cards/Card.svelte';
-  import Drawer from '$components/overlays/drawers/Drawer.svelte';
-  import SharePagination from '$components/shares/SharePagination.svelte';
-  import Table from '$components/elements/tables/Table.svelte';
-  import { bindFilter, filter } from './filter';
+
   import { columns } from './(__table__)/_table';
+  import { bindFilter, filter } from './filter';
   import Filter from './Filter.svelte';
+
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
+  import Table from '$components/elements/tables/Table.svelte';
+  import Drawer from '$components/overlays/drawers/Drawer.svelte';
+  import Card from '$components/sections/cards/Card.svelte';
+  import SharePagination from '$components/shares/SharePagination.svelte';
+  import drawer from '$lib/stores/overlay';
+  import type { Machine } from '$types/machine';
 
   export let data;
 

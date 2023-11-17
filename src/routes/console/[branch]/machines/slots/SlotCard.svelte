@@ -2,10 +2,11 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import { tippy } from 'svelte-tippy';
+
+  import { t } from '$lib/i18n/translations';
+  import type { MachineSlot } from '$types/machine_slot';
   import 'tippy.js/dist/tippy.css';
   import 'tippy.js/animations/shift-away.css';
-  import type { MachineSlot } from '$types/machine_slot';
-  import { t } from '$lib/i18n/translations';
 
   export let slot: MachineSlot;
   export let isEdited: boolean;

@@ -1,6 +1,7 @@
+import { type Writable, writable } from 'svelte/store';
+
 import { LANGUAGE } from '$lib/constants';
 import { storage } from '$lib/utils/local-storage';
-import { writable, type Writable } from 'svelte/store';
 
 type LanguageType = 'en' | 'th';
 

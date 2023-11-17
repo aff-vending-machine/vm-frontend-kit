@@ -1,10 +1,12 @@
 <!-- TableRender -->
 <script lang="ts">
+  import dayjs from 'dayjs';
+
+  import type { TableFieldType } from './table';
+
   import Image from '$components/elements/images/Image.svelte';
   import Currency from '$components/elements/labels/Currency.svelte';
   import Number from '$components/elements/labels/Number.svelte';
-  import dayjs from 'dayjs';
-  import type { TableFieldType } from './@table';
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   export let index: number;

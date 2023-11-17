@@ -1,7 +1,8 @@
+import { get } from 'svelte/store';
+
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
 import useFilter from '$lib/stores/useFilter';
-import { get } from 'svelte/store';
 
 type FilterType = {
   machineId: number;

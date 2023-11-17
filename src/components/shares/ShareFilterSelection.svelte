@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import SelectField from '$components/forms/inputs/SelectField.svelte';
   import type { SelectOptionsType } from '$lib/utils/options';
 

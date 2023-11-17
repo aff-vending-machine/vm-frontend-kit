@@ -1,5 +1,5 @@
-import type { StoreBranch } from './store_branch';
 import type { AccountRole } from './account_role';
+import type { StoreBranch } from './store_branch';
 
 export type AccountUser = {
   id: number;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { genKey } from '$lib/utils/generate.js';
+  import { genKey } from '$lib/utils/generate';
 
   export let data;
 </script>

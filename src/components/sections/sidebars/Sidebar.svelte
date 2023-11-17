@@ -1,15 +1,17 @@
 <script lang="ts">
-  import sidebar from '$lib/stores/sidebar';
-  import SidebarMenu from './SidebarMenu.svelte';
   import Icon from '@iconify/svelte';
-  import { clickOutside } from '$lib/hooks/useClickOutside';
-  import { fly } from 'svelte/transition';
-  import { quintOut } from 'svelte/easing';
-  import { page } from '$app/stores';
   import { onDestroy } from 'svelte';
-  import { menulist } from '$lib/sidebar';
+  import { quintOut } from 'svelte/easing';
+  import { fly } from 'svelte/transition';
+
+  import SidebarMenu from './SidebarMenu.svelte';
+
+  import { page } from '$app/stores';
+  import { clickOutside } from '$lib/hooks/useClickOutside';
   import { t } from '$lib/i18n/translations';
+  import { menulist } from '$lib/sidebar';
   import { isDesktop } from '$lib/stores/media';
+  import sidebar from '$lib/stores/sidebar';
 
   export let title: string;
   export let branch: string;

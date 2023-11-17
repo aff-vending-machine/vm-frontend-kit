@@ -1,5 +1,6 @@
+import { type Writable, writable } from 'svelte/store';
+
 import { debounce } from '$lib/utils/debounce';
-import { writable, type Writable } from 'svelte/store';
 
 const sidebar: Writable<boolean> = writable(true);
 const delay = 100;

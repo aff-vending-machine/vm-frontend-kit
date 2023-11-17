@@ -1,6 +1,7 @@
-import type { ColumnType } from '$components/elements/tables/@table';
-import Title from './Title.svelte';
 import Actions from './Actions.svelte';
+import Title from './Title.svelte';
+
+import type { ColumnType } from '$components/elements/tables/table';
 
 export const columns: ColumnType[] = [
   {

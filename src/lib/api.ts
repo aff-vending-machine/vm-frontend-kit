@@ -1,5 +1,6 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import { error } from '@sveltejs/kit';
+
 import config from './config';
 
 type Fetcher = {

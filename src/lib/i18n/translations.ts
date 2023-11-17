@@ -1,4 +1,5 @@
 import i18n, { type Modifier } from 'sveltekit-i18n';
+
 import lang from './lang.json';
 
 export const defaultLocale = 'en';

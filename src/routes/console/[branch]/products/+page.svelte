@@ -1,15 +1,17 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { CatalogProduct } from '$types/catalog_product';
-  import drawer from '$lib/stores/overlay';
-  import Card from '$components/sections/cards/Card.svelte';
-  import Drawer from '$components/overlays/drawers/Drawer.svelte';
-  import SharePagination from '$components/shares/SharePagination.svelte';
-  import Table from '$components/elements/tables/Table.svelte';
-  import { filter, bindFilter } from './filter';
+
   import { columns } from './(__table__)/_table';
-  import Filter from './Filter.svelte';
   import Action from './Action.svelte';
+  import { filter, bindFilter } from './filter';
+  import Filter from './Filter.svelte';
+
+  import Table from '$components/elements/tables/Table.svelte';
+  import Drawer from '$components/overlays/drawers/Drawer.svelte';
+  import Card from '$components/sections/cards/Card.svelte';
+  import SharePagination from '$components/shares/SharePagination.svelte';
+  import drawer from '$lib/stores/overlay';
+  import type { CatalogProduct } from '$types/catalog_product';
 
   export let data;
 

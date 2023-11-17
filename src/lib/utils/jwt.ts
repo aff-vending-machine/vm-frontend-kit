@@ -1,10 +1,12 @@
-import api from '$lib/api';
-import { ACCESS_TOKEN, REFRESH_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN_PATH } from '$lib/constants';
 import type { HttpError_1 } from '@sveltejs/kit';
+
 import { isExpired } from './check';
-import { storage } from './local-storage';
-import type { AccessStore } from '$types/access';
 import { convertToDate } from './convert';
+import { storage } from './local-storage';
+
+import api from '$lib/api';
+import { ACCESS_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN, REFRESH_TOKEN_PATH } from '$lib/constants';
+import type { AccessStore } from '$types/access';
 
 export const parseJWT = (token: string): AccessStore => {
   if (!token && token.indexOf('.') < 0) {

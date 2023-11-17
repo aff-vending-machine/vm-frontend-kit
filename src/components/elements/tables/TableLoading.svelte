@@ -1,6 +1,7 @@
 <script lang="ts">
+  import type { ColumnType } from './table';
+
   import { isMobile, isTablet, isDesktop } from '$lib/stores/media';
-  import type { ColumnType } from './@table';
 
   export let columns: ColumnType[];
 

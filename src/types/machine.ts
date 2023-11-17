@@ -1,5 +1,5 @@
-import type { StoreBranch } from './store_branch';
 import type { MachineSlot } from './machine_slot';
+import type { StoreBranch } from './store_branch';
 
 export type Machine = {
   id: number;

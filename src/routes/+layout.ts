@@ -1,7 +1,7 @@
+import { loadTranslations } from '$lib/i18n/translations';
 import { AuthService } from '$lib/services/auth';
 import access from '$lib/stores/access';
 import language from '$lib/stores/language';
-import { loadTranslations } from '$lib/i18n/translations';
 import { genError } from '$lib/utils/generate';
 
 export const ssr = false;

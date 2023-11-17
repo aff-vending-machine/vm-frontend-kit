@@ -1,16 +1,17 @@
 <!-- DateTimePicker -->
 <script lang="ts">
+  import Icon from '@iconify/svelte';
+  import { DatePicker } from 'date-picker-svelte';
+  import { getLocaleDefaults } from 'date-picker-svelte/locale';
   import dayjs from 'dayjs';
   import { createEventDispatcher } from 'svelte';
   import { writable } from 'svelte/store';
-  import { DatePicker } from 'date-picker-svelte';
+
   import TimePicker from './TimePicker.svelte';
 
-  import { getLocaleDefaults } from 'date-picker-svelte/locale';
-  import { locale, t } from '$lib/i18n/translations';
-  import Icon from '@iconify/svelte';
   import Button from '$components/elements/buttons/Button.svelte';
   import { clickOutside } from '$lib/hooks/useClickOutside';
+  import { locale, t } from '$lib/i18n/translations';
 
   export let value: Date;
   export let id: string;

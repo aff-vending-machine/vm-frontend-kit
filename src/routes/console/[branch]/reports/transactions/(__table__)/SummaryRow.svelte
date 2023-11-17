@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { TransactionReport } from '$types/report';
   import Currency from '$components/elements/labels/Currency.svelte';
-  import { isTablet, isDesktop } from '$lib/stores/media';
+  import type { ColumnType } from '$components/elements/tables/table';
   import { t } from '$lib/i18n/translations';
-  import type { ColumnType } from '$components/elements/tables/@table';
+  import { isTablet, isDesktop } from '$lib/stores/media';
+  import type { TransactionReport } from '$types/report';
 
   export let columns: ColumnType[];
   export let source: TransactionReport[];

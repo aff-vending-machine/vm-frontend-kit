@@ -1,5 +1,5 @@
-import { CatalogGroupService } from '$lib/services/catalog_group.js';
-import { CatalogProductService } from '$lib/services/catalog_product.js';
+import { CatalogGroupService } from '$lib/services/catalog_group';
+import { CatalogProductService } from '$lib/services/catalog_product';
 import { MachineService } from '$lib/services/machine';
 import { MachineSlotService } from '$lib/services/machine_slot';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import ToggleField from '$components/forms/inputs/ToggleField.svelte';
 
   export let key: string;

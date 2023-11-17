@@ -2,6 +2,7 @@
   import Icon from '@iconify/svelte';
   import { quintOut } from 'svelte/easing';
   import { slide } from 'svelte/transition';
+
   import { page } from '$app/stores';
   import type { SidebarSubMenuType } from '$lib/sidebar';
 

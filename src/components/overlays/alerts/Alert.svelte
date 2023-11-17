@@ -1,6 +1,7 @@
 <script lang="ts">
-  import type { AlertType } from '$lib/stores/alert';
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
+
+  import type { AlertType } from '$lib/stores/alert';
 
   export let type: AlertType = 'info';
   export let message = '';

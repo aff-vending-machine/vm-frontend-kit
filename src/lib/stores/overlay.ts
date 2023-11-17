@@ -1,5 +1,6 @@
+import { type Writable, writable } from 'svelte/store';
+
 import { debounce } from '$lib/utils/debounce';
-import { writable, type Writable } from 'svelte/store';
 
 const overlay: Writable<boolean> = writable(false);
 const delay = 100;

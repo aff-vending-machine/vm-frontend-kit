@@ -1,6 +1,6 @@
-import type { StoreBranch } from './store_branch';
 import type { Machine } from './machine';
 import type { PaymentChannel } from './payment_channel';
+import type { StoreBranch } from './store_branch';
 
 export type PaymentTransaction = {
   id: number;

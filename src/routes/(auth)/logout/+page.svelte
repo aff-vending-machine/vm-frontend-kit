@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   import { goto } from '$app/navigation';
   import { AuthService } from '$lib/services/auth';
-  import { onMount } from 'svelte';
 
   const authService = AuthService.getInstance();
 

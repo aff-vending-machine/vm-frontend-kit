@@ -1,8 +1,9 @@
-import type { ColumnType } from '$components/elements/tables/@table';
-import type { StockReport } from '$types/report';
 import No from './No.svelte';
 import Product from './Product.svelte';
 import Summary from './Summary.svelte';
+
+import type { ColumnType } from '$components/elements/tables/table';
+import type { StockReport } from '$types/report';
 
 export const regroupData = (list: StockReport[], group: boolean) => {
   if (group) {

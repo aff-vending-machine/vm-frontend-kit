@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { isDesktop, isMobile, isTablet } from '$lib/stores/media';
-  import type { ColumnType } from './@table';
+  import type { ColumnType } from './table';
   import TableHeaderField from './TableHeaderField.svelte';
+
+  import { isDesktop, isMobile, isTablet } from '$lib/stores/media';
 
   export let columns: ColumnType[];
 

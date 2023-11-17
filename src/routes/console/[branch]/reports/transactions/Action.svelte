@@ -1,9 +1,10 @@
 <script lang="ts">
+  import Icon from '@iconify/svelte';
+
   import { page } from '$app/stores';
   import Button from '$components/elements/buttons/Button.svelte';
   import { t } from '$lib/i18n/translations';
   import overlay from '$lib/stores/overlay';
-  import Icon from '@iconify/svelte';
 
   $: link = () => {
     const params = new URLSearchParams($page.url.searchParams);

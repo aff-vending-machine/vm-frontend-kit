@@ -1,10 +1,12 @@
 <script lang="ts">
-  import Header from './DrawerHeader.svelte';
+  import { quintOut } from 'svelte/easing';
+  import { fade, slide } from 'svelte/transition';
+
   import Body from './DrawerBody.svelte';
   import Footer from './DrawerFooter.svelte';
+  import Header from './DrawerHeader.svelte';
+
   import drawer from '$lib/stores/overlay';
-  import { fade, slide } from 'svelte/transition';
-  import { quintOut } from 'svelte/easing';
 </script>
 
 {#if $drawer}

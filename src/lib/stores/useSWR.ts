@@ -1,5 +1,6 @@
-import { genError } from '$lib/utils/generate';
 import { writable } from 'svelte/store';
+
+import { genError } from '$lib/utils/generate';
 
 // Defining a generic type for the fetcher function
 type Fetcher<T> = () => Promise<T>;

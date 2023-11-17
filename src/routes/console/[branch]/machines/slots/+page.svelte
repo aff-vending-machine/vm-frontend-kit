@@ -1,13 +1,15 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import Card from '$components/sections/cards/Card.svelte';
-  import type { MachineSlot } from '$types/machine_slot';
-  import useSWR from '$lib/stores/useSWR';
+
   import { bindFilter } from './filter';
-  import { regroupData } from './ui';
-  import { t } from '$lib/i18n/translations';
   import SlotCard from './SlotCard.svelte';
   import SlotEmpty from './SlotEmpty.svelte';
+  import { regroupData } from './ui';
+
+  import Card from '$components/sections/cards/Card.svelte';
+  import { t } from '$lib/i18n/translations';
+  import useSWR from '$lib/stores/useSWR';
+  import type { MachineSlot } from '$types/machine_slot';
 
   export let data;
   let slots = useSWR<MachineSlot[]>();

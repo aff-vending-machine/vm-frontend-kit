@@ -1,7 +1,8 @@
 <script lang="ts">
-  import type { Machine } from '$types/machine';
   import Icon from '@iconify/svelte';
   import { createEventDispatcher } from 'svelte';
+
+  import type { Machine } from '$types/machine';
 
   // ignored data
   export let index: number;

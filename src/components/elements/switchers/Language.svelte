@@ -1,11 +1,12 @@
 <script lang="ts">
-  import language from '$lib/stores/language';
   import Icon from '@iconify/svelte';
+
+  import language from '$lib/stores/language';
 
   $: isUS = $language === 'en';
 </script>
 
-<button class="cursor-pointer" on:click={language.toggle}>
+<button class={$$props.class} on:click={language.toggle}>
   <span class:hidden={!isUS}>
     <Icon icon="emojione:flag-for-us-outlying-islands" class="h-8 w-8" />
   </span>

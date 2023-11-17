@@ -1,10 +1,10 @@
-import { storage } from '$lib/utils/local-storage';
-import { getAccessToken, parseJWT } from '$lib/utils/jwt';
 import api from '$lib/api';
 import { ACCESS_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN } from '$lib/constants';
 import { genError } from '$lib/utils/generate';
-import type { Auth } from '$types/auth';
+import { getAccessToken, parseJWT } from '$lib/utils/jwt';
+import { storage } from '$lib/utils/local-storage';
 import type { AccessStore } from '$types/access';
+import type { Auth } from '$types/auth';
 
 const ROOT_PATH = 'auth';
 

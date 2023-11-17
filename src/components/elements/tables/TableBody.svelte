@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import type { ColumnType } from './@table';
+
+  import type { ColumnType } from './table';
   import TableBodyField from './TableBodyField.svelte';
+
   import { isDesktop, isTablet, isMobile } from '$lib/stores/media';
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */

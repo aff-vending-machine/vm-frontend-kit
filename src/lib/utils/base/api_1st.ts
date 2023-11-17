@@ -1,6 +1,7 @@
-import api from '$lib/api';
-import { getAccessToken } from '../jwt';
 import { genError } from '../generate';
+import { getAccessToken } from '../jwt';
+
+import api from '$lib/api';
 
 export abstract class CRUDService<T> {
   constructor(protected ROOT_PATH: string) {}

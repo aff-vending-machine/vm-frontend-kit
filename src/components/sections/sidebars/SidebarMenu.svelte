@@ -14,12 +14,42 @@
 
   let open = false;
 
+  $: active = checkActiveLink($page.route.id || '', link || submenu[0].link);
+  $: subactive = (sub: string) => checkActiveSubLink($page.route.id!, sub);
+
+  function checkActiveLink(ref: string, link: string) {
+    const currentPath = ref.split('/');
+    const comparePath = link.split('/');
+
+    if (comparePath.length == 5) comparePath.pop();
+    if (currentPath.length == 5) currentPath.pop();
+    if (currentPath.length !== comparePath.length) return false;
+
+    for (let i = 0; i < currentPath.length; i++) {
+      if (currentPath[i].startsWith('[') && currentPath[i].endsWith(']')) continue;
+      if (currentPath[i] !== comparePath[i]) return false;
+    }
+
+    return true;
+  }
+
+  function checkActiveSubLink(ref: string, link: string) {
+    const currentPath = ref.split('/');
+    const comparePath = link.split('/');
+
+    if (currentPath.length !== comparePath.length) return false;
+
+    for (let i = 0; i < currentPath.length; i++) {
+      if (currentPath[i].startsWith('[') && currentPath[i].endsWith(']')) continue;
+      if (currentPath[i] !== comparePath[i]) return false;
+    }
+
+    return true;
+  }
+
   function handleToggle() {
     open = !open;
   }
-
-  $: active = $page.route.id === link || submenu.some(s => s.link === $page.route.id);
-  $: subactive = (sub: string) => $page.route.id === sub;
 </script>
 
 {#if link}

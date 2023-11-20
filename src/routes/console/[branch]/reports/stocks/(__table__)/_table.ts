@@ -3,6 +3,7 @@ import Product from './Product.svelte';
 import Summary from './Summary.svelte';
 
 import type { ColumnType } from '$components/elements/tables/table';
+import type { TranslationType } from '$lib/i18n/translations';
 import type { StockReport } from '$types/report';
 
 export const regroupData = (list: StockReport[], group: boolean) => {
@@ -42,7 +43,7 @@ export const regroupData = (list: StockReport[], group: boolean) => {
   }
 };
 
-export const reportColumns: (t: (key: string) => string) => ColumnType[] = (t: (key: string) => string) => [
+export const reportColumns: (t: TranslationType) => ColumnType[] = (t: TranslationType) => [
   {
     key: 'index',
     type: 'component',

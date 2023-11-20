@@ -1,10 +1,11 @@
-export type SelectOptionsType<T = unknown> = {
+export type SelectOptionsType<V = string | number, T = unknown> = {
   label: string;
-  value: string | number;
+  value: V;
   data?: T;
+  filter?: V;
 };
 
-export const viewOptions = [
+export const viewOptions: SelectOptionsType<number>[] = [
   { label: '10', value: 10 },
   { label: '25', value: 25 },
   { label: '50', value: 50 },

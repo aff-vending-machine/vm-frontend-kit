@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { login, swr } from './actions';
+  import { handle, swr } from './actions';
 
   import { goto } from '$app/navigation';
+  import { t } from '$lib/i18n/translations';
 
   export let data;
 
@@ -24,12 +25,12 @@
 <div class="flex h-screen items-center justify-center bg-gray-100">
   <div class="min-w-[24rem] rounded-lg bg-white p-6 shadow">
     <div class="my-2 text-center">
-      <h1 class="text-xl font-bold tracking-wider text-gray-500">Portal</h1>
+      <h1 class="text-xl font-bold tracking-wider text-gray-500">{$t('auth.title')}</h1>
     </div>
     <div class="h-8"></div>
-    <form class="flex flex-col space-y-4" use:login>
+    <form class="flex flex-col space-y-4" on:submit|preventDefault={handle.submit}>
       <div class="flex flex-col space-y-2">
-        <label for="username" class="text-sm uppercase"> Username </label>
+        <label for="username" class="text-sm uppercase">{$t('auth.username')}</label>
         <input
           id="username"
           name="username"
@@ -41,7 +42,7 @@
         />
       </div>
       <div class="flex flex-col space-y-2">
-        <label for="password" class="text-sm uppercase"> Password </label>
+        <label for="password" class="text-sm uppercase">{$t('auth.password')}</label>
         <input
           id="password"
           name="password"
@@ -59,11 +60,13 @@
           class="rounded border-gray-300 disabled:bg-gray-100"
           disabled={loading}
         />
-        <label for="remember" class="mr-2 cursor-pointer text-sm disabled:cursor-not-allowed"> Remember Me </label>
+        <label for="remember" class="mr-2 cursor-pointer text-sm disabled:cursor-not-allowed"
+          >{$t('auth.remember')}</label
+        >
       </div>
       <div class="text-center">
         {#if loading}
-          <p class="text-xs text-primary-500">Loading...</p>
+          <p class="text-xs text-primary-500">{$t('common.loading')}</p>
         {/if}
 
         {#if error}
@@ -76,7 +79,7 @@
         type="submit"
         disabled={loading}
       >
-        Sign in
+        {$t('auth.signin')}
       </button>
     </form>
   </div>

@@ -19,10 +19,15 @@
   {#if $isTablet}
     <td class="flex flex-col justify-end px-6 py-4">
       <span class="text-green-800">
-        {$t('report.columns.credit-card-short')}
+        <span class="sm:hidden">{$t('report.credit-card-short')} </span>
+        <span class="hidden sm:inline-block">{$t('report.credit-card')}</span>
         <Currency amount={totalCreditCard} />
       </span>
-      <span class="text-lime-800"> {$t('report.columns.promptpay-short')} <Currency amount={totalPromptPay} /></span>
+      <span class="text-lime-800">
+        <span class="sm:hidden">{$t('report.promptpay-short')} </span>
+        <span class="hidden sm:inline-block">{$t('report.promptpay')}</span>
+        <Currency amount={totalPromptPay} />
+      </span>
     </td>
   {/if}
   {#if $isDesktop}

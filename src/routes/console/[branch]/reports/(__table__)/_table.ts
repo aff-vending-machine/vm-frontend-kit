@@ -3,8 +3,9 @@ import Summary from './Summary.svelte';
 import Title from './Title.svelte';
 
 import type { ColumnType } from '$components/elements/tables/table';
+import type { TranslationType } from '$lib/i18n/translations';
 
-export const reportColumns: (t: (key: string) => string) => ColumnType[] = (t: (key: string) => string) => [
+export const reportColumns: (t: TranslationType) => ColumnType[] = (t: TranslationType) => [
   { key: 'name', type: 'string', title: t('report.columns.machine-name'), sortable: true, responsive: 'desktop' },
   {
     key: 'serial_number',

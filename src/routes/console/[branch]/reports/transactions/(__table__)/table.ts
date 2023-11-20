@@ -4,8 +4,9 @@ import Order from './Order.svelte';
 import Reference from './Reference.svelte';
 
 import type { ColumnType } from '$components/elements/tables/table';
+import type { TranslationType } from '$lib/i18n/translations';
 
-export const reportColumns: (t: (key: string) => string) => ColumnType[] = (t: (key: string) => string) => [
+export const reportColumns: (t: TranslationType) => ColumnType[] = (t: TranslationType) => [
   {
     key: 'index',
     type: 'component',

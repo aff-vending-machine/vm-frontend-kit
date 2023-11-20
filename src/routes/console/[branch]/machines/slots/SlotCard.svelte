@@ -3,8 +3,10 @@
   import { createEventDispatcher } from 'svelte';
   import { tippy } from 'svelte-tippy';
 
+  import { mousePress } from '$lib/hooks/useMousePress';
   import { t } from '$lib/i18n/translations';
   import type { MachineSlot } from '$types/machine_slot';
+
   import 'tippy.js/dist/tippy.css';
   import 'tippy.js/animations/shift-away.css';
 
@@ -57,27 +59,28 @@
 
   const tooltip = `
     <div class="m-1">
-      <span class="text-center">${slot.code}: ${slot.product?.name}</span>
-      <img class="border h-24 w-24 mt-1 mx-auto object-contain bg-white" src=${slot.product?.image_url} />
+      <span class="text-center">${slot.code}: ${slot.product.name}</span>
+      <img class="border h-24 w-24 mt-1 mx-auto object-contain bg-white" src=${slot.product.image_url} />
     </div>
   `;
 </script>
 
 <!-- HTML -->
 <button
-  class={`flex h-36 w-32 flex-col items-center rounded-md p-2 ${getColor(slot)}`}
+  class="flex h-40 w-full min-w-[120px] flex-col items-center rounded-md p-2 {getColor(slot)}"
+  style="column-span: {slot.spiral || 1};"
   use:tippy={{ allowHTML: true, content: tooltip, placement: 'top', animation: 'shift-away' }}
   on:click={handleSelectEvent}
 >
   <div class="font-bold">{slot.code}</div>
   <div class="text-center text-xs">
     <span class="overflow-hidden text-ellipsis">
-      {truncate(slot.product?.name, 40, false)}
+      {truncate(slot.product.name, 40, false)}
     </span>
   </div>
   <div class="flex-grow" />
   <div class="text-center text-xs">
-    {$t('slot.price')}: <span class="font-semibold text-red-500">{slot.product?.sale_price}</span>
+    {$t('slot.price')}: <span class="font-semibold text-red-500">{slot.product.sale_price}</span>
   </div>
   <div class="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white p-1">
     <button
@@ -86,7 +89,9 @@
         hover:border-blue-700 hover:bg-blue-500
         disabled:border-gray-300 disabled:bg-gray-300
       "
+      use:mousePress
       on:click|preventDefault|stopPropagation={handleDecreaseStockEvent}
+      on:mouse-press={handleDecreaseStockEvent}
       disabled={slot.stock === 0}
     >
       -
@@ -98,7 +103,9 @@
         hover:border-blue-700 hover:bg-blue-500
       disabled:border-gray-300 disabled:bg-gray-300
       "
+      use:mousePress
       on:click|preventDefault|stopPropagation={handleIncreaseStockEvent}
+      on:mouse-press={handleIncreaseStockEvent}
       disabled={slot.stock === slot.capacity}
     >
       +

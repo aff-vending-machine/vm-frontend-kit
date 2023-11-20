@@ -8,6 +8,11 @@
   "application": "ชนิดเอกสาร",
   "export-stock": "สรุปสินค้า",
   "export-transaction": "รายการธุรกรรม",
+  "credit-card": "บัตรเครดิต",
+  "promptpay": "พร้อมเพย์",
+  "credit-card-short": "CC",
+  "promptpay-short": "PP",
+  "summary": "ยอดรวม",
   "columns": {
     "no": "ลำดับที่",
     "machine-id": "รหัสเครื่อง",
@@ -27,8 +32,6 @@
     "sold-short": "ขาย",
     "credit-card": "ยอดขายบัตรเครดิต",
     "promptpay": "ยอดขายพร้อมเพย์",
-    "credit-card-short": "CC",
-    "promptpay-short": "PP",
     "split": "แยกตามประเภท",
     "total": "ยอดขายทั้งหมด",
     "reports": "รายงานสรุป"

@@ -10,6 +10,7 @@ export type MachineSlot = {
   code: string;
   stock: number;
   capacity: number;
+  spiral: number;
   is_enable: boolean;
 };
 

@@ -1,9 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
+  import SelectField from '$components/forms/inputs/SelectField.svelte';
   import Footer from '$components/sections/footers/Footer.svelte';
   import Header from '$components/sections/headers/Header.svelte';
   import Sidebar from '$components/sections/sidebars/Sidebar.svelte';
+  import { t } from '$lib/i18n/translations';
   import access from '$lib/stores/access';
   import sidebar from '$lib/stores/sidebar';
   import { genKey } from '$lib/utils/generate';
@@ -23,26 +25,16 @@
     <Header let:Content>
       <Content let:Hamburger>
         <span class="xl:hidden"> <Hamburger open={$sidebar} --color="gray" on:click={sidebar.toggle} /></span>
-
         {#if $page.params.branch && data.branches}
-          {#if data.branches.length > 1}
-            <select
-              name="branch"
-              value={$page.params.branch}
-              class="w-full min-w-[160px] rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700"
-              on:change={handleChangeBranch}
-            >
-              <option class="text-gray-500" value="all">All Branches</option>
-
-              {#each data.branches as option}
-                <option value={genKey(option.name)}>{option.name}</option>
-              {/each}
-            </select>
-          {:else}
-            <div class="w-full min-w-[160px] rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700">
-              {data.branches[0].name}
-            </div>
-          {/if}
+          <SelectField
+            id="branches"
+            value={$page.params.branch}
+            options={[{ name: 'test' }].map(b => ({ label: b.name, value: genKey(b.name) }))}
+            unselected="all"
+            placeholder={$t('options.branch.all')}
+            disabled={true}
+            on:change={handleChangeBranch}
+          />
         {/if}
       </Content>
       <Content let:Language let:Theme let:Profile>

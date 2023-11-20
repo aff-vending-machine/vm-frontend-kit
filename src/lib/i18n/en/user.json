@@ -1,0 +1,21 @@
+{
+  "title": "User",
+  "create-title": "Create User",
+  "edit-title": "Edit User",
+  "delete-title": "Delete User",
+  "columns": {
+    "id": "ID",
+    "name": "Username",
+    "role": "Role",
+    "branch": "Branch",
+    "created-by": "Created By",
+    "actions": "Actions"
+  },
+  "field": {
+    "username": "Username",
+    "password": "Password",
+    "confirm-password": "Confirm Password",
+    "role": "Role",
+    "branch": "Branch"
+  }
+}

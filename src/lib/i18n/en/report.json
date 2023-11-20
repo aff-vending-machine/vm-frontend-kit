@@ -8,6 +8,11 @@
   "application": "Application",
   "export-stock": "Stocks",
   "export-transaction": "Transactions",
+  "credit-card": "Credit Card",
+  "promptpay": "Prompypay",
+  "credit-card-short": "CC",
+  "promptpay-short": "PP",
+  "summary": "Summary",
   "columns": {
     "no": "No.",
     "machine-id": "Machine ID",
@@ -27,8 +32,6 @@
     "sold-short": "Sold",
     "credit-card": "Credit Card",
     "promptpay": "Prompypay",
-    "credit-card-short": "CC",
-    "promptpay-short": "PP",
     "split": "Providers",
     "total": "Total",
     "reports": "Reports"

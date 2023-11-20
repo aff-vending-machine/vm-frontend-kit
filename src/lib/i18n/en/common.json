@@ -1,5 +1,16 @@
 {
-  "loading": "Loading...",
+  "slots": "Machine Slots",
+  "machine": "Machine",
+  "branch": "Branch",
+  "group": "Product group",
+  "transaction": "Transaction",
+  "role": "Role",
+  "untitled": "Untitled",
+  "loading": "Loading ...",
+  "syncing": "Syncing ...",
+  "unseleted-options": "Select an option",
+  "delete-message": " Are You Sure! Want to Delete",
+  "error": "An error occurred while loading the data.",
   "button": {
     "add-product": "Add Product",
     "add-slot": "Add Slot",

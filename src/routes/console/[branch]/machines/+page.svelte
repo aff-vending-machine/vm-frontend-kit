@@ -29,7 +29,6 @@
   function handleAction(e: CustomEvent) {
     const { data } = e.detail;
     selectedMachine = data;
-    console.log(data);
     drawer.open();
   }
 

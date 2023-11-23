@@ -1,0 +1,22 @@
+{
+  "add-title": "Add Slot",
+  "update-title": "Update Slot",
+  "delete-title": "Delete Slot",
+  "price": "Price",
+  "all-group": "All Groups",
+  "tag": {
+    "disable": "disable",
+    "empty": "empty",
+    "less-than-20": "≤ 20%",
+    "available": "available",
+    "full": "full"
+  },
+  "field": {
+    "code": "Code",
+    "product-group": "Product Group",
+    "product": "Product",
+    "stock": "Stock",
+    "capacity": "Capacity",
+    "active": "Active"
+  }
+}

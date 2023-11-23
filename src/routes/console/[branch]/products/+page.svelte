@@ -10,6 +10,7 @@
   import Drawer from '$components/overlays/drawers/Drawer.svelte';
   import Card from '$components/sections/cards/Card.svelte';
   import SharePagination from '$components/shares/SharePagination.svelte';
+  import { t } from '$lib/i18n/translations';
   import drawer from '$lib/stores/overlay';
   import type { CatalogProduct } from '$types/catalog_product';
 
@@ -34,7 +35,7 @@
 
 <Card let:Header let:Content>
   <Content>
-    <Header>Search Filter</Header>
+    <Header>{$t('common.search-filter')}</Header>
     <Filter limit={$filter.limit} groupId={$filter.groupId} groupOptions={data.options.groups} />
   </Content>
   <Content>

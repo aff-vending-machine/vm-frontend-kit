@@ -61,7 +61,7 @@
 
 <Card let:Content let:Header>
   <Content>
-    <Header>Search Filter</Header>
+    <Header>{$t('common.search-filter')}</Header>
     <Filter
       from={$filter.from}
       to={$filter.to}

@@ -41,7 +41,8 @@
   </Content>
   <Content>
     <Table let:Loading let:Header let:Footer let:Body>
-      <Header {columns} />{#await data.fetch.groups()}
+      <Header {columns} />
+      {#await data.fetch.groups()}
         <Loading {columns} />
       {:then source}
         <Body {columns} {source} on:select={handleSelect} />

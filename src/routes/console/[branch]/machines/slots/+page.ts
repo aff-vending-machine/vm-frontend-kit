@@ -8,18 +8,21 @@ const groupAPI = CatalogGroupService.getInstance();
 const productAPI = CatalogProductService.getInstance();
 const slotAPI = MachineSlotService.getInstance();
 
-export async function load({ url, parent }) {
+export async function load({ parent }) {
   const fetchMachineSlot = async (machineId: number) => {
     const { branch_id } = await parent();
-    const query = new URLSearchParams(url.searchParams);
+    const query = new URLSearchParams();
 
     if (branch_id > 0) query.set('branch_id', branch_id.toString());
-    query.delete('machine_id');
     query.set('preloads', 'Product');
     query.sort();
 
     const slots = await slotAPI.find(machineId, query.toString());
     return slots;
+  };
+
+  const fetchMachine = async (machineId: number) => {
+    return await machineAPI.findByID(machineId);
   };
 
   const fetchMachineOptions = async () => {
@@ -41,11 +44,14 @@ export async function load({ url, parent }) {
     return products.map(p => ({
       label: `${p.name} (${p.sale_price}.-)`,
       value: p.id,
+      filter: p.group_id,
+      data: p,
     }));
   };
 
   return {
     fetch: {
+      machine: fetchMachine,
       slots: fetchMachineSlot,
     },
     options: {

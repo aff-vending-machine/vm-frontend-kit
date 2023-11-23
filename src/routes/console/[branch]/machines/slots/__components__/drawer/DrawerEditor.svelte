@@ -48,7 +48,7 @@
   }
 
   function handleDelete() {
-    dispatch('delete', { source: slot });
+    dispatch('delete', { machineId: slot.machine_id, id: slot.id });
   }
 
   function handleCancel() {
@@ -81,7 +81,8 @@
       bind:value={$group_id.value}
       error={$group_id.errors?.at(0)}
       options={groupOptions}
-      unselected={false}
+      unselected={0}
+      placeholder={$t('slot.all-group')}
       on:change={handleGroup}
     />
     <SelectField
@@ -89,8 +90,7 @@
       label={$t('slot.field.product')}
       bind:value={$productID.value}
       error={$productID.errors?.at(0)}
-      options={productOptions.filter(p => p.filter === $group_id.value)}
-      unselected={false}
+      options={productOptions.filter(p => $group_id.value === 0 || p.filter === $group_id.value)}
     />
     <NumberInputField
       id="stock"
@@ -108,8 +108,8 @@
   </form>
 
   <div class="mt-4 flex justify-end space-x-4">
-    <Button color="secondary" type="submit" form={formID}>{$t('button.save')}</Button>
-    <Button color="danger" outline on:click={handleDelete}>{$t('button.delete')}</Button>
-    <Button color="warning" outline on:click={handleCancel}>{$t('button.cancel')}</Button>
+    <Button color="primary" type="submit" form={formID}>{$t('common.button.save')}</Button>
+    <Button color="danger" outline on:click={handleDelete}>{$t('common.button.delete')}</Button>
+    <Button color="warning" outline on:click={handleCancel}>{$t('common.button.cancel')}</Button>
   </div>
 </div>

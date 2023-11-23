@@ -12,25 +12,39 @@ export type SWRStore<T> = {
 };
 
 export function useSWR<T>() {
-  const swr = writable<SWRStore<T>>({ loading: false });
+  const { subscribe, set, update } = writable<SWRStore<T>>({ loading: false });
 
   async function mutate(fetcher: Fetcher<T>) {
     try {
-      swr.set({ loading: true });
+      set({ loading: true });
       const result = await fetcher();
-      swr.update(() => ({ loading: false, data: result }));
+      update(() => ({ loading: false, data: result }));
     } catch (e) {
       const err = genError(e);
-      swr.update(() => ({ loading: false, error: err }));
+      update(() => ({ loading: false, error: err }));
+    }
+  }
+
+  async function call(fetcher: Fetcher<void>) {
+    try {
+      set({ loading: true });
+      await fetcher();
+      update(() => ({ loading: false }));
+    } catch (e) {
+      const err = genError(e);
+      update(() => ({ loading: false, error: err }));
     }
   }
 
   async function failure(message: string) {
-    swr.update(() => ({ loading: false, error: new Error(message) }));
+    update(() => ({ loading: false, error: new Error(message) }));
   }
 
   return {
-    ...swr,
+    subscribe,
+    set,
+    update,
+    call,
     mutate,
     failure,
   };

@@ -4,12 +4,20 @@ import { goto } from '$app/navigation';
 import { page } from '$app/stores';
 import useFilter from '$lib/stores/useFilter';
 
-type FilterType = {
+export type FilterType = {
   machineId: number;
+  search: string;
+  stock: string;
+  status: string;
+  changed: string;
 };
 
 export const filter = useFilter<FilterType>({
   machineId: 0,
+  search: '',
+  stock: '',
+  status: '',
+  changed: '',
 });
 
 export const bindFilter = (machines: number[], call: (id: number) => Promise<void>) => {
@@ -17,6 +25,11 @@ export const bindFilter = (machines: number[], call: (id: number) => Promise<voi
     const searchParams = get(page).url.searchParams;
 
     let currentMachineId = parseInt(searchParams.get('machine_id') ?? '0');
+    const currentSearch = searchParams.get('search') ?? '';
+    const currentStock = searchParams.get('stock') ?? '';
+    const currentStatus = searchParams.get('status') ?? '';
+    const currentChanged = searchParams.get('changed') ?? '';
+
     if (currentMachineId === 0 || !machines.includes(currentMachineId)) {
       currentMachineId = machines[0];
 
@@ -31,6 +44,10 @@ export const bindFilter = (machines: number[], call: (id: number) => Promise<voi
 
     filter.update(() => ({
       machineId: currentMachineId,
+      search: currentSearch,
+      stock: currentStock,
+      status: currentStatus,
+      changed: currentChanged,
     }));
 
     return p;

@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { Machine } from '$types/machine';
 
+  // ignored data
+  export let index: number;
+  $: _ = index;
+
   export let source: Machine;
 </script>
 

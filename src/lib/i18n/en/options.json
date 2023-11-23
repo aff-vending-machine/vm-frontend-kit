@@ -1,4 +1,7 @@
 {
+  "branch": {
+    "all": "All branches"
+  },
   "stock": {
     "all": "All",
     "avaialble": "Available",

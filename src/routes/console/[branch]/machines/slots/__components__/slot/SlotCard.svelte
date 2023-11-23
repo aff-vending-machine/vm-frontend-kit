@@ -22,7 +22,7 @@
   // helpers
   const decreasing = (slot: MachineSlot) => (slot.stock - 1 < 0 ? 0 : slot.stock - 1);
   const increasing = (slot: MachineSlot) => (slot.stock + 1 > slot.capacity ? slot.capacity : slot.stock + 1);
-  const getColor = (slot: MachineSlot) => {
+  $: getColor = (slot: MachineSlot) => {
     let style = 'border ';
     if (isEdited) {
       style = 'text-orange-500 border ';
@@ -67,7 +67,7 @@
 
 <!-- HTML -->
 <button
-  class="flex h-40 w-full min-w-[120px] flex-col items-center rounded-md p-2 {getColor(slot)}"
+  class="flex h-48 w-40 flex-col items-center rounded-md p-2 {getColor(slot)}"
   style="column-span: {slot.spiral || 1};"
   use:tippy={{ allowHTML: true, content: tooltip, placement: 'top', animation: 'shift-away' }}
   on:click={handleSelectEvent}

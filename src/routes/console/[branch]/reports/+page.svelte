@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { reportColumns } from './(__table__)/_table';
-  import SummaryRow from './(__table__)/SummaryRow.svelte';
+  import Filter from './__components__/filter/Filter.svelte';
+  import SummaryRow from './__components__/table/SummaryRow.svelte';
   import { bindFilter, filter } from './filter';
-  import Filter from './Filter.svelte';
+  import { reportColumns } from './table';
 
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';

@@ -9,16 +9,16 @@ import type { MachineSlot } from '$types/machine_slot';
 
 type Mode = 'edit';
 
+const slotAPI = MachineSlotService.getInstance();
+const syncAPI = SyncService.getInstance();
+
 export const request = useSWR();
 export const selector = useSelector<Mode, MachineSlot>();
 export const machineData = useSWR<Machine>();
 export const slotsData = useSWR<MachineSlot[]>();
 export const draft = writable<MachineSlot[]>([]);
 
-const slotAPI = MachineSlotService.getInstance();
-const syncAPI = SyncService.getInstance();
-
-export const events = {
+export const handle = {
   select: (e: CustomEvent) => {
     const { data } = e.detail;
     selector.select('edit', data);

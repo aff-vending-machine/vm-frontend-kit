@@ -1,13 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import Export from '../(__modal__)/Export.svelte';
+  import Export from '../__components__/modal/Export.svelte';
 
-  import { regroupData, reportColumns } from './(__table__)/_table';
-  import SummaryRow from './(__table__)/SummaryRow.svelte';
-  import Action from './Action.svelte';
+  import Action from './__components__/filter/Action.svelte';
+  import Filter from './__components__/filter/Filter.svelte';
+  import SummaryRow from './__components__/table/SummaryRow.svelte';
   import { bindFilter, filter } from './filter';
-  import Filter from './Filter.svelte';
+  import { regroupData, reportColumns } from './table';
 
   import Table from '$components/elements/tables/Table.svelte';
   import Modal from '$components/overlays/modals/Modal.svelte';

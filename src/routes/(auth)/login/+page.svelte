@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { handle, swr } from './actions';
+  import { handle, swr } from './handle';
 
   import { goto } from '$app/navigation';
   import { t } from '$lib/i18n/translations';

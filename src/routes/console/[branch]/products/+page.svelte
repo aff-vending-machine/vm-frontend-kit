@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { columns } from './(__table__)/_table';
-  import Action from './Action.svelte';
+  import Action from './__components__/filter/Action.svelte';
   import { filter, bindFilter } from './filter';
   import Filter from './Filter.svelte';
+  import { columns } from './table';
 
   import Table from '$components/elements/tables/Table.svelte';
   import Drawer from '$components/overlays/drawers/Drawer.svelte';

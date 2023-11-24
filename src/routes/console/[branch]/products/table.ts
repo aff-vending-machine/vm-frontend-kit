@@ -1,5 +1,5 @@
-import Actions from './Actions.svelte';
-import Title from './Title.svelte';
+import Actions from './__components__/table/Actions.svelte';
+import Title from './__components__/table/Title.svelte';
 
 import type { ColumnType } from '$components/elements/tables/table';
 

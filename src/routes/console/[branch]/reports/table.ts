@@ -1,6 +1,6 @@
-import Actions from './Actions.svelte';
-import Summary from './Summary.svelte';
-import Title from './Title.svelte';
+import Actions from './__components__/table/Actions.svelte';
+import Summary from './__components__/table/Summary.svelte';
+import Title from './__components__/table/Title.svelte';
 
 import type { ColumnType } from '$components/elements/tables/table';
 import type { TranslationType } from '$lib/i18n/translations';

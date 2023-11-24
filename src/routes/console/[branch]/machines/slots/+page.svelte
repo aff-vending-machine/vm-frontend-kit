@@ -2,12 +2,12 @@
   import { onMount } from 'svelte';
 
   import Drawer from './__components__/drawer/Drawer.svelte';
-  import Command from './__components__/filter/Command.svelte';
-  import FilterBar from './__components__/filter/FilterBar.svelte';
-  import SlotCard from './__components__/slot/SlotCard.svelte';
-  import SlotEmpty from './__components__/slot/SlotEmpty.svelte';
-  import { request, events, selector, slotsData, draft, machineData } from './events';
+  import Command from './__components__/filter/Action.svelte';
+  import FilterBar from './__components__/filter/Filter.svelte';
+  import SlotCard from './__components__/grid/SlotCard.svelte';
+  import SlotEmpty from './__components__/grid/SlotEmpty.svelte';
   import { bindFilter, filter } from './filter';
+  import { request, handle, selector, slotsData, draft, machineData } from './handle';
   import { findBorder, isPassed5Seconds, regroupData } from './utils';
 
   import Card from '$components/sections/cards/Card.svelte';
@@ -54,9 +54,9 @@
       isEdited={JSON.stringify($slotsData.data) !== JSON.stringify($draft)}
       isSynced={isPassed5Seconds($machineData.data?.sync_time)}
       loading={$request.loading}
-      on:refresh={events.refresh}
-      on:save={events.save}
-      on:reset={events.reset}
+      on:refresh={handle.refresh}
+      on:save={handle.save}
+      on:reset={handle.reset}
     />
   </Content>
   <Content>
@@ -72,8 +72,8 @@
               <SlotCard
                 slot={getSlot(slot.id)}
                 isEdited={isEdited(slot.id)}
-                on:select={events.select}
-                on:stock={events.adjust}
+                on:select={handle.select}
+                on:stock={handle.adjust}
               />
             {:else}
               <SlotEmpty code={slot.code} isExist={true} />
@@ -92,9 +92,9 @@
         slot={value}
         groupOptions={data.options.groups}
         productOptions={data.options.products}
-        on:update={events.update}
-        on:delete={events.delete}
-        on:cancel={events.cancel}
+        on:update={handle.update}
+        on:delete={handle.delete}
+        on:cancel={handle.cancel}
       />
     {/if}
   </Drawer>

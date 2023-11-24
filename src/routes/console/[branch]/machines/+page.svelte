@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { columns } from './(__table__)/_table';
+  import Filter from './__components__/filter/Filter.svelte';
   import { bindFilter, filter } from './filter';
-  import Filter from './Filter.svelte';
+  import { columns } from './table';
 
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';

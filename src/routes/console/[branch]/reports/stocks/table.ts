@@ -1,6 +1,6 @@
-import No from './No.svelte';
-import Product from './Product.svelte';
-import Summary from './Summary.svelte';
+import No from './__components__/table/No.svelte';
+import Product from './__components__/table/Product.svelte';
+import Summary from './__components__/table/Summary.svelte';
 
 import type { ColumnType } from '$components/elements/tables/table';
 import type { TranslationType } from '$lib/i18n/translations';

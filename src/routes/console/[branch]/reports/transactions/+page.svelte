@@ -4,9 +4,9 @@
   import Export from '../__components__/modal/Export.svelte';
 
   import Action from './__components__/filter/Action.svelte';
+  import Filter from './__components__/filter/Filter.svelte';
   import SummaryRow from './__components__/table/SummaryRow.svelte';
   import { bindFilter, filter } from './filter';
-  import Filter from './Filter.svelte';
   import { reportColumns } from './table';
 
   import Table from '$components/elements/tables/Table.svelte';

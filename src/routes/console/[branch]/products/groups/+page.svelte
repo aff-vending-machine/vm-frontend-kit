@@ -2,8 +2,8 @@
   import { onMount } from 'svelte';
 
   import Action from './__components__/filter/Action.svelte';
+  import Filter from './__components__/filter/Filter.svelte';
   import { bindFilter, filter } from './filter';
-  import Filter from './Filter.svelte';
   import { columns } from './table';
 
   import { goto } from '$app/navigation';

@@ -1,5 +1,5 @@
-import Status from './table/Status.svelte';
-import Title from './table/Title.svelte';
+import Status from './__components__/table/Status.svelte';
+import Title from './__components__/table/Title.svelte';
 
 import type { ColumnType } from '$components/elements/tables/table';
 

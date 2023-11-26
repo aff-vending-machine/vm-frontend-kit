@@ -52,7 +52,7 @@
     "hook:pre-push": "npx husky add .husky/pre-push 'pnpm check'",
     "hook": "pnpm hook:commit-msg && pnpm hook:pre-commit && pnpm hook:pre-push && chmod ug+x .husky/*",
     "prepare": "husky install && chmod ug+x .husky/*",
-    "precommit": "pnpm format && pnpm lint",
+    "precommit": "pnpm check && pnpm format && pnpm lint",
     "commit": "git-cz",
     "release": "commit-and-tag-version --no-verify --skip.tag"
   },

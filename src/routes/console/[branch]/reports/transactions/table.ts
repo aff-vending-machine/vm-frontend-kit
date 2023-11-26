@@ -1,7 +1,7 @@
-import Cart from './table/Cart.svelte';
-import No from './table/No.svelte';
-import Order from './table/Order.svelte';
-import Reference from './table/Reference.svelte';
+import Cart from './__components__/table/Cart.svelte';
+import No from './__components__/table/No.svelte';
+import Order from './__components__/table/Order.svelte';
+import Reference from './__components__/table/Reference.svelte';
 
 import type { ColumnType } from '$components/elements/tables/table';
 import type { TranslationType } from '$lib/i18n/translations';

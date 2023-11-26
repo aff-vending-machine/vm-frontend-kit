@@ -1,4 +1,3 @@
-<!-- Editor -->
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
   import { field, form } from 'svelte-forms';
@@ -22,7 +21,6 @@
   const dispatch = createEventDispatcher();
 
   const formID = 'slot-editor-form';
-
   const id = field('id', slot.id, [required()]);
   const code = field('code', slot.code, [required()]);
   const group_id = field('group_id', slot.product?.group_id, [required()]);
@@ -30,13 +28,12 @@
   const stock = field('stock', slot.stock, [required(), min(0)]);
   const capacity = field('capacity', slot.capacity, [required(), min(0)]);
   const is_enable = field('is_enable', slot.is_enable, [required()]);
-
   const slotForm = form(id, code, group_id, productID, stock, capacity, is_enable);
 
   async function handleSubmit() {
     await slotForm.validate();
     if ($slotForm.valid) {
-      dispatch('update', slotForm.summary());
+      dispatch('update', { data: slotForm.summary() });
     }
   }
 

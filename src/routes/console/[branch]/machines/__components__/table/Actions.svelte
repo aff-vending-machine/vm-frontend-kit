@@ -12,25 +12,19 @@
 
   const dispatch = createEventDispatcher();
 
-  function handleView(): void {
-    dispatch('action', { type: 'view', data: source });
-  }
-  function handleEdit(): void {
-    dispatch('action', { type: 'edit', data: source });
-  }
-  function handleDelete(): void {
-    dispatch('action', { type: 'delete', data: source });
-  }
+  const handleAction = (mode: string) => () => {
+    dispatch('action', { mode, data: source });
+  };
 </script>
 
 <div class="flex justify-center space-x-1">
-  <button on:click={handleView}>
+  <button on:click|preventDefault|stopPropagation={handleAction('view')}>
     <Icon icon="mdi:search" class="h-6 w-6 text-gray-500 hover:text-primary-500" />
   </button>
-  <button on:click={handleEdit}>
+  <button on:click|preventDefault|stopPropagation={handleAction('edit')}>
     <Icon icon="mdi:edit" class="h-6 w-6 text-gray-500 hover:text-primary-500" />
   </button>
-  <button on:click={handleDelete}>
+  <button on:click|preventDefault|stopPropagation={handleAction('delete')}>
     <Icon icon="mdi:delete" class="h-6 w-6 text-gray-500 hover:text-primary-500" />
   </button>
 </div>

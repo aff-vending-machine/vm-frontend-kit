@@ -1,4 +1,4 @@
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
 import overlay from './overlay';
 
@@ -25,16 +25,14 @@ export function useSelector<M, D>() {
     overlay.close();
   }
 
-  async function wait() {
-    const { mode, data } = get(selector);
-    if (mode !== 'none') {
+  async function call({ mode, data }: SelectorType) {
+    if (mode !== 'none' && !!data) {
       return Promise.resolve({ mode, value: data! });
-    } else {
-      return Promise.reject();
     }
+    return Promise.reject();
   }
 
-  return { select, ok, reset, wait };
+  return { select, ok, reset, call, ...selector };
 }
 
 export default useSelector;

@@ -1,24 +1,9 @@
 import { get } from 'svelte/store';
 
+import { filter } from './store';
+
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
-import useFilter from '$lib/stores/useFilter';
-
-export type FilterType = {
-  machineId: number;
-  search: string;
-  stock: string;
-  status: string;
-  changed: string;
-};
-
-export const filter = useFilter<FilterType>({
-  machineId: 0,
-  search: '',
-  stock: '',
-  status: '',
-  changed: '',
-});
 
 export const bindFilter = (machines: number[], call: (id: number) => Promise<void>) => {
   return page.subscribe(async p => {

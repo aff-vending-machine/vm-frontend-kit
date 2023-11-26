@@ -1,8 +1,7 @@
 import dayjs from 'dayjs';
 import { get } from 'svelte/store';
 
-import type { FilterType } from './filter';
-import { slotsData, draft } from './handle';
+import { draft, slotsData, type FilterType } from './store';
 
 import { locale, t } from '$lib/i18n/translations';
 import type { CatalogProduct } from '$types/catalog_product';

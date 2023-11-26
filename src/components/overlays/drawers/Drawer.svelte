@@ -17,7 +17,7 @@
       on:click={drawer.close}
     />
     <div
-      class="absolute right-0 h-full w-full bg-white shadow-md shadow-white lg:w-1/2"
+      class="absolute right-0 h-full w-full bg-white shadow-md shadow-white md:w-1/2 lg:w-1/3"
       transition:slide={{ duration: 300, easing: quintOut, axis: 'x' }}
     >
       <div class="flex h-full w-full flex-col justify-between">

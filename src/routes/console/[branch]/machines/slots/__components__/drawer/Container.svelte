@@ -1,5 +1,7 @@
 <script lang="ts">
-  import Editor from './DrawerEditor.svelte';
+  import Creator from './Creator.svelte';
+  import Editor from './Editor.svelte';
+  import Eraser from './Eraser.svelte';
 
   import Drawer from '$components/overlays/drawers/Drawer.svelte';
 
@@ -10,7 +12,7 @@
 <Drawer let:Header let:Footer let:Body>
   <Header {title} {subtitle} />
   <Body>
-    <slot {Editor} />
+    <slot {Creator} {Editor} {Eraser} />
   </Body>
   <Footer />
 </Drawer>

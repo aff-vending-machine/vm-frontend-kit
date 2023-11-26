@@ -1,20 +1,9 @@
 import { get } from 'svelte/store';
 
+import { filter } from './store';
+
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
-import useFilter from '$lib/stores/useFilter';
-
-type FilterType = {
-  page: number;
-  limit: number;
-  groupId: number;
-};
-
-export const filter = useFilter<FilterType>({
-  page: 1,
-  limit: 10,
-  groupId: 0,
-});
 
 export const bindFilter = (count: number) => {
   return page.subscribe(async p => {

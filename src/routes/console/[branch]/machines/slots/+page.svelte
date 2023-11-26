@@ -1,14 +1,15 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import Drawer from './__components__/drawer/Drawer.svelte';
+  import Drawer from './__components__/drawer/Container.svelte';
   import Command from './__components__/filter/Action.svelte';
   import FilterBar from './__components__/filter/Filter.svelte';
   import SlotCard from './__components__/grid/SlotCard.svelte';
   import SlotEmpty from './__components__/grid/SlotEmpty.svelte';
-  import { bindFilter, filter } from './filter';
-  import { request, handle, selector, slotsData, draft, machineData } from './handle';
-  import { findBorder, isPassed5Seconds, regroupData } from './utils';
+  import { bindFilter } from './filter';
+  import { handle } from './handle';
+  import { machineData, slotsData, draft, request, selector, filter } from './store';
+  import { findBorder, isEdited, isPassed5Seconds, regroupData } from './utils';
 
   import Card from '$components/sections/cards/Card.svelte';
   import { t } from '$lib/i18n/translations';
@@ -19,8 +20,6 @@
   $: loading = $slotsData.loading || $request.loading;
   $: error = $slotsData.error || $request.error;
 
-  $: isEdited = (id: number) =>
-    JSON.stringify($draft.find(s => s.id === id)) !== JSON.stringify($slotsData.data?.find(s => s.id === id));
   $: getSlot = (id: number) => $draft.find(s => s.id === id) || $draft[0];
 
   onMount(() => {
@@ -85,9 +84,17 @@
   </Content>
 </Card>
 
-{#await selector.wait() then { mode, value }}
-  <Drawer let:Editor title={value.code} subtitle={value.product.name}>
-    {#if mode === 'edit'}
+{#await selector.call($selector) then { mode, value }}
+  <Drawer let:Creator let:Editor let:Eraser title={value.code} subtitle={value.product.name}>
+    {#if mode === 'create'}
+      <Creator
+        slotcode={value.code}
+        groupOptions={data.options.groups}
+        productOptions={data.options.products}
+        on:update={handle.update}
+        on:delete={handle.delete}
+        on:cancel={handle.cancel}
+      />{:else if mode === 'edit'}
       <Editor
         slot={value}
         groupOptions={data.options.groups}
@@ -95,9 +102,10 @@
         on:update={handle.update}
         on:delete={handle.delete}
         on:cancel={handle.cancel}
-      />
+      />{:else if mode === 'delete'}
+      <Eraser slot={value} on:delete={handle.delete} on:cancel={handle.cancel} />
     {/if}
   </Drawer>
-{:catch _}
-  <div />
+{:catch}
+  <div class="hidden" />
 {/await}

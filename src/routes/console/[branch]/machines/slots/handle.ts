@@ -1,22 +1,11 @@
-import { writable } from 'svelte/store';
+import { selector, draft } from './store';
 
 import { MachineSlotService } from '$lib/services/machine_slot';
 import { SyncService } from '$lib/services/sync';
-import useSelector from '$lib/stores/useSelector';
-import useSWR from '$lib/stores/useSWR';
-import type { Machine } from '$types/machine';
 import type { MachineSlot } from '$types/machine_slot';
-
-type Mode = 'edit';
 
 const slotAPI = MachineSlotService.getInstance();
 const syncAPI = SyncService.getInstance();
-
-export const request = useSWR();
-export const selector = useSelector<Mode, MachineSlot>();
-export const machineData = useSWR<Machine>();
-export const slotsData = useSWR<MachineSlot[]>();
-export const draft = writable<MachineSlot[]>([]);
 
 export const handle = {
   select: (e: CustomEvent) => {

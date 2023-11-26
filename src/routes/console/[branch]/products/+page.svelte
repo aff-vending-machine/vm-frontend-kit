@@ -1,28 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  import Drawer from './__components__/drawer/Container.svelte';
   import Action from './__components__/filter/Action.svelte';
-  import { filter, bindFilter } from './filter';
-  import Filter from './Filter.svelte';
+  import Filter from './__components__/filter/Filter.svelte';
+  import { bindFilter } from './filter';
+  import { handle } from './handle';
+  import { filter, selector } from './store';
   import { columns } from './table';
 
   import Table from '$components/elements/tables/Table.svelte';
-  import Drawer from '$components/overlays/drawers/Drawer.svelte';
   import Card from '$components/sections/cards/Card.svelte';
   import SharePagination from '$components/shares/SharePagination.svelte';
   import { t } from '$lib/i18n/translations';
-  import drawer from '$lib/stores/overlay';
-  import type { CatalogProduct } from '$types/catalog_product';
 
   export let data;
-
-  let selectedProduct: CatalogProduct;
-
-  function handleAction(e: CustomEvent) {
-    const { value } = e.detail;
-    selectedProduct = value;
-    drawer.open();
-  }
 
   onMount(() => {
     const unsubscribe = bindFilter(data.count);
@@ -47,7 +39,7 @@
       {#await data.fetch.products()}
         <Loading {columns} />
       {:then source}
-        <Body {columns} {source} on:select={handleAction} />
+        <Body {columns} {source} on:select={handle.action} />
         <Footer>
           <SharePagination limit={$filter.limit} page={$filter.page} colspan={columns.length} count={data.count} />
         </Footer>
@@ -56,8 +48,18 @@
   </Content>
 </Card>
 
-<Drawer let:Header let:Footer let:Body>
-  <Header title={selectedProduct.name} subtitle={selectedProduct.description} />
-  <Body></Body>
-  <Footer />
-</Drawer>
+{#await selector.call($selector) then { mode, value }}
+  <Drawer let:Viewer let:Creator let:Editor let:Eraser title={value.name} subtitle={value.group.description}>
+    {#if mode === 'view'}
+      <Viewer product={value} on:edit={handle.action} on:delete={handle.action} on:cancel={handle.close} />
+    {:else if mode === 'create'}
+      <Creator groupOptions={data.options.groups} on:update={handle.update} on:cancel={handle.close} />
+    {:else if mode === 'edit'}
+      <Editor product={value} groupOptions={data.options.groups} on:update={handle.update} on:cancel={handle.close} />
+    {:else if mode === 'delete'}
+      <Eraser product={value} on:delete={handle.delete} on:cancel={handle.close} />
+    {/if}
+  </Drawer>
+{:catch}
+  <div class="hidden" />
+{/await}

@@ -6,7 +6,7 @@ export type TranslationType = (key: string) => string;
 export const defaultLocale = 'en';
 
 const locales = ['en', 'th'];
-const keys = ['auth', 'common', 'console', 'options', 'pagination', 'report', 'sidebar', 'slot'];
+const keys = ['auth', 'common', 'console', 'machine', 'options', 'pagination', 'report', 'sidebar', 'slot'];
 
 const loaders = [];
 

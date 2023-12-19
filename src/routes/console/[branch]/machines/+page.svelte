@@ -29,7 +29,6 @@
     <Header>{$t('common.search-filter')}</Header>
     <Filter limit={$filter.limit} />
   </Content>
-  <div class="mt-4 border-b" />
   <Content>
     <Table let:Loading let:Header let:Footer let:Body>
       <Header {columns} />
@@ -40,6 +39,8 @@
         <Footer>
           <SharePagination limit={$filter.limit} page={$filter.page} colspan={columns.length} count={data.count} />
         </Footer>
+      {:catch e}
+        <div>{e?.message}</div>
       {/await}
     </Table>
   </Content>

@@ -12,7 +12,7 @@
   export let hidden = false;
 </script>
 
-<div class="mr-6" class:hidden>
+<div class:hidden>
   {#if label}
     <label for={id} class="mb-1 block text-sm font-medium">{label}:</label>
   {/if}
@@ -22,10 +22,10 @@
     disabled={disabled || (!unselected && options.length === 1)}
     bind:value
     on:change
-    class="w-full rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700 sm:w-[calc(100%+24px)]"
+    class="w-full rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700 sm:w-full"
   >
     {#if unselected !== undefined && options.length > 1}
-      <option class="text-gray-500" value={unselected}>{placeholder}</option>
+      <option class="text-gray-500" value={unselected} disabled={unselected === null}>{placeholder}</option>
     {/if}
     {#each options as option}
       <option value={option.value}>{option.label}</option>

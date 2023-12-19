@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import { handle } from './handle';
+
   import { page } from '$app/stores';
   import SelectField from '$components/forms/inputs/SelectField.svelte';
   import Footer from '$components/sections/footers/Footer.svelte';
@@ -11,11 +12,7 @@
 
   export let data;
 
-  function handleChangeBranch(event: Event) {
-    const newBranch = (event.target as HTMLSelectElement).value;
-    const url = $page.route.id?.replace('[branch]', newBranch);
-    goto(`${url}?${$page.url.searchParams.toString()}`);
-  }
+  $: branchOptions = data.options.branches.map(b => ({ label: b.label, value: b.data }));
 </script>
 
 <div class="flex h-screen w-screen bg-gray-100">
@@ -28,11 +25,11 @@
           <SelectField
             id="branches"
             value={$page.params.branch}
-            options={data.options.branches}
+            options={branchOptions}
             unselected="all"
             placeholder={$t('options.branch.all')}
-            disabled={data.options.branches.length < 2}
-            on:change={handleChangeBranch}
+            disabled={branchOptions.length < 2}
+            on:change={handle.changeBranch}
           />
         {/if}
       </Content>

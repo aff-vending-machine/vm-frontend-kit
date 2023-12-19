@@ -7,6 +7,7 @@ type Fetcher = {
   query?: string | null;
   data?: BodyInit | null;
   token?: string | null;
+  refresh?: boolean | null;
 };
 
 type Protocol<T> = {
@@ -18,7 +19,11 @@ type Protocol<T> = {
 
 const cache: Record<string, any> = {};
 
-const requester = async <T = any>(method: string, path: string, { query, data, token }: Fetcher = {}): Promise<T> => {
+const requester = async <T = any>(
+  method: string,
+  path: string,
+  { query, data, token, refresh }: Fetcher = {},
+): Promise<T> => {
   try {
     const opts: RequestInit = { method };
     const headers = {} as Record<string, string>;
@@ -32,6 +37,10 @@ const requester = async <T = any>(method: string, path: string, { query, data, t
 
     const key = url.href;
     if (method === 'GET') {
+      if (refresh) {
+        delete cache[key];
+      }
+
       if (cache[key] && Date.now() - cache[key].timestamp < 60 * 60 * 1000) {
         return Promise.resolve(cache[key].data);
       }
@@ -69,8 +78,8 @@ type Options = {
   query?: string | null;
   token?: string | null;
 };
-const get = <T = any>(path: string, opt?: Options) => {
-  return requester<T>('GET', path, { ...opt });
+const get = <T = any>(path: string, opt?: Options, refresh?: boolean) => {
+  return requester<T>('GET', path, { ...opt, refresh });
 };
 
 const del = <T = any>(path: string, opt?: Options) => {

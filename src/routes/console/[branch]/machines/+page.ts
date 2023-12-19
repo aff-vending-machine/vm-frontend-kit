@@ -14,10 +14,10 @@ export async function load({ url, parent }) {
       const offset = ((page || 1) - 1) * limit;
       query.set('offset', offset.toString());
     }
-
+    query.set('preloads', 'Branch');
     query.sort();
 
-    const machines = await machineAPI.find(query.toString());
+    const machines = await machineAPI.find(query.toString(), true);
     return machines.sort((a, b) => {
       if (a.name < b.name) return -1;
       if (a.name > b.name) return 1;

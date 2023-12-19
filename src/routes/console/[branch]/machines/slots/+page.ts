@@ -17,7 +17,7 @@ export async function load({ parent }) {
     query.set('preloads', 'Product');
     query.sort();
 
-    const slots = await slotAPI.find(machineId, query.toString());
+    const slots = await slotAPI.find(machineId, query.toString(), true);
     return slots;
   };
 

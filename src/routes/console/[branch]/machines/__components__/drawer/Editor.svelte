@@ -16,19 +16,21 @@
   const dispatch = createEventDispatcher();
 
   const formID = 'machine-editor-form';
-  const id = field('id', machine.id, []);
   const name = field('name', machine.name, [required()]);
   const branchId = field('branch_id', machine.branch_id, [required()]);
   const location = field('location', machine.location, []);
   const type = field('type', machine.type, []);
   const vendor = field('vendor', machine.vendor, []);
   const status = field('status', machine.status, []);
-  const machineForm = form(id, name, branchId, location, type, vendor, status);
+  const machineForm = form(name, branchId, location, type, vendor, status);
 
   async function handleSubmit() {
     await machineForm.validate();
     if ($machineForm.valid) {
-      dispatch('update', { data: machineForm.summary() });
+      const id = machine.id;
+      const data = machineForm.summary();
+
+      dispatch('update', { id, data });
     }
   }
 

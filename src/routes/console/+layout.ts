@@ -22,7 +22,7 @@ export async function load({ parent }) {
 
   const fetchBranchOptions = async () => {
     const branches = await branchAPI.find();
-    return branches.map(b => ({ label: b.name, value: genKey(b.name) }));
+    return branches.map(b => ({ label: b.name, value: b.id, data: genKey(b.name) }));
   };
 
   const { isAuthenticated } = await parent();

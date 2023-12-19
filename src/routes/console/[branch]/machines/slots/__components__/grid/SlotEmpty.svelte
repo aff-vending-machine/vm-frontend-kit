@@ -5,7 +5,7 @@
   export let isExist: boolean;
 
   const dispatch = createEventDispatcher();
-  const handleCreateEvent = () => !isExist && dispatch('create', { source: { code } });
+  const handleCreateEvent = () => !isExist && dispatch('create', { data: { code } });
 </script>
 
 <button

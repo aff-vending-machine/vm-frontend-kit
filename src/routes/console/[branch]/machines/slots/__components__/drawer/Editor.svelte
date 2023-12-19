@@ -21,19 +21,25 @@
   const dispatch = createEventDispatcher();
 
   const formID = 'slot-editor-form';
-  const id = field('id', slot.id, [required()]);
   const code = field('code', slot.code, [required()]);
   const group_id = field('group_id', slot.product?.group_id, [required()]);
   const productID = field('product_id', slot.product_id, []);
   const stock = field('stock', slot.stock, [required(), min(0)]);
   const capacity = field('capacity', slot.capacity, [required(), min(0)]);
   const is_enable = field('is_enable', slot.is_enable, [required()]);
-  const slotForm = form(id, code, group_id, productID, stock, capacity, is_enable);
+  const slotForm = form(code, productID, stock, capacity, is_enable);
 
   async function handleSubmit() {
     await slotForm.validate();
     if ($slotForm.valid) {
-      dispatch('update', { data: slotForm.summary() });
+      const id = slot.id;
+      const data = slotForm.summary();
+      data.product = productOptions.find(p => p.value === data.product_id)?.data;
+      delete data.product.created_at;
+      delete data.product.updated_at;
+      delete data.product.group;
+
+      dispatch('update', { id, data });
     }
   }
 
@@ -87,25 +93,29 @@
       label={$t('slot.field.product')}
       bind:value={$productID.value}
       error={$productID.errors?.at(0)}
+      unselected={null}
+      placeholder="-"
       options={productOptions.filter(p => $group_id.value === 0 || p.filter === $group_id.value)}
     />
     <NumberInputField
       id="stock"
       label={$t('slot.field.stock')}
       bind:value={$stock.value}
+      max={$capacity.value}
       error={$stock.errors?.at(0)}
     />
     <NumberInputField
       id="capacity"
       label={$t('slot.field.capacity')}
       bind:value={$capacity.value}
+      min={$stock.value}
       error={$capacity.errors?.at(0)}
     />
     <ToggleField id="is_enable" label={$t('slot.field.active')} bind:value={$is_enable.value} />
   </form>
 
   <div class="mt-4 flex justify-end space-x-4">
-    <Button color="primary" type="submit" form={formID}>{$t('common.button.save')}</Button>
+    <Button color="primary" type="submit" form={formID} disabled={!$slotForm.valid}>{$t('common.button.save')}</Button>
     <Button color="danger" outline on:click={handleDelete}>{$t('common.button.delete')}</Button>
     <Button color="warning" outline on:click={handleCancel}>{$t('common.button.cancel')}</Button>
   </div>

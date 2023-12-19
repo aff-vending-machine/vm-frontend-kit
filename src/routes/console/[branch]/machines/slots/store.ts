@@ -14,6 +14,7 @@ export type FilterType = {
   stock: string;
   status: string;
   changed: string;
+  image: string;
 };
 
 export const filter = useFilter<FilterType>({
@@ -22,9 +23,10 @@ export const filter = useFilter<FilterType>({
   stock: '',
   status: '',
   changed: '',
+  image: '',
 });
-export const request = useSWR();
 export const selector = useSelector<ModeType, MachineSlot>();
-export const machineData = useSWR<Machine>();
-export const slotsData = useSWR<MachineSlot[]>();
 export const draft = writable<MachineSlot[]>([]);
+export const actionState = useSWR<void>();
+export const machineState = useSWR<Machine>();
+export const slotsState = useSWR<MachineSlot[]>();

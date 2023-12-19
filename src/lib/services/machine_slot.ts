@@ -1,6 +1,9 @@
+import api from '$lib/api';
 import { CRUDService } from '$lib/utils/base/api_2nd';
 import { convertToDate } from '$lib/utils/convert';
-import type { MachineSlot } from '$types/machine_slot';
+import { genError } from '$lib/utils/generate';
+import { getAccessToken } from '$lib/utils/jwt';
+import type { BulkUpdateMachineSlot, MachineSlot } from '$types/machine_slot';
 
 const ROOT_PATH = 'machines';
 const SUB_PATH = 'slots';
@@ -25,4 +28,14 @@ export class MachineSlotService extends CRUDService<MachineSlot> {
 
     return slot;
   };
+
+  async bulkUpdate(machine_id: number, payload: BulkUpdateMachineSlot): Promise<void> {
+    try {
+      const token = await getAccessToken();
+      const data = await api.put<void>(`${this.ROOT_PATH}/${machine_id}/${this.SUB_PATH}/bulk`, payload, { token });
+      return Promise.resolve<void>(data);
+    } catch (e) {
+      return Promise.reject(genError(e));
+    }
+  }
 }

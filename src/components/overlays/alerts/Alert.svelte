@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Icon from '@iconify/svelte';
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
   import type { AlertType } from '$lib/stores/alert';
@@ -31,9 +32,9 @@
       case 'success':
         return {
           icon: 'mdi:check-circle-outline',
-          bg: 'bg-secondary-100',
-          bar: 'bg-secondary-500',
-          txt: 'text-secondary-700',
+          bg: 'bg-green-100',
+          bar: 'bg-green-500',
+          txt: 'text-green-700',
           color: 'green',
         };
 
@@ -70,15 +71,15 @@
   });
 </script>
 
-<div class="flex min-w-[16rem] animate-notify flex-col rounded-md shadow-lg {spec.bg} opacity-0">
+<div class="flex min-w-[20rem] animate-notify flex-col rounded-md shadow-lg {spec.bg} opacity-0">
   <div class="flex p-4 text-sm">
-    <!-- <Icon icon={spec.icon} class="mr-3 h-5 w-5 flex-shrink-0" color={spec.color} /> -->
+    <Icon icon={spec.icon} class="mr-3 h-5 w-5 flex-shrink-0" color={spec.color} />
     <p class={spec.txt}>{message}</p>
     <button class="float-right ml-auto" on:click|once={remove}>
-      <!-- <Icon icon="mdi:close" class="h-4 w-4 text-gray-500 hover:text-red-500" /> -->
+      <Icon icon="mdi:close" class="h-4 w-4 text-gray-500 hover:text-red-500" />
     </button>
   </div>
-  <div class="relative flex h-0.5 w-full overflow-hidden rounded-full bg-secondary-200">
+  <div class="relative flex h-0.5 w-full overflow-hidden rounded-full bg-gray-200">
     <div
       role="progressbar"
       aria-valuenow={100}

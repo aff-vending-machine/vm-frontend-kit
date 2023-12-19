@@ -3,24 +3,19 @@
 
   import { page } from '$app/stores';
   import Alert from '$components/overlays/alerts/Alert.svelte';
-  import { loadTranslations, loading } from '$lib/i18n/translations';
+  import { loadTranslations } from '$lib/i18n/translations';
   import alert from '$lib/stores/alert';
   import language from '$lib/stores/language';
   import { windowWidth } from '$lib/stores/media';
   import '../app.css';
 
   onMount(() => {
-    const unsubLanguage = language.subscribe(lang => {
+    const unsubscribe = language.subscribe(lang => {
       loadTranslations(lang, $page.url.pathname);
     });
 
-    const unsubLoading = loading.subscribe(async $loading => {
-      if ($loading) await loading.toPromise();
-    });
-
     return () => {
-      unsubLanguage();
-      unsubLoading();
+      unsubscribe();
     };
   });
 </script>

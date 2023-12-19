@@ -17,6 +17,11 @@ export const isIsoDate = (str?: string | null) => {
   return d instanceof Date && !isNaN(d.getTime()) && d.toISOString() === str; // valid date
 };
 
+export const isMatched = (a?: unknown, b?: unknown) => {
+  if (a === b) return true;
+  return JSON.stringify(a) === JSON.stringify(b);
+};
+
 export const filterColumns = (columns: ColumnType[]) =>
   columns.filter(c => {
     if (!c.responsive || c.responsive === 'all') return true;

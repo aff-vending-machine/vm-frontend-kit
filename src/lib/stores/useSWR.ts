@@ -14,7 +14,7 @@ export type SWRStore<T> = {
 export function useSWR<T>() {
   const { subscribe, set, update } = writable<SWRStore<T>>({ loading: false });
 
-  async function mutate(fetcher: Fetcher<T>) {
+  async function mutate(fetcher: Fetcher<T>): Promise<string | null> {
     try {
       set({ loading: true });
       const result = await fetcher();
@@ -22,7 +22,10 @@ export function useSWR<T>() {
     } catch (e) {
       const err = genError(e);
       update(() => ({ loading: false, error: err }));
+      return err.message;
     }
+
+    return null;
   }
 
   async function call(fetcher: Fetcher<void>) {

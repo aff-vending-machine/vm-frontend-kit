@@ -5,16 +5,16 @@ import api from '$lib/api';
 
 export abstract class CRUDService<T> {
   constructor(
-    private ROOT_PATH: string,
-    private SUB_PATH: string,
+    protected ROOT_PATH: string,
+    protected SUB_PATH: string,
   ) {}
 
   protected abstract remap: (data: T) => T;
 
-  async find(root_id: number, query?: string): Promise<T[]> {
+  async find(root_id: number, query?: string, refresh?: boolean): Promise<T[]> {
     try {
       const token = await getAccessToken();
-      const data = await api.get<T[]>(`${this.ROOT_PATH}/${root_id}/${this.SUB_PATH}`, { query, token });
+      const data = await api.get<T[]>(`${this.ROOT_PATH}/${root_id}/${this.SUB_PATH}`, { query, token }, refresh);
       const result = data.map(this.remap);
       return Promise.resolve<T[]>(result);
     } catch (e) {
@@ -22,20 +22,24 @@ export abstract class CRUDService<T> {
     }
   }
 
-  async count(root_id: number, query?: string): Promise<number> {
+  async count(root_id: number, query?: string, refresh?: boolean): Promise<number> {
     try {
       const token = await getAccessToken();
-      const data = await api.get<number>(`${this.ROOT_PATH}/${root_id}/${this.SUB_PATH}/count`, { query, token });
+      const data = await api.get<number>(
+        `${this.ROOT_PATH}/${root_id}/${this.SUB_PATH}/count`,
+        { query, token },
+        refresh,
+      );
       return Promise.resolve<number>(data);
     } catch (e) {
       return Promise.reject(genError(e));
     }
   }
 
-  async findByID(root_id: number, id: number): Promise<T> {
+  async findByID(root_id: number, id: number, refresh?: boolean): Promise<T> {
     try {
       const token = await getAccessToken();
-      const data = await api.get<T>(`${this.ROOT_PATH}/${root_id}/${this.SUB_PATH}/${id}`, { token });
+      const data = await api.get<T>(`${this.ROOT_PATH}/${root_id}/${this.SUB_PATH}/${id}`, { token }, refresh);
       const result = this.remap(data);
       return Promise.resolve<T>(result);
     } catch (e) {

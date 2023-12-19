@@ -8,14 +8,13 @@
   import { createEventDispatcher } from 'svelte';
 
   import 'dayjs/locale/th';
-  import { showTime } from '../../utils';
 
   import Button from '$components/elements/buttons/Button.svelte';
-  import { t } from '$lib/i18n/translations';
+  import { locale, t } from '$lib/i18n/translations';
 
   export let time: Date | undefined;
-  export let isSynced: boolean;
-  export let isEdited: boolean;
+  export let syncing: boolean;
+  export let editing: boolean;
   export let loading: boolean;
 
   dayjs.extend(utc);
@@ -29,14 +28,20 @@
   const handleRefresh = () => dispatch('refresh');
   const handleSave = () => dispatch('save');
   const handleCancel = () => dispatch('reset');
+
+  // helpers
+  const showTime = (date?: Date) => {
+    if (!date) return $t('common.field.never');
+    return dayjs(date).locale($locale.split('-')[0]).fromNow();
+  };
 </script>
 
 <!-- HTML -->
 <div class="flex flex-col space-y-2">
   <div class="block space-x-2">
-    <Button i="sync" disabled={!isSynced} {loading} on:click={handleRefresh}>{$t('common.button.refresh')}</Button>
-    <Button i="save" disabled={!isEdited} {loading} on:click={handleSave}>{$t('common.button.save')}</Button>
-    <Button i="cancel" disabled={!isEdited} {loading} on:click={handleCancel}>{$t('common.button.cancel')}</Button>
+    <Button i="sync" disabled={!syncing} {loading} on:click={handleRefresh}>{$t('common.button.refresh')}</Button>
+    <Button i="save" disabled={!editing} {loading} on:click={handleSave}>{$t('common.button.save')}</Button>
+    <Button i="cancel" disabled={!editing} {loading} on:click={handleCancel}>{$t('common.button.cancel')}</Button>
   </div>
   <span class="text-xs">{$t('common.field.last-time-sync')}: {showTime(time)}</span>
 </div>

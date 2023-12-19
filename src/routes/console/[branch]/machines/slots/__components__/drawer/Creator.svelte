@@ -31,7 +31,9 @@
   async function handleSubmit() {
     await slotForm.validate();
     if ($slotForm.valid) {
-      dispatch('create', { data: slotForm.summary() });
+      const data = slotForm.summary();
+
+      dispatch('create', { data });
     }
   }
 

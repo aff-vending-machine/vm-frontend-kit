@@ -1,7 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { field, form } from 'svelte-forms';
-  import { required } from 'svelte-forms/validators';
+  import { form } from 'svelte-forms';
 
   import Button from '$components/elements/buttons/Button.svelte';
   import { t } from '$lib/i18n/translations';
@@ -12,13 +11,15 @@
   const dispatch = createEventDispatcher();
 
   const formID = 'machine-eraser-form';
-  const id = field('id', machine.id, [required()]);
-  const machineForm = form(id);
+  const machineForm = form();
 
   async function handleSubmit() {
     await machineForm.validate();
     if ($machineForm.valid) {
-      dispatch('delete', { data: machineForm.summary() });
+      const id = machine.id;
+      const data = machine;
+
+      dispatch('delete', { id, data });
     }
   }
 
@@ -40,7 +41,11 @@
   </form>
 
   <div class="mt-4 flex justify-end space-x-4">
-    <Button color="danger" type="submit" form={formID}>{$t('common.button.delete')}</Button>
-    <Button color="warning" outline on:click={handleCancel}>{$t('common.button.cancel')}</Button>
+    <Button color="danger" type="submit" form={formID}>
+      {$t('common.button.delete')}
+    </Button>
+    <Button color="warning" outline on:click={handleCancel}>
+      {$t('common.button.cancel')}
+    </Button>
   </div>
 </div>

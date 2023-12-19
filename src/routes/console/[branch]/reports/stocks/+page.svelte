@@ -26,8 +26,8 @@
 
   onMount(() => {
     const machineIds = data.options.machines.map(m => m.value);
-    const unsubscribe = bindFilter(machineIds, id => {
-      return stocks.mutate(() => data.fetch.stocks(id));
+    const unsubscribe = bindFilter(machineIds, async id => {
+      await stocks.mutate(() => data.fetch.stocks(id));
     });
 
     return () => {

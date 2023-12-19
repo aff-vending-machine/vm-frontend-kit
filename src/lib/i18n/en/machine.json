@@ -19,6 +19,11 @@
     "branch": "Branch",
     "location": "Location",
     "type": "Type",
-    "vendor": "Vendor"
+    "vendor": "Vendor",
+    "status": "Status",
+    "sync-time": "Sync Time",
+    "sync-slot-time": "Slot Time",
+    "sync-channel-time": "Channel Time",
+    "sync-transaction-time": "Transaction Time"
   }
 }

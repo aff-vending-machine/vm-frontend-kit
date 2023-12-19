@@ -8,10 +8,10 @@ export abstract class CRUDService<T> {
 
   protected abstract remap: (data: T) => T;
 
-  async find(query?: string): Promise<T[]> {
+  async find(query?: string, refresh?: boolean): Promise<T[]> {
     try {
       const token = await getAccessToken();
-      const data = await api.get<T[]>(this.ROOT_PATH, { query, token });
+      const data = await api.get<T[]>(this.ROOT_PATH, { query, token }, refresh);
       const result = data.map(this.remap);
       return Promise.resolve<T[]>(result);
     } catch (e) {
@@ -19,20 +19,20 @@ export abstract class CRUDService<T> {
     }
   }
 
-  async count(query?: string): Promise<number> {
+  async count(query?: string, refresh?: boolean): Promise<number> {
     try {
       const token = await getAccessToken();
-      const data = await api.get<number>(`${this.ROOT_PATH}/count`, { query, token });
+      const data = await api.get<number>(`${this.ROOT_PATH}/count`, { query, token }, refresh);
       return Promise.resolve<number>(data);
     } catch (e) {
       return Promise.reject(genError(e));
     }
   }
 
-  async findByID(id: number, query?: string): Promise<T> {
+  async findByID(id: number, query?: string, refresh?: boolean): Promise<T> {
     try {
       const token = await getAccessToken();
-      const data = await api.get<T>(`${this.ROOT_PATH}/${id}`, { query, token });
+      const data = await api.get<T>(`${this.ROOT_PATH}/${id}`, { query, token }, refresh);
       const result = this.remap(data);
       return Promise.resolve<T>(result);
     } catch (e) {

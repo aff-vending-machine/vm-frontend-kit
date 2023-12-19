@@ -14,6 +14,7 @@ export const bindFilter = (machines: number[], call: (id: number) => Promise<voi
     const currentStock = searchParams.get('stock') ?? '';
     const currentStatus = searchParams.get('status') ?? '';
     const currentChanged = searchParams.get('changed') ?? '';
+    const currentImage = searchParams.get('image') ?? '';
 
     if (currentMachineId === 0 || !machines.includes(currentMachineId)) {
       currentMachineId = machines[0];
@@ -33,6 +34,7 @@ export const bindFilter = (machines: number[], call: (id: number) => Promise<voi
       stock: currentStock,
       status: currentStatus,
       changed: currentChanged,
+      image: currentImage,
     }));
 
     return p;

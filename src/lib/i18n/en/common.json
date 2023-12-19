@@ -51,6 +51,7 @@
     "stock": "Stock",
     "role": "Role",
     "status": "Status",
-    "changed": "Is edited"
+    "changed": "Is edited",
+    "image": "Image"
   }
 }

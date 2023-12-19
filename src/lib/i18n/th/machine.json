@@ -5,20 +5,25 @@
   "columns": {
     "id": "รหัส",
     "name": "ชื่อ",
-    "serial-number": "หมายเลขประจำเครื่อง",
+    "serial-number": "หมายเลขเครื่อง",
     "location": "สถานที่ตั้ง",
     "type": "ชนิด",
-    "vendor": "ผู้ให้บริการ",
+    "vendor": "ผู้ใช้บริการ",
     "status": "สถานะ",
     "actions": "คำสั่ง"
   },
   "field": {
     "name": "ชื่อ",
-    "serial-number": "หมายเลขประจำเครื่อง",
+    "serial-number": "หมายเลขเครื่อง",
     "branch-id": "รหัสสาขา",
     "branch": "สาขา",
     "location": "สถานที่ตั้ง",
     "type": "ชนิด",
-    "vendor": "ผู้ให้บริการ"
+    "vendor": "ผู้ใช้บริการ",
+    "status": "Status",
+    "sync-time": "ดึงข้อมูลล่าสุด",
+    "sync-slot-time": "ดึงช่องสินค้าล่าสุด",
+    "sync-channel-time": "ข้อมูลชำระเงินล่าสุด",
+    "sync-transaction-time": "ข้อมูลธุรกรรมล่าสุด"
   }
 }

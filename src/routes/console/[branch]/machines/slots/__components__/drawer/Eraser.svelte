@@ -13,14 +13,16 @@
   const dispatch = createEventDispatcher();
 
   const formID = 'slot-eraser-form';
-  const id = field('id', slot.id, [required()]);
   const code = field('code', slot.code, [required()]);
-  const slotForm = form(id, code);
+  const slotForm = form(code);
 
   async function handleSubmit() {
     await slotForm.validate();
     if ($slotForm.valid) {
-      dispatch('delete', { data: slotForm.summary() });
+      const id = slot.id;
+      const data = slotForm.summary();
+
+      dispatch('delete', { id, data });
     }
   }
 

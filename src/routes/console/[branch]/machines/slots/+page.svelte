@@ -4,33 +4,36 @@
   import Drawer from './__components__/drawer/Container.svelte';
   import Command from './__components__/filter/Action.svelte';
   import FilterBar from './__components__/filter/Filter.svelte';
+  import Help from './__components__/filter/Help.svelte';
   import SlotCard from './__components__/grid/SlotCard.svelte';
   import SlotEmpty from './__components__/grid/SlotEmpty.svelte';
   import { bindFilter } from './filter';
   import { handle } from './handle';
-  import { machineData, slotsData, draft, request, selector, filter } from './store';
-  import { findBorder, isEdited, isPassed5Seconds, regroupData } from './utils';
+  import { machineState, slotsState, draft, selector, filter, actionState } from './store';
+  import { utils } from './utils';
 
   import Card from '$components/sections/cards/Card.svelte';
   import { t } from '$lib/i18n/translations';
+  import { isMatched } from '$lib/utils/check';
+  import { clone } from '$lib/utils/generate';
 
   export let data;
 
-  $: border = findBorder($slotsData.data || []);
-  $: loading = $slotsData.loading || $request.loading;
-  $: error = $slotsData.error || $request.error;
-
-  $: getSlot = (id: number) => $draft.find(s => s.id === id) || $draft[0];
+  $: border = utils.findBorder($slotsState.data || []);
+  $: slots = utils.regroupData($draft, $filter, border);
+  $: loading = $slotsState.loading || $actionState.loading;
 
   onMount(() => {
     const machineIds = data.options.machines.map(m => m.value);
     const unsubscribe = bindFilter(machineIds, id => {
-      machineData.mutate(() => data.fetch.machine(id));
-      slotsData.mutate(() => data.fetch.slots(id));
+      if (!$machineState.data) {
+        machineState.mutate(() => data.fetch.machine(id));
+        slotsState.mutate(() => data.fetch.slots(id));
+      }
       return Promise.resolve();
     });
-    const unsubscribeSlots = slotsData.subscribe(s => {
-      draft.set([...(s.data || [])]);
+    const unsubscribeSlots = slotsState.subscribe(s => {
+      draft.set(clone(s.data));
       return s;
     });
 
@@ -41,6 +44,12 @@
   });
 </script>
 
+<Card let:Header>
+  <Header>
+    {$t('common.branch')}: <span class="text-secondary-500">{$machineState.data?.location || '-'}</span>
+    {$t('common.machine')}: <span class="text-secondary-500">{$machineState.data?.name || '-'}</span>
+  </Header>
+</Card>
 <Card let:Header let:Content>
   <Content>
     <Header>{$t('common.search-filter')}</Header>
@@ -49,10 +58,10 @@
   <Content>
     <Header>{$t('common.field.instructions')}</Header>
     <Command
-      time={$machineData.data?.sync_time}
-      isEdited={JSON.stringify($slotsData.data) !== JSON.stringify($draft)}
-      isSynced={isPassed5Seconds($machineData.data?.sync_time)}
-      loading={$request.loading}
+      time={$machineState.data?.sync_time}
+      editing={!isMatched($draft, $slotsState.data)}
+      syncing={utils.isPassed5Seconds($machineState.data?.sync_time)}
+      loading={$actionState.loading}
       on:refresh={handle.refresh}
       on:save={handle.save}
       on:reset={handle.reset}
@@ -60,27 +69,29 @@
   </Content>
   <Content>
     <div class="max-w-full select-none overflow-auto border-b border-t border-gray-300 p-4">
-      <div class="grid w-full gap-6" style="grid-template-columns: repeat({border.cols}, auto);">
-        {#if loading}
-          <div class="py-4 text-center">{$t('common.loading')}</div>
-        {:else if error}
-          <div>{error}</div>
-        {:else}
-          {#each regroupData($draft, $filter, border) as slot}
+      {#if loading}
+        <div class="py-4 text-center">{$t('common.syncing')}</div>
+      {:else}
+        <div class="grid w-full gap-6" style="grid-template-columns: repeat({border.cols}, auto);">
+          {#each slots as slot}
             {#if slot.id > 0}
               <SlotCard
-                slot={getSlot(slot.id)}
-                isEdited={isEdited(slot.id)}
+                slot={utils.getSlot(slot.id)}
+                editing={utils.isEditing(slot.id)}
+                image={$filter.image === 'show'}
                 on:select={handle.select}
                 on:stock={handle.adjust}
               />
             {:else}
-              <SlotEmpty code={slot.code} isExist={true} />
+              <SlotEmpty code={slot.code} isExist={true} on:create />
             {/if}
           {/each}
-        {/if}
-      </div>
+        </div>
+      {/if}
     </div>
+  </Content>
+  <Content>
+    <Help />
   </Content>
 </Card>
 
@@ -91,8 +102,7 @@
         slotcode={value.code}
         groupOptions={data.options.groups}
         productOptions={data.options.products}
-        on:update={handle.update}
-        on:delete={handle.delete}
+        on:create={handle.create}
         on:cancel={handle.cancel}
       />{:else if mode === 'edit'}
       <Editor

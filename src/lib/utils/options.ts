@@ -37,3 +37,8 @@ export const editOptions: SelectOptionsTypeFunction = (t: TranslationType) => [
   { label: t('options.changed.changed'), value: 'true' },
   { label: t('options.changed.not-changed'), value: 'false' },
 ];
+
+export const displayOptions: SelectOptionsTypeFunction = (t: TranslationType) => [
+  { label: t('options.display.hidden'), value: '' },
+  { label: t('options.display.show'), value: 'show' },
+];

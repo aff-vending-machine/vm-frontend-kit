@@ -19,6 +19,10 @@
     "changed": "มีการแก้ไข",
     "not-changed": "ไม่มีการแก้ไข"
   },
+  "display": {
+    "hidden": "ซ่อน",
+    "show": "แสดง"
+  },
   "export": {
     "excel": "ไฟล์ Excel",
     "csv": "ไฟล์ CSV"

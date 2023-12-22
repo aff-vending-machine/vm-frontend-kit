@@ -1,0 +1,33 @@
+<!-- TableRender -->
+<script lang="ts">
+  import dayjs from 'dayjs';
+
+  import type { TableFieldType } from './table';
+
+  import Image from '$lib/components/elements/images/Image.svelte';
+  import Currency from '$lib/components/elements/labels/Currency.svelte';
+  import Number from '$lib/components/elements/labels/Number.svelte';
+
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  export let index: number;
+  export let value: any;
+  export let type: TableFieldType;
+  export let source: unknown;
+</script>
+
+<!-- HTML -->
+{#if type === 'component'}
+  <svelte:component this={value} {index} {source} on:action />
+{:else if type === 'image'}
+  <Image src={value} alt={value} class="h-auto w-16" />
+{:else if type === 'number'}
+  <Number amount={value} />
+{:else if type === 'currency'}
+  <Currency amount={value} />
+{:else if type === 'date'}
+  <time>{dayjs(value).format('DD MMM YYYY HH:mm:ss')}</time>
+{:else if type === 'array'}
+  <span>{value.join(', ')}</span>
+{:else}
+  <span>{value}</span>
+{/if}

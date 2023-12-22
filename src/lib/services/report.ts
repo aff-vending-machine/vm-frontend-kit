@@ -1,8 +1,8 @@
-import api from '$lib/api';
-import { convertToDate } from '$lib/utils/convert';
-import { genError } from '$lib/utils/generate';
-import { getAccessToken } from '$lib/utils/jwt';
-import type { MachineReport, StockReport, TransactionReport } from '$types/report';
+import api, { type Result } from '$lib/helpers/apis/api';
+import { convertToDate } from '$lib/helpers/converter';
+import { generateError } from '$lib/helpers/generator';
+import { getAccessTokenWithAuthRefresh } from '$lib/helpers/jwt';
+import type { MachineReport, StockReport, TransactionReport } from '$lib/types/report';
 
 const ROOT_PATH = 'report';
 
@@ -26,33 +26,32 @@ export class ReportService {
     return data;
   };
 
-  async summary(query?: string): Promise<MachineReport[]> {
+  protected async requestWrapper<R>(callback: (token: string) => Promise<R>): Promise<R> {
     try {
-      const token = await getAccessToken();
-      const result = await api.get<MachineReport[]>(`${this.PATH}/summary`, { query, token });
-      return Promise.resolve(result);
+      const token = await getAccessTokenWithAuthRefresh();
+      return await callback(token);
     } catch (e) {
-      return Promise.reject(genError(e));
+      throw generateError(e);
     }
   }
 
-  async stocks(machine_id: number, query?: string): Promise<StockReport[]> {
-    try {
-      const token = await getAccessToken();
-      const result = await api.get<StockReport[]>(`${this.PATH}/${machine_id}/stocks`, { query, token });
-      return Promise.resolve(result);
-    } catch (e) {
-      return Promise.reject(genError(e));
-    }
+  async summary(query?: string): Promise<Result<MachineReport[]>> {
+    return this.requestWrapper(async token => {
+      const result = await api.get<MachineReport[]>(`${this.PATH}/summary`, { query, token });
+      return { ...result };
+    });
   }
-  async transactions(machine_id: number, query?: string): Promise<TransactionReport[]> {
-    try {
-      const token = await getAccessToken();
-      const list = await api.get<TransactionReport[]>(`${this.PATH}/${machine_id}/transactions`, { query, token });
-      const result = list.map(this.remapTransaction);
-      return Promise.resolve(result);
-    } catch (e) {
-      return Promise.reject(genError(e));
-    }
+
+  async stocks(machine_id: number, query?: string): Promise<Result<StockReport[]>> {
+    return this.requestWrapper(async token => {
+      const result = await api.get<StockReport[]>(`${this.PATH}/${machine_id}/stocks`, { query, token });
+      return { ...result };
+    });
+  }
+  async transactions(machine_id: number, query?: string): Promise<Result<TransactionReport[]>> {
+    return this.requestWrapper(async token => {
+      const result = await api.get<TransactionReport[]>(`${this.PATH}/${machine_id}/transactions`, { query, token });
+      return { ...result, data: result.data!.map(this.remapTransaction) };
+    });
   }
 }

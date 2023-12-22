@@ -1,15 +1,12 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import { goto } from '$app/navigation';
+  import { authenticate } from '$lib/stores/auth';
 
-  export let data;
-
-  onMount(async () => {
-    if (data.isAuthenticated) {
-      await goto('/console');
-    } else {
-      await goto('/login');
+  $effect(() => {
+    if ($authenticate) {
+      goto('/console');
+    } else if ($authenticate === false) {
+      goto('/login');
     }
   });
 </script>

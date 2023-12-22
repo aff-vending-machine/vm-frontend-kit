@@ -6,3 +6,6 @@ export const AUTHENTICATED_REMEMBERED = 'authenticated-remembered';
 export const LOGIN_REDIRECT = 'login-redirect';
 export const REFRESH_TOKEN_PATH = 'auth/refresh';
 export const LANGUAGE = 'language';
+
+export const DEFAULT_PER_PAGE = '10';
+export const DEFAULT_PAGE = '1';

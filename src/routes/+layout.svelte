@@ -1,31 +1,18 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  import { page } from '$app/stores';
-  import Alert from '$components/overlays/alerts/Alert.svelte';
-  import { loadTranslations } from '$lib/i18n/translations';
+  import { navigating } from '$app/stores';
+  import Alert from '$lib/components/overlays/alerts/Alert.svelte';
   import alert from '$lib/stores/alert';
-  import language from '$lib/stores/language';
   import { windowWidth } from '$lib/stores/media';
   import '../app.css';
+  import { authenticate } from '$lib/stores/auth';
+  import { goto } from '$app/navigation';
 
-  onMount(() => {
-    const unsubscribe = language.subscribe(lang => {
-      loadTranslations(lang, $page.url.pathname);
-    });
-
-    return () => {
-      unsubscribe();
-    };
+  $effect(() => {
+    if ($authenticate === false) {
+      goto('/login');
+    }
   });
 </script>
-
-<!-- Display alerts -->
-<div class="fixed right-4 top-4 z-50 space-y-2">
-  {#each $alert as { id, type, message }}
-    <Alert {type} {message} on:remove={() => alert.remove(id)} />
-  {/each}
-</div>
 
 <svelte:head>
   <meta name="description" content="The web application for vending machine" />
@@ -35,4 +22,13 @@
 
 <svelte:window bind:innerWidth={$windowWidth} />
 
-<slot />
+{#if !$navigating}
+  <slot />
+{/if}
+
+<!-- Display alerts -->
+<div class="fixed right-4 top-4 z-50 space-y-2">
+  {#each $alert as { id, type, message }}
+    <Alert {type} {message} on:remove={() => alert.remove(id)} />
+  {/each}
+</div>

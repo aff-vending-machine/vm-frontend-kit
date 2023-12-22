@@ -1,6 +1,6 @@
 import { get } from 'svelte/store';
 
-import type { ColumnType } from '$components/elements/tables/table';
+import type { ColumnType } from '$lib/components/elements/tables/table';
 import { isDesktop, isMobile, isTablet } from '$lib/stores/media';
 
 export const isExpired = (iat: Date, exp: Date) => {

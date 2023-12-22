@@ -1,23 +1,32 @@
+import { get } from 'svelte/store';
+
 import { loadTranslations } from '$lib/i18n/translations';
 import { AuthService } from '$lib/services/auth';
-import access from '$lib/stores/access';
+import { authenticate } from '$lib/stores/auth';
 import language from '$lib/stores/language';
-import { genError } from '$lib/utils/generate';
 
 export const ssr = false;
-export const prerender = true;
 
-const authService = AuthService.getInstance();
+const authAPI = AuthService.getInstance();
 
 export async function load({ url }) {
-  const locale = language.reload();
-  await loadTranslations(locale, url.pathname);
+  const checkTranslations = async (url: URL) => {
+    const locale = language.reload();
+    await loadTranslations(locale, url.pathname);
+  };
 
-  try {
-    const token = await authService.authenticate();
-    access.set(token);
-    return { isAuthenticated: true };
-  } catch (e) {
-    return { isAuthenticated: false, error: genError(e) };
-  }
+  const checkAuthentication = async () => {
+    try {
+      await authAPI.authenticate();
+      authenticate.enable();
+    } catch (e) {
+      authenticate.disable();
+    }
+  };
+
+  await Promise.all([checkTranslations(url), checkAuthentication()]);
+
+  return {
+    isAuthenticated: get(authenticate),
+  };
 }

@@ -1,6 +1,6 @@
-import { CRUDService } from '$lib/utils/base/api_1st';
-import { convertToDate } from '$lib/utils/convert';
-import type { StoreBranch } from '$types/store_branch';
+import { CRUDService } from '$lib/helpers/apis/api_1st';
+import { convertToDate } from '$lib/helpers/converter';
+import type { StoreBranch } from '$lib/types/store_branch';
 
 const ROOT_PATH = 'branches';
 

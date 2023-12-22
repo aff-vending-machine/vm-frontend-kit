@@ -1,6 +1,6 @@
-import { CRUDService } from '$lib/utils/base/api_1st';
-import { convertToDate } from '$lib/utils/convert';
-import type { CatalogGroup } from '$types/catalog_group';
+import { CRUDService } from '$lib/helpers/apis/api_1st';
+import { convertToDate } from '$lib/helpers/converter';
+import type { CatalogGroup } from '$lib/types/catalog_group';
 
 const ROOT_PATH = 'groups';
 

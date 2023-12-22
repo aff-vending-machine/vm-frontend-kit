@@ -1,6 +1,6 @@
-import { CRUDService } from '$lib/utils/base/api_1st';
-import { convertToDate } from '$lib/utils/convert';
-import type { AccountRole } from '$types/account_role';
+import { CRUDService } from '$lib/helpers/apis/api_1st';
+import { convertToDate } from '$lib/helpers/converter';
+import type { AccountRole } from '$lib/types/account_role';
 
 const ROOT_PATH = 'roles';
 

@@ -1,6 +1,7 @@
-import { CRUDService } from '$lib/utils/base/api_1st';
-import { convertToDate } from '$lib/utils/convert';
-import type { Machine } from '$types/machine';
+import api from '$lib/helpers/apis/api';
+import { CRUDService } from '$lib/helpers/apis/api_1st';
+import { convertToDate } from '$lib/helpers/converter';
+import type { Machine } from '$lib/types/machine';
 
 const ROOT_PATH = 'machines';
 
@@ -24,4 +25,16 @@ export class MachineService extends CRUDService<Machine> {
 
     return data;
   };
+
+  async fetchMachine(machineID: number): Promise<void> {
+    return this.requestWrapper(async token => {
+      await api.post<void>(`${this.ROOT_PATH}/${machineID}/fetch`, null, { token });
+    });
+  }
+
+  async pushMachine(machineID: number): Promise<void> {
+    return this.requestWrapper(async token => {
+      await api.post<void>(`${this.ROOT_PATH}/${machineID}/push`, null, { token });
+    });
+  }
 }

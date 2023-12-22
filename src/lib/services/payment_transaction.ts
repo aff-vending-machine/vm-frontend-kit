@@ -1,9 +1,7 @@
-import api from '$lib/api';
-import { CRUDService } from '$lib/utils/base/api_1st';
-import { convertToAnyDate, convertToDate } from '$lib/utils/convert';
-import { genError } from '$lib/utils/generate';
-import { getAccessToken } from '$lib/utils/jwt';
-import type { PaymentTransaction } from '$types/payment_transaction';
+import api from '$lib/helpers/apis/api';
+import { CRUDService } from '$lib/helpers/apis/api_1st';
+import { convertToAnyDate, convertToDate } from '$lib/helpers/converter';
+import type { PaymentTransaction } from '$lib/types/payment_transaction';
 
 const ROOT_PATH = 'transactions';
 
@@ -36,22 +34,21 @@ export class PaymentTransactionService extends CRUDService<PaymentTransaction> {
   };
 
   async done(id: number, note: string): Promise<void> {
-    try {
-      const token = await getAccessToken();
-      const data = await api.post<void>(`${this.ROOT_PATH}/${id}/done`, { note }, { token });
-      return Promise.resolve<void>(data);
-    } catch (e) {
-      return Promise.reject(genError(e));
-    }
+    return this.requestWrapper(async token => {
+      await api.put<void>(`${this.ROOT_PATH}/${id}/done`, { note }, { token });
+    });
   }
 
   async cancel(id: number, note: string): Promise<void> {
-    try {
-      const token = await getAccessToken();
-      const data = await api.post<void>(`${this.ROOT_PATH}/${id}/cancel`, { note }, { token });
-      return Promise.resolve<void>(data);
-    } catch (e) {
-      return Promise.reject(genError(e));
-    }
+    return this.requestWrapper(async token => {
+      await api.put<void>(`${this.ROOT_PATH}/${id}/cancel`, { note }, { token });
+    });
+  }
+
+  async pullTransactions(machineID: number): Promise<void> {
+    return this.requestWrapper(async token => {
+      const query = `machine_id=${machineID}`;
+      await api.post<void>(`${this.ROOT_PATH}/transactions/pull`, null, { query, token });
+    });
   }
 }

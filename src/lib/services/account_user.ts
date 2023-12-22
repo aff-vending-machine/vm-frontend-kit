@@ -1,9 +1,7 @@
-import api from '$lib/api';
-import { CRUDService } from '$lib/utils/base/api_1st';
-import { convertToAnyDate, convertToDate } from '$lib/utils/convert';
-import { genError } from '$lib/utils/generate';
-import { getAccessToken } from '$lib/utils/jwt';
-import type { AccountUser, ChangePassword, ChangeRole } from '$types/account_user';
+import api from '$lib/helpers/apis/api';
+import { CRUDService } from '$lib/helpers/apis/api_1st';
+import { convertToAnyDate, convertToDate } from '$lib/helpers/converter';
+import type { AccountUser, ChangePassword, ChangeRole } from '$lib/types/account_user';
 
 const ROOT_PATH = 'users';
 
@@ -31,34 +29,22 @@ export class UserService extends CRUDService<AccountUser> {
 
   // ChangeRole // POST 	{users/:id/change-role}
   async changeRoleByID(id: number, payload: ChangeRole): Promise<void> {
-    try {
-      const token = await getAccessToken();
-      await api.post<void>(`${ROOT_PATH}/${id}/change-role`, payload, { token });
-      return Promise.resolve();
-    } catch (e) {
-      return Promise.reject(genError(e));
-    }
+    return this.requestWrapper(async token => {
+      await api.post<void>(`${this.ROOT_PATH}/${id}/change-role`, payload, { token });
+    });
   }
 
   // ChangePassword // POST 	{users/me/change-password}
   async changePassword(payload: ChangePassword): Promise<void> {
-    try {
-      const token = await getAccessToken();
-      await api.post<void>(`${ROOT_PATH}/me/change-password`, payload, { token });
-      return Promise.resolve();
-    } catch (e) {
-      return Promise.reject(genError(e));
-    }
+    return this.requestWrapper(async token => {
+      await api.post<void>(`${this.ROOT_PATH}/me/change-password`, payload, { token });
+    });
   }
 
   // ResetPassword // POST 	{users/:id/reset-password}
   async resetPasswordByID(id: number): Promise<void> {
-    try {
-      const token = await getAccessToken();
-      await api.post<void>(`${ROOT_PATH}/${id}/reset-password`, { token });
-      return Promise.resolve();
-    } catch (e) {
-      return Promise.reject(genError(e));
-    }
+    return this.requestWrapper(async token => {
+      await api.post<void>(`${this.ROOT_PATH}/${id}/reset-password`, null, { token });
+    });
   }
 }

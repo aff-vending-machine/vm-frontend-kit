@@ -1,6 +1,5 @@
-// import adapter from '@sveltejs/adapter-auto';
 import adapter from '@sveltejs/adapter-static';
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,10 +15,6 @@ const config = {
       strict: true,
       fallback: 'index.html',
     }),
-    alias: {
-      $components: 'src/components',
-      $types: 'src/types',
-    },
     version: {
       name: process.env.npm_package_version,
     },

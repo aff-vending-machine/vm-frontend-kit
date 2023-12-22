@@ -1,12 +1,14 @@
 import { writable } from 'svelte/store';
 
-import { genError } from '$lib/utils/generate';
+import type { Pagination, Result } from '$lib/helpers/apis/api';
+import { generateError } from '$lib/helpers/generator';
 
 // Defining a generic type for the fetcher function
-type Fetcher<T> = () => Promise<T>;
+type Fetcher<T> = () => Promise<Result<T>>;
 
 export type SWRStore<T> = {
   data?: T;
+  pagination?: Pagination;
   error?: Error;
   loading: boolean;
 };
@@ -18,9 +20,9 @@ export function useSWR<T>() {
     try {
       set({ loading: true });
       const result = await fetcher();
-      update(() => ({ loading: false, data: result }));
+      update(() => ({ loading: false, data: result.data, pagination: result.pagination }));
     } catch (e) {
-      const err = genError(e);
+      const err = generateError(e);
       update(() => ({ loading: false, error: err }));
       return err.message;
     }
@@ -28,15 +30,18 @@ export function useSWR<T>() {
     return null;
   }
 
-  async function call(fetcher: Fetcher<void>) {
+  async function call(fetcher: Fetcher<void>): Promise<string | null> {
     try {
       set({ loading: true });
       await fetcher();
       update(() => ({ loading: false }));
     } catch (e) {
-      const err = genError(e);
+      const err = generateError(e);
       update(() => ({ loading: false, error: err }));
+      return err.message;
     }
+
+    return null;
   }
 
   async function failure(message: string) {

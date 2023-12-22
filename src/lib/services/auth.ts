@@ -1,10 +1,9 @@
-import api from '$lib/api';
 import { ACCESS_TOKEN, AUTHENTICATED_REMEMBERED, REFRESH_TOKEN } from '$lib/constants';
-import { genError } from '$lib/utils/generate';
-import { getAccessToken, parseJWT } from '$lib/utils/jwt';
+import api from '$lib/helpers/apis/api';
+import { isTokenExpired } from '$lib/helpers/checker';
+import { generateError } from '$lib/helpers/generator';
+import type { AuthResult } from '$lib/types/auth';
 import { storage } from '$lib/utils/local-storage';
-import type { AccessStore } from '$types/access';
-import type { Auth } from '$types/auth';
 
 const ROOT_PATH = 'auth';
 
@@ -20,49 +19,50 @@ export class AuthService {
 
   private constructor(private PATH: string) {}
 
-  async login(username: string, password: string, remember?: boolean): Promise<AccessStore> {
+  async login(username: string, password: string, remember?: boolean): Promise<AuthResult> {
     try {
-      const data = await api.post<Auth>(`${this.PATH}/login`, { username, password });
-      storage(ACCESS_TOKEN, data.access_token);
+      const result = await api.post<AuthResult>(`${this.PATH}/login`, { username, password });
+      storage(ACCESS_TOKEN, result.data!.access_token);
+      storage(AUTHENTICATED_REMEMBERED, remember?.toString());
+      if (remember) storage(REFRESH_TOKEN, result.data!.refresh_token);
 
-      if (remember) {
-        storage(AUTHENTICATED_REMEMBERED, 'TRUE');
-        storage(REFRESH_TOKEN, data.refresh_token);
-      } else {
-        storage(AUTHENTICATED_REMEMBERED, null);
-      }
-
-      const result = parseJWT(data.access_token);
-      return Promise.resolve(result);
+      return result.data!;
     } catch (e) {
       storage(ACCESS_TOKEN, null);
       storage(REFRESH_TOKEN, null);
       storage(AUTHENTICATED_REMEMBERED, null);
-
-      // return Promise.reject(genError(e));
-      return Promise.reject('Login failed');
+      throw generateError(e);
     }
   }
 
-  async authenticate(): Promise<AccessStore> {
-    try {
-      const accessToken = await getAccessToken();
-      const result = parseJWT(accessToken);
-      return Promise.resolve(result);
-    } catch (e) {
-      storage(ACCESS_TOKEN, null);
-      storage(REFRESH_TOKEN, null);
-      storage(AUTHENTICATED_REMEMBERED, null);
+  async authenticate(): Promise<void> {
+    const accessToken = storage(ACCESS_TOKEN);
 
-      return Promise.reject(genError(e));
+    if (!accessToken || isTokenExpired(accessToken)) {
+      const refreshToken = storage(REFRESH_TOKEN);
+      if (!refreshToken || isTokenExpired(refreshToken)) {
+        throw generateError('No valid token available');
+      }
+
+      try {
+        const result = await api.post<AuthResult>(`${this.PATH}/refresh`, { refresh_token: refreshToken });
+        storage(ACCESS_TOKEN, result.data!.access_token);
+        storage(REFRESH_TOKEN, result.data!.refresh_token);
+      } catch (e) {
+        throw generateError(e);
+      }
     }
   }
 
   async logout(): Promise<void> {
-    storage(ACCESS_TOKEN, null);
-    storage(REFRESH_TOKEN, null);
-    storage(AUTHENTICATED_REMEMBERED, null);
-
-    return Promise.resolve();
+    try {
+      const token = storage(ACCESS_TOKEN);
+      await api.post<void>(`${this.PATH}/logout`, null, { token });
+    } catch (e) {
+      // Consider logging the error or handling it based on your application's needs
+    } finally {
+      storage(ACCESS_TOKEN, null);
+      storage(REFRESH_TOKEN, null);
+    }
   }
 }

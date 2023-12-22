@@ -1,9 +1,9 @@
 import { type Writable, writable } from 'svelte/store';
 
 import { SELECT_BRANCH_ID, SELECT_MACHINE_ID } from '$lib/constants';
+import type { Machine } from '$lib/types/machine';
+import type { StoreBranch } from '$lib/types/store_branch';
 import { storage } from '$lib/utils/local-storage';
-import type { Machine } from '$types/machine';
-import type { StoreBranch } from '$types/store_branch';
 
 export type SelectorData = {
   branch?: StoreBranch;

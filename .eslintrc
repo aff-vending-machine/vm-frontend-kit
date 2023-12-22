@@ -50,6 +50,10 @@
         },
         "newlines-between": "always"
       }
-    ]
-  }
+    ],
+    // ignored for svelte 5
+    "@typescript-eslint/no-explicit-any": "off"
+  },
+  // ignored for svelte 5
+  "ignorePatterns": ["**/*.svelte"]
 }

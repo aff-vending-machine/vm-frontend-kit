@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { field, form } from 'svelte-forms';
   import { required } from 'svelte-forms/validators';
 
@@ -9,11 +8,14 @@
   import { t } from '$lib/i18n/translations';
   import type { SelectOptionsType } from '$lib/utils/options';
   import type { Machine } from '$lib/types/machine';
+  import type { StoreBranch } from '$lib/types/store_branch';
 
-  export let machine: Machine;
-  export let branchOptions: SelectOptionsType[];
-
-  const dispatch = createEventDispatcher();
+  let { machine, branchOptions, onupdate, oncancel } = $props<{
+    machine: Machine;
+    branchOptions: SelectOptionsType<string, StoreBranch>[];
+    onupdate?: (id: number, data: Record<string, any>) => void;
+    oncancel?: () => void;
+  }>();
 
   const formID = 'machine-editor-form';
   const name = field('name', machine.name, [required()]);
@@ -24,28 +26,27 @@
   const status = field('status', machine.status, []);
   const machineForm = form(name, branchId, location, type, vendor, status);
 
-  async function handleSubmit() {
+  async function handleSubmit(e: SubmitEvent) {
+    e.preventDefault();
+
     await machineForm.validate();
     if ($machineForm.valid) {
-      const id = machine.id;
       const data = machineForm.summary();
 
-      dispatch('update', { id, data });
+      onupdate && onupdate(machine.id, data);
     }
   }
 
-  function handleCancel() {
-    dispatch('cancel');
+  function handleCancel(e: MouseEvent) {
+    e.preventDefault();
+
+    oncancel && oncancel();
   }
 </script>
 
 <div class="mr-2 h-full overflow-y-auto" style="z-index: 999;">
   <h2 class="mb-4 text-xl font-bold">{$t('machine.edit-title')}: {machine.name || $t('general.untitled')}</h2>
-  <form
-    id={formID}
-    on:submit|preventDefault={handleSubmit}
-    class="space-y-4 rounded-md border border-gray-200 p-2 text-sm"
-  >
+  <form id={formID} onsubmit={handleSubmit} class="space-y-4 rounded-md border border-gray-200 p-2 text-sm">
     <TextInputField id="name" label={$t('machine.field.name')} bind:value={$name.value} error={$name.errors?.at(0)} />
 
     <SelectField
@@ -53,7 +54,7 @@
       label={$t('machine.field.branch')}
       bind:value={$branchId.value}
       error={$branchId.errors?.at(0)}
-      options={branchOptions}
+      options={branchOptions.map(b => ({ label: b.label, value: b.data!.id }))}
     />
 
     <TextInputField
@@ -75,6 +76,6 @@
 
   <div class="mt-4 flex justify-end space-x-4">
     <Button color="secondary" type="submit" form={formID}>{$t('common.button.save')}</Button>
-    <Button color="warning" outline on:click={handleCancel}>{$t('common.button.cancel')}</Button>
+    <Button color="warning" outline onclick={handleCancel}>{$t('common.button.cancel')}</Button>
   </div>
 </div>

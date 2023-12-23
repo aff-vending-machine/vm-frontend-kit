@@ -5,8 +5,11 @@
 
   import Drawer from '$lib/components/overlays/drawers/Drawer.svelte';
 
-  export let title: string;
-  export let subtitle: string;
+  let { title, subtitle } = $props<{
+    title: string;
+    subtitle: string;
+    children: () => any;
+  }>();
 </script>
 
 <Drawer let:Header let:Footer let:Body>

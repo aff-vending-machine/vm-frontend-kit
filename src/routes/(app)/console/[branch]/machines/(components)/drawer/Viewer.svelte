@@ -1,23 +1,32 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   import Button from '$lib/components/elements/buttons/Button.svelte';
   import { t } from '$lib/i18n/translations';
   import { showDate } from '$lib/utils/generate';
   import type { Machine } from '$lib/types/machine';
 
-  export let machine: Machine;
+  let { machine, onedit, ondelete, oncancel } = $props<{
+    machine: Machine;
+    onedit?: (mode: string, data: Machine) => void;
+    ondelete?: (mode: string, data: Machine) => void;
+    oncancel?: () => void;
+  }>();
 
-  const dispatch = createEventDispatcher();
+  function handleEdit(e: MouseEvent) {
+    e.preventDefault();
 
-  function handleEdit() {
-    dispatch('edit', { mode: 'edit', data: machine });
+    onedit && onedit('edit', machine);
   }
-  function handleDelete() {
-    dispatch('delete', { mode: 'delete', data: machine });
+
+  function handleDelete(e: MouseEvent) {
+    e.preventDefault();
+
+    ondelete && ondelete('delete', machine);
   }
-  function handleCancel() {
-    dispatch('cancel');
+
+  function handleCancel(e: MouseEvent) {
+    e.preventDefault();
+
+    oncancel && oncancel();
   }
 </script>
 
@@ -54,8 +63,8 @@
   </div>
 
   <div class="mt-4 flex justify-end space-x-4">
-    <Button color="secondary" on:click={handleEdit}>{$t('common.button.edit')}</Button>
-    <Button color="danger" on:click={handleDelete}>{$t('common.button.delete')}</Button>
-    <Button color="warning" outline on:click={handleCancel}>{$t('common.button.cancel')}</Button>
+    <Button color="secondary" onclick={handleEdit}>{$t('common.button.edit')}</Button>
+    <Button color="danger" onclick={handleDelete}>{$t('common.button.delete')}</Button>
+    <Button color="warning" outline onclick={handleCancel}>{$t('common.button.cancel')}</Button>
   </div>
 </div>

@@ -7,17 +7,26 @@
   import Image from '$lib/components/elements/images/Image.svelte';
   import Currency from '$lib/components/elements/labels/Currency.svelte';
   import Number from '$lib/components/elements/labels/Number.svelte';
+  import type { Entity } from '$lib/types/common';
 
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  export let index: number;
-  export let value: any;
-  export let type: TableFieldType;
-  export let source: unknown;
+  let {
+    index,
+    value,
+    type,
+    source = [],
+    onaction,
+  } = $props<{
+    index: number;
+    value: any;
+    type: TableFieldType;
+    source: unknown;
+    onaction?: (mode: string, data: Entity) => void;
+  }>();
 </script>
 
 <!-- HTML -->
 {#if type === 'component'}
-  <svelte:component this={value} {index} {source} on:action />
+  <svelte:component this={value} {index} {source} {onaction} />
 {:else if type === 'image'}
   <Image src={value} alt={value} class="h-auto w-16" />
 {:else if type === 'number'}

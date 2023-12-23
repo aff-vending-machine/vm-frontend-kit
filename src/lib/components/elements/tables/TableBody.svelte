@@ -1,16 +1,21 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   import type { ColumnType } from './table';
   import TableBodyField from './TableBodyField.svelte';
 
   import { isDesktop, isTablet, isMobile } from '$lib/stores/media';
+  import type { Entity } from '$lib/types/common';
 
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  export let columns: ColumnType[];
-  export let source: Record<string, any>[] = [];
-
-  const dispatch = createEventDispatcher();
+  let {
+    columns,
+    source = [],
+    onselect,
+    onaction,
+  } = $props<{
+    columns: ColumnType[];
+    source?: Entity[];
+    onselect?: (index: number, data: Entity) => void;
+    onaction?: (mode: string, data: Entity) => void;
+  }>();
 
   const getValue = (key?: string, value?: any) => {
     let data = { ...value };
@@ -25,13 +30,23 @@
     return data;
   };
 
-  $: fillterdColumns = columns.filter(c => {
-    if (!c.responsive || c.responsive === 'all') return true;
-    if (c.responsive.includes('mobile') && $isMobile) return true;
-    if (c.responsive.includes('tablet') && $isTablet) return true;
-    if (c.responsive.includes('desktop') && $isDesktop) return true;
-    return false;
-  });
+  let fillterdColumns = $derived(
+    columns.filter(c => {
+      if (!c.responsive || c.responsive === 'all') return true;
+      if (c.responsive.includes('mobile') && $isMobile) return true;
+      if (c.responsive.includes('tablet') && $isTablet) return true;
+      if (c.responsive.includes('desktop') && $isDesktop) return true;
+      return false;
+    }),
+  );
+
+  function handleSelect(index: number, data: Record<string, any>) {
+    return (e: MouseEvent) => {
+      e.preventDefault();
+
+      onselect && onselect(index, data);
+    };
+  }
 </script>
 
 <tbody class="divide-y divide-gray-200 border-t border-gray-100">
@@ -45,7 +60,7 @@
   {#each source as data, index}
     <tr
       class="cursor-pointer space-x-4 odd:bg-white even:bg-gray-50 hover:bg-primary-100"
-      on:click={() => dispatch('select', { index, value: data })}
+      onclick={handleSelect(index, data)}
     >
       {#each fillterdColumns as column}
         <td class="px-6 py-4 text-sm">
@@ -54,7 +69,7 @@
             value={column.render ? column.render(data, index) : getValue(column.key, data)}
             type={column.type}
             source={data}
-            on:action
+            {onaction}
           />
         </td>
       {/each}

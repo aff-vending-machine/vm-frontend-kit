@@ -1,11 +1,10 @@
 <script lang="ts">
   import type { Machine } from '$lib/types/machine';
 
-  // ignored data
-  export let index: number;
-  $: _ = index;
-
-  export let source: Machine;
+  let { source } = $props<{
+    index: number;
+    source: Machine;
+  }>();
 </script>
 
 <div class="flex flex-col">

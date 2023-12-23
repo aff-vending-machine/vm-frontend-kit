@@ -1,7 +1,7 @@
 <script lang="ts">
   import Drawer from './(components)/drawer/Container.svelte';
   import Filter from './(components)/filter/Filter.svelte';
-  import { handle, fetch } from './event';
+  import { handle, call } from './event.svelte';
   import { columns } from './table';
 
   import Table from '$lib/components/elements/tables/Table.svelte';
@@ -9,7 +9,7 @@
   import SharePagination from '$lib/components/shares/SharePagination.svelte';
   import { t } from '$lib/i18n/translations';
   import { page } from '$app/stores';
-  import { cached, selector } from './store';
+  import { selector } from './store';
 
   let { data } = $props();
   let query = $derived(new URLSearchParams($page.url.searchParams));
@@ -27,10 +27,10 @@
   <Content>
     <Table let:Loading let:Header let:Footer let:Body>
       <Header {columns} />
-      {#await fetch.machines(data.branchID, query, $cached)}
+      {#await call.machines(data.branchID, query)}
         <Loading {columns} />
       {:then response}
-        <Body {columns} source={response.data} on:action={handle.action} on:select={handle.select} />
+        <Body {columns} source={response.data} onaction={handle.action} onselect={handle.select} />
         <Footer>
           <SharePagination {...response.pagination!} colspan={columns.length} />
         </Footer>
@@ -44,16 +44,11 @@
 {#await selector.call($selector) then { mode, value }}
   <Drawer let:Viewer let:Editor let:Eraser title={value.name} subtitle={value.location}>
     {#if mode === 'view'}
-      <Viewer machine={value} on:edit={handle.action} on:delete={handle.action} on:cancel={handle.close} />
+      <Viewer machine={value} onedit={handle.action} ondelete={handle.action} oncancel={handle.close} />
     {:else if mode === 'edit'}
-      <Editor
-        machine={value}
-        on:update={handle.update}
-        on:cancel={handle.close}
-        branchOptions={data.options.branches}
-      />
+      <Editor machine={value} branchOptions={data.options.branches} onupdate={handle.update} oncancel={handle.close} />
     {:else if mode === 'delete'}
-      <Eraser machine={value} on:delete={handle.delete} on:cancel={handle.close} />
+      <Eraser machine={value} ondelete={handle.delete} oncancel={handle.close} />
     {/if}
   </Drawer>
 {:catch}

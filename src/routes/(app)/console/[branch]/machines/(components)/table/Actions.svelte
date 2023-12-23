@@ -1,30 +1,32 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
-  import { createEventDispatcher } from 'svelte';
 
   import type { Machine } from '$lib/types/machine';
 
-  // ignored data
-  export let index: number;
-  $: _ = index;
+  let { source, onaction } = $props<{
+    index: number;
+    source: Machine;
+    onaction: (mode: string, source: Machine) => void;
+  }>();
 
-  export let source: Machine;
+  function handleAction(mode: string) {
+    return (e: MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-  const dispatch = createEventDispatcher();
-
-  const handleAction = (mode: string) => () => {
-    dispatch('action', { mode, data: source });
-  };
+      onaction && onaction(mode, source);
+    };
+  }
 </script>
 
 <div class="flex justify-center space-x-1">
-  <button on:click|preventDefault|stopPropagation={handleAction('view')}>
+  <button onclick={handleAction('view')}>
     <Icon icon="mdi:search" class="h-6 w-6 text-gray-500 hover:text-primary-500" />
   </button>
-  <button on:click|preventDefault|stopPropagation={handleAction('edit')}>
+  <button onclick={handleAction('edit')}>
     <Icon icon="mdi:edit" class="h-6 w-6 text-gray-500 hover:text-primary-500" />
   </button>
-  <button on:click|preventDefault|stopPropagation={handleAction('delete')}>
+  <button onclick={handleAction('delete')}>
     <Icon icon="mdi:delete" class="h-6 w-6 text-gray-500 hover:text-primary-500" />
   </button>
 </div>

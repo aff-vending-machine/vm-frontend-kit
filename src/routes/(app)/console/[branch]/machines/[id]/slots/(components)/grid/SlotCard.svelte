@@ -1,6 +1,5 @@
 <!-- SlotCard -->
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { tippy } from 'svelte-tippy';
 
   import Image from '$lib/components/elements/images/Image.svelte';
@@ -11,19 +10,33 @@
   import 'tippy.js/dist/tippy.css';
   import 'tippy.js/animations/shift-away.css';
 
-  export let slot: MachineSlot;
-  export let editing: boolean;
-  export let image: boolean;
-  // events
-  const dispatch = createEventDispatcher();
-  const handleIncreaseStockEvent = () => dispatch('stock', { id: slot.id, stock: increasing(slot) });
-  const handleDecreaseStockEvent = () => dispatch('stock', { id: slot.id, stock: decreasing(slot) });
-  const handleSelectEvent = () => dispatch('select', { id: slot.id, data: slot });
+  let { slot, editing, image, onstock, onselect } = $props<{
+    slot: MachineSlot;
+    editing: boolean;
+    image: boolean;
+    onstock?: (id: number, value: number) => void;
+    onselect?: (value: MachineSlot) => void;
+  }>();
+
+  function handleIncreaseStockEvent(e: MouseEvent) {
+    e.preventDefault();
+    onstock && onstock(slot.id, increasing(slot));
+  }
+  function handleDecreaseStock(e: MouseEvent) {
+    e.preventDefault();
+    onstock && onstock(slot.id, decreasing(slot));
+  }
+  function handleSelect(e: MouseEvent) {
+    console.log('handleSelect');
+    e.preventDefault();
+    onselect && onselect(slot);
+  }
 
   // helpers
   const decreasing = (slot: MachineSlot) => (slot.stock - 1 < 0 ? 0 : slot.stock - 1);
   const increasing = (slot: MachineSlot) => (slot.stock + 1 > slot.capacity ? slot.capacity : slot.stock + 1);
-  $: getColor = (slot: MachineSlot) => {
+
+  const getColor = (slot: MachineSlot) => {
     let style = 'border ';
     if (editing) {
       style = 'text-orange-500 border ';
@@ -41,12 +54,13 @@
       return style + 'border-gray-500 bg-gray-200 hover:bg-gray-100';
     }
 
-    if (slot.stock / slot.capacity <= 0.2) {
+    if (slot.stock / (slot.capacity || 1) <= 0.2) {
       return style + 'border-yellow-500 bg-yellow-50 hover:bg-yellow-100';
     }
 
     return style + 'border-blue-500 bg-blue-50 hover:bg-blue-100';
   };
+
   const truncate = (str: string, n: number, useWordBoundary: boolean) => {
     if (!str) {
       return '';
@@ -58,7 +72,7 @@
     return (useWordBoundary ? subString.slice(0, subString.lastIndexOf(' ')) : subString) + '...';
   };
 
-  $: tooltip = `
+  const tooltip = `
     <div class="m-1 flex flex-col justify-center">
       <span class="text-center">${slot.code}: ${slot.product.name}</span>
       <img class="border h-24 w-24 mt-1 mx-auto object-contain bg-white" src=${slot.product.image_url} />
@@ -68,11 +82,13 @@
 </script>
 
 <!-- HTML -->
-<button
-  class="flex h-48 w-40 flex-col items-center rounded-md p-2 {getColor(slot)} relative"
-  style="column-span: {slot.spiral || 1};"
+<div
+  role="button"
+  tabindex="0"
+  class="flex h-48 w-40 flex-col items-center rounded-md p-2 {getColor(slot)} relative transition-all"
+  style="grid-column: span {slot.spiral || 1} / span {slot.spiral || 1};"
+  onclickcapture={handleSelect}
   use:tippy={{ allowHTML: true, content: tooltip, placement: 'top', animation: 'shift-away' }}
-  on:click={handleSelectEvent}
 >
   {#if image}
     <div class="absolute top-8 flex justify-center opacity-20">
@@ -97,8 +113,8 @@
         disabled:border-gray-300 disabled:bg-gray-300
       "
       use:mousePress
-      on:click|preventDefault|stopPropagation={handleDecreaseStockEvent}
-      on:mouse-press={handleDecreaseStockEvent}
+      onclick={handleDecreaseStock}
+      on:mouse-press={handleDecreaseStock}
       disabled={slot.stock === 0}
     >
       -
@@ -111,11 +127,11 @@
       disabled:border-gray-300 disabled:bg-gray-300
       "
       use:mousePress
-      on:click|preventDefault|stopPropagation={handleIncreaseStockEvent}
+      onclick={handleIncreaseStockEvent}
       on:mouse-press={handleIncreaseStockEvent}
       disabled={slot.stock === slot.capacity}
     >
       +
     </button>
   </div>
-</button>
+</div>

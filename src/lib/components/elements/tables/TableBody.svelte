@@ -13,7 +13,7 @@
   } = $props<{
     columns: ColumnType[];
     source?: Entity[];
-    onselect?: (index: number, data: Entity) => void;
+    onselect?: (id: number, data: Entity, index: number) => void;
     onaction?: (mode: string, data: Entity) => void;
   }>();
 
@@ -44,7 +44,7 @@
     return (e: MouseEvent) => {
       e.preventDefault();
 
-      onselect && onselect(index, data);
+      onselect && onselect(data.id, data, index);
     };
   }
 </script>

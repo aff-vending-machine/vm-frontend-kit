@@ -1,70 +1,87 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import Drawer from './(components)/drawer/Container.svelte';
   import Command from './(components)/filter/Action.svelte';
   import FilterBar from './(components)/filter/Filter.svelte';
   import Help from './(components)/filter/Help.svelte';
   import SlotCard from './(components)/grid/SlotCard.svelte';
   import SlotEmpty from './(components)/grid/SlotEmpty.svelte';
-  import { bindFilter } from './filter';
-  import { handle } from './handle';
-  import { machineState, slotsState, draft, selector, filter, actionState } from './store';
+  import { call, handle } from './event.svelte';
+  import { selector, act } from './store';
   import { utils } from './utils';
 
   import Card from '$lib/components/sections/cards/Card.svelte';
   import { t } from '$lib/i18n/translations';
   import { isMatched } from '$lib/utils/check';
+  import type { MachineSlot } from '$lib/types/machine_slot';
   import { clone } from '$lib/utils/generate';
+  import type { Machine } from '$lib/types/machine';
 
   let { data } = $props();
+  let filter = $state({
+    search: '',
+    stock: '',
+    status: '',
+    changed: '',
+    image: '',
+  });
 
-  let border = $derived(utils.findBorder($slotsState.data || []));
-  let slots = $derived(utils.regroupData($draft, $filter, border));
-  let loading = $derived($slotsState.loading || $actionState.loading);
+  let machine = $state<Machine>();
+  let origin = $state<MachineSlot[]>([]);
+  let draft = $state<MachineSlot[]>([]);
+  let border = $derived(utils.findBorder(origin));
+  let slots = $derived(utils.regroup(draft, filter, border));
+  let loading = $state(true);
 
-  onMount(() => {
-    const machineIds = data.options.machines.map((m: { value: any }) => m.value);
-    const unsubscribe = bindFilter(machineIds, id => {
-      if (!$machineState.data) {
-        machineState.mutate(() => data.fetch.machine(id));
-        slotsState.mutate(() => data.fetch.slots(id));
+  $effect.pre(() => {
+    (async () => {
+      try {
+        loading = true;
+        await handle.refresh(data.machineID);
+
+        const result2 = await call.machine(data.machineID);
+        machine = result2.data;
+
+        const result3 = await call.slots(data.branchID, data.machineID);
+        origin = result3.data || [];
+        draft = result3.data || [];
+      } finally {
+        loading = false;
       }
-      return Promise.resolve();
-    });
-    const unsubscribeSlots = slotsState.subscribe(s => {
-      draft.set(clone(s.data));
-      return s;
-    });
-
-    return () => {
-      unsubscribeSlots();
-      unsubscribe();
-    };
+    })();
   });
 </script>
 
-<Card let:Header>
-  <Header>
-    {$t('common.branch')}: <span class="text-secondary-500">{$machineState.data?.location || '-'}</span>
-    {$t('common.machine')}: <span class="text-secondary-500">{$machineState.data?.name || '-'}</span>
-  </Header>
+<Card let:Header let:Content>
+  <Content>
+    <Header>
+      <div class="flex flex-col">
+        <span> {$t('common.branch')}: <span class="text-secondary-500">{machine?.location || '-'}</span></span>
+        <span> {$t('common.machine')}: <span class="text-secondary-500">{machine?.name || '-'}</span></span>
+      </div>
+    </Header>
+  </Content>
 </Card>
 <Card let:Header let:Content>
   <Content>
     <Header>{$t('common.search-filter')}</Header>
-    <FilterBar bind:search={$filter.search} changed={$filter.changed} status={$filter.status} stock={$filter.stock} />
+    <FilterBar
+      bind:search={filter.search}
+      bind:stock={filter.stock}
+      bind:status={filter.status}
+      bind:changed={filter.changed}
+      bind:image={filter.image}
+    />
   </Content>
   <Content>
     <Header>{$t('common.field.instructions')}</Header>
     <Command
-      time={$machineState.data?.sync_time}
-      editing={!isMatched($draft, $slotsState.data)}
-      syncing={utils.isPassed5Seconds($machineState.data?.sync_time)}
-      loading={$actionState.loading}
-      on:refresh={handle.refresh}
-      on:save={handle.save}
-      on:reset={handle.reset}
+      time={machine?.sync_slot_time}
+      editing={!isMatched(draft, origin)}
+      syncing={utils.isPassed5Seconds(machine?.sync_slot_time)}
+      loading={$act.loading}
+      onrefresh={() => handle.refresh(data.machineID)}
+      onsave={() => handle.save(data.machineID, draft)}
+      oncancel={() => (draft = clone(origin))}
     />
   </Content>
   <Content>
@@ -76,11 +93,11 @@
           {#each slots as slot}
             {#if slot.id > 0}
               <SlotCard
-                slot={utils.getSlot(slot.id)}
-                editing={utils.isEditing(slot.id)}
-                image={$filter.image === 'show'}
-                on:select={handle.select}
-                on:stock={handle.adjust}
+                slot={utils.getSlot(draft, slot.id)}
+                editing={utils.isEditing(draft, origin, slot.id)}
+                image={filter.image === 'show'}
+                onselect={handle.select}
+                onstock={(id, stock) => handle.adjust(draft, id, stock)}
               />
             {:else}
               <SlotEmpty code={slot.code} isExist={true} on:create />
@@ -98,22 +115,11 @@
 {#await selector.call($selector) then { mode, value }}
   <Drawer let:Creator let:Editor let:Eraser title={value.code} subtitle={value.product.name}>
     {#if mode === 'create'}
-      <Creator
-        slotcode={value.code}
-        groupOptions={data.options.groups}
-        productOptions={data.options.products}
-        on:create={handle.create}
-        on:cancel={handle.cancel}
-      />{:else if mode === 'edit'}
-      <Editor
-        slot={value}
-        groupOptions={data.options.groups}
-        productOptions={data.options.products}
-        on:update={handle.update}
-        on:delete={handle.delete}
-        on:cancel={handle.cancel}
-      />{:else if mode === 'delete'}
-      <Eraser slot={value} on:delete={handle.delete} on:cancel={handle.cancel} />
+      <Creator slotcode={value.code} groupOptions={data.options.groups} productOptions={data.options.products} />
+    {:else if mode === 'edit'}
+      <Editor slot={value} groupOptions={data.options.groups} productOptions={data.options.products} />
+    {:else if mode === 'delete'}
+      <Eraser slot={value} ondelete={id => handle.delete(draft, id)} oncancel={handle.cancel} />
     {/if}
   </Drawer>
 {:catch}

@@ -1,7 +1,4 @@
 import dayjs from 'dayjs';
-import { get } from 'svelte/store';
-
-import { draft, slotsState, type FilterType } from './store';
 
 import type { CatalogProduct } from '$lib/types/catalog_product';
 import type { MachineSlot } from '$lib/types/machine_slot';
@@ -26,8 +23,16 @@ export type SlotType = {
   is_enable?: boolean;
 };
 
+type FilterType = {
+  search: string;
+  stock: string;
+  status: string;
+  changed: string;
+  image: string;
+};
+
 export const utils = {
-  regroupData: (origin: MachineSlot[], filter: FilterType, border: BorderType): SlotType[] => {
+  regroup: (origin: MachineSlot[], filter: FilterType, border: BorderType): SlotType[] => {
     if (origin.length === 0) {
       return [];
     }
@@ -108,13 +113,13 @@ export const utils = {
 
     return { rows, cols };
   },
-  isEditing: (id: number) => {
-    const a = get(draft).find(s => s.id === id);
-    const b = get(slotsState).data?.find(s => s.id === id);
+  isEditing: (draft: MachineSlot[], origin: MachineSlot[], id: number) => {
+    const a = draft.find(s => s.id === id);
+    const b = origin.find(s => s.id === id);
     return JSON.stringify(a) !== JSON.stringify(b);
   },
-  getSlot: (id: number) => {
-    return get(draft).find(s => s.id === id) || get(draft)[0];
+  getSlot: (draft: MachineSlot[], id: number) => {
+    return draft.find(s => s.id === id) || draft[0];
   },
   isPassed5Seconds: (date?: Date) => {
     if (!date) return true;

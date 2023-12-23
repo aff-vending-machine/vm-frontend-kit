@@ -9,4 +9,10 @@
 </script>
 
 <!-- HTML -->
-<img class={$$props.class} {alt} {src} on:error={handleImageError} />
+<img
+  class={$$props.class}
+  {alt}
+  {src}
+  placeholder="https://placehold.co/512x512?text=No+Image"
+  on:error={handleImageError}
+/>

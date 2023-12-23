@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$lib/components/elements/buttons/Button.svelte';
+  import ButtonLink from '$lib/components/elements/buttons/ButtonLink.svelte';
 </script>
 
 <main class="grid h-screen place-items-center bg-gray-800 px-6 py-24 sm:py-32 lg:px-8">
@@ -13,8 +13,8 @@
       {$page.error?.message ?? 'Unknown error'}
     </p>
     <div class="mt-10 flex items-center justify-center gap-x-6">
-      <Button class="flex-1" href="/">Go back home</Button>
-      <a href="/support" target="_blank" class="flex-1 text-sm font-semibold text-gray-50"> Contact support </a>
+      <ButtonLink class="flex-1" href="/">Go back home</ButtonLink>
+      <ButtonLink href="/support" target="_blank" class="flex-1">Contact support</ButtonLink>
     </div>
   </div>
 </main>

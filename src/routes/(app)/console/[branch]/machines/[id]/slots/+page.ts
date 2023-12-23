@@ -1,30 +1,12 @@
 import { CatalogGroupService } from '$lib/services/catalog_group';
 import { CatalogProductService } from '$lib/services/catalog_product';
 import { MachineService } from '$lib/services/machine';
-import { MachineSlotService } from '$lib/services/machine_slot';
 
 const machineAPI = MachineService.getInstance();
 const groupAPI = CatalogGroupService.getInstance();
 const productAPI = CatalogProductService.getInstance();
-const slotAPI = MachineSlotService.getInstance();
 
-export async function load({ parent }) {
-  const fetchMachineSlot = async (machineId: number) => {
-    const { branchID } = await parent();
-    const query = new URLSearchParams();
-
-    if (branchID > 0) query.set('branch_id', branchID.toString());
-    query.set('preloads', 'Product');
-    query.sort();
-
-    const slots = await slotAPI.find(machineId, query.toString(), true);
-    return slots;
-  };
-
-  const fetchMachine = async (machineId: number) => {
-    return await machineAPI.findByID(machineId);
-  };
-
+export async function load({ params, parent }) {
   const fetchMachineOptions = async () => {
     const { branchID } = await parent();
     const query = new URLSearchParams();
@@ -49,11 +31,10 @@ export async function load({ parent }) {
     }));
   };
 
+  const machineID = parseInt(params.id);
+
   return {
-    fetch: {
-      machine: fetchMachine,
-      slots: fetchMachineSlot,
-    },
+    machineID,
     options: {
       machines: await fetchMachineOptions(),
       groups: await fetchProductGroupOptions(),

@@ -35,6 +35,8 @@
     <div class="w-full space-y-1 md:pl-4">
       <h1 class="pb-2 text-xl font-bold">{machine.name}</h1>
       <div class="grid grid-cols-3 gap-4">
+        <p class="text-gray-700">{$t('machine.field.id')}:</p>
+        <p class="col-span-2 text-gray-700">{machine.id}</p>
         <p class="text-gray-700">{$t('machine.field.serial-number')}:</p>
         <p class="col-span-2 text-gray-700">{machine.serial_number}</p>
         <p class="text-gray-700">{$t('machine.field.branch-id')}:</p>

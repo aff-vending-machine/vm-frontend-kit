@@ -1,15 +1,26 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
-  export let type: 'submit' | 'reset' | 'button' = 'button';
-  export let form: string | undefined = undefined;
-  export let disabled = false;
-  export let loading = false;
-  export let color: 'primary' | 'secondary' | 'tertiary' | 'info' | 'warning' | 'success' | 'danger' = 'primary';
-  export let outline = false;
-  export let rounded = 'md';
-
-  const dispatch = createEventDispatcher();
+  let {
+    class: externalClass = '',
+    type = 'button',
+    form,
+    disabled = false,
+    loading = false,
+    color = 'primary',
+    outline = false,
+    rounded = 'md',
+    onclick,
+  } = $props<{
+    class?: string;
+    type?: 'submit' | 'reset' | 'button';
+    form?: string;
+    disabled?: boolean;
+    loading?: boolean;
+    color?: 'primary' | 'secondary' | 'tertiary' | 'info' | 'warning' | 'success' | 'danger';
+    outline?: boolean;
+    rounded?: 'sm' | 'md' | 'lg';
+    onclick?: (e: MouseEvent) => void;
+    children?: () => any;
+  }>();
 
   const buttonClasses = () => {
     let classes = '';
@@ -33,13 +44,11 @@
     return classes;
   };
 
-  const handleClick = () => {
+  const handleClick = (e: MouseEvent) => {
     if (disabled || loading) {
       return;
     }
-
-    // Call the click handler if it was passed in as a prop
-    dispatch('click');
+    onclick && onclick(e);
   };
 </script>
 
@@ -47,12 +56,12 @@
   class={`
     inline-flex items-center justify-center border px-4 py-2 text-xs font-medium shadow-sm outline-none
     disabled:cursor-not-allowed disabled:opacity-50 
-    ${buttonClasses()} ${$$props.class || ''}
+    ${buttonClasses()} ${externalClass || ''}
   `}
   {type}
   {form}
   disabled={disabled || loading}
-  on:click|stopPropagation={handleClick}
+  onclick={handleClick}
 >
   {#if loading}
     <svg
@@ -69,6 +78,5 @@
       />
     </svg>
   {/if}
-
   <slot />
 </button>

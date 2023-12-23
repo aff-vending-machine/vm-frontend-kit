@@ -46,7 +46,7 @@ export const menulist = (t: (s: string) => string, branch: string) => [
       },
       {
         title: t('sidebar.machine-slot'),
-        link: `/console/${branch}/machines/slots`,
+        link: `/console/${branch}/machines/0/slots`,
       },
       {
         title: t('sidebar.machine-payment'),

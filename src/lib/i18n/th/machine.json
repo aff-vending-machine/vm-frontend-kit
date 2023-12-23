@@ -13,6 +13,7 @@
     "actions": "คำสั่ง"
   },
   "field": {
+    "id": "ID",
     "name": "ชื่อ",
     "serial-number": "หมายเลขเครื่อง",
     "branch-id": "รหัสสาขา",

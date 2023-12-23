@@ -5,43 +5,60 @@
   import relativeTime from 'dayjs/plugin/relativeTime';
   import timezone from 'dayjs/plugin/timezone';
   import utc from 'dayjs/plugin/utc';
-  import { createEventDispatcher } from 'svelte';
-
-  import 'dayjs/locale/th';
 
   import Button from '$lib/components/elements/buttons/Button.svelte';
   import { locale, t } from '$lib/i18n/translations';
 
-  export let time: Date | undefined;
-  export let syncing: boolean;
-  export let editing: boolean;
-  export let loading: boolean;
-
+  import 'dayjs/locale/th';
+  import Icon from '@iconify/svelte';
   dayjs.extend(utc);
   dayjs.extend(timezone);
   dayjs.extend(relativeTime);
   dayjs.extend(localizedFormat);
   dayjs.tz.setDefault('Asia/Bangkok');
 
-  // events
-  const dispatch = createEventDispatcher();
-  const handleRefresh = () => dispatch('refresh');
-  const handleSave = () => dispatch('save');
-  const handleCancel = () => dispatch('reset');
+  let { time, syncing, editing, loading, onrefresh, onsave, oncancel } = $props<{
+    time: Date | undefined;
+    syncing: boolean;
+    editing: boolean;
+    loading: boolean;
+    onrefresh?: () => void;
+    onsave?: () => void;
+    oncancel?: () => void;
+  }>();
+  let showTime = $derived(!time ? $t('common.field.never') : dayjs(time).locale($locale.split('-')[0]).fromNow());
 
-  // helpers
-  const showTime = (date?: Date) => {
-    if (!date) return $t('common.field.never');
-    return dayjs(date).locale($locale.split('-')[0]).fromNow();
-  };
+  function handleRefresh(e: MouseEvent) {
+    e.preventDefault();
+    onrefresh && onrefresh();
+  }
+
+  function handleSave(e: MouseEvent) {
+    e.preventDefault();
+    onsave && onsave();
+  }
+
+  function handleCancel(e: MouseEvent) {
+    e.preventDefault();
+    oncancel && oncancel();
+  }
 </script>
 
 <!-- HTML -->
 <div class="flex flex-col space-y-2">
   <div class="block space-x-2">
-    <Button i="sync" disabled={!syncing} {loading} on:click={handleRefresh}>{$t('common.button.refresh')}</Button>
-    <Button i="save" disabled={!editing} {loading} on:click={handleSave}>{$t('common.button.save')}</Button>
-    <Button i="cancel" disabled={!editing} {loading} on:click={handleCancel}>{$t('common.button.cancel')}</Button>
+    <Button disabled={!syncing} {loading} onclick={handleRefresh}>
+      <Icon icon="mdi:sync" class="mr-1 h-4 w-4" />
+      {$t('common.button.refresh')}
+    </Button>
+    <Button disabled={!editing} {loading} onclick={handleSave}>
+      <Icon icon="mdi:content-save" class="mr-1 h-4 w-4" />
+      {$t('common.button.save')}
+    </Button>
+    <Button disabled={!editing} {loading} onclick={handleCancel}>
+      <Icon icon="mdi:history" class="mr-1 h-4 w-4" />
+      {$t('common.button.reset')}
+    </Button>
   </div>
-  <span class="text-xs">{$t('common.field.last-time-sync')}: {showTime(time)}</span>
+  <span class="text-xs">{$t('common.field.last-time-sync')}: {showTime}</span>
 </div>

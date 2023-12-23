@@ -4,10 +4,13 @@
   import { t } from '$lib/i18n/translations';
   import { displayOptions, editOptions, statusOptions, stockOptions } from '$lib/utils/options';
 
-  export let search: string;
-  export let stock: string;
-  export let status: string;
-  export let changed: string;
+  let { search, stock, status, changed, image } = $props<{
+    search: string;
+    stock: string;
+    status: string;
+    changed: string;
+    image: string;
+  }>();
 </script>
 
 <div class="flex flex-col justify-between space-y-4 rounded border bg-secondary-50 p-4">
@@ -18,25 +21,35 @@
       label={$t('common.field.search')}
       bind:value={search}
       maxlength={3}
+      saveOnUrl={false}
     />
-    <ShareFilterSelection key="stock" label={$t('common.field.stock')} bind:value={stock} options={stockOptions($t)} />
+    <ShareFilterSelection
+      key="stock"
+      label={$t('common.field.stock')}
+      bind:value={stock}
+      options={stockOptions($t)}
+      saveOnUrl={false}
+    />
     <ShareFilterSelection
       key="status"
       label={$t('common.field.status')}
       bind:value={status}
       options={statusOptions($t)}
+      saveOnUrl={false}
     />
     <ShareFilterSelection
       key="changed"
       label={$t('common.field.changed')}
       bind:value={changed}
       options={editOptions($t)}
+      saveOnUrl={false}
     />
     <ShareFilterSelection
       key="image"
       label={$t('common.field.image')}
-      bind:value={changed}
+      bind:value={image}
       options={displayOptions($t)}
+      saveOnUrl={false}
     />
   </div>
 </div>

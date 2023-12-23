@@ -93,7 +93,7 @@
       label={$t('slot.field.product')}
       bind:value={$productID.value}
       error={$productID.errors?.at(0)}
-      unselected={null}
+      unselected={''}
       placeholder="-"
       options={productOptions.filter(p => $group_id.value === 0 || p.filter === $group_id.value)}
     />

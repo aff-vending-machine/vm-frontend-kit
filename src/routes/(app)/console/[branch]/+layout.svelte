@@ -11,6 +11,8 @@
   import sidebar from '$lib/stores/sidebar';
 
   let { data } = $props();
+
+  let paramsCount = $derived(Object.keys($page.params).length);
 </script>
 
 <div class="flex h-screen w-screen bg-gray-100">
@@ -18,18 +20,18 @@
   <div class="flex w-0 flex-1 flex-col xl:px-8 xl:py-2">
     <Header let:Content>
       <Content let:Hamburger>
-        <span class="xl:hidden"> <Hamburger open={$sidebar} --color="gray" on:click={sidebar.toggle} /></span>
-        {#if $page.params.branch}
-          <SelectField
-            id="branches"
-            value={$page.params.branch}
-            options={data.options.branches}
-            unselected="all"
-            placeholder={$t('options.branch.all')}
-            disabled={data.options.branches.length < 2}
-            on:change={handle.change}
-          />
-        {/if}
+        <span class="xl:hidden">
+          <Hamburger open={$sidebar} --color="gray" on:click={sidebar.toggle} />
+        </span>
+        <SelectField
+          id="branches"
+          value={$page.params.branch}
+          options={data.options.branches}
+          unselected="all"
+          placeholder={$t('options.branch.all')}
+          disabled={data.options.branches.length < 2 || paramsCount > 1}
+          on:change={handle.change}
+        />
       </Content>
       <Content let:Language let:Theme let:Profile>
         <Language class="hidden sm:block" />

@@ -22,7 +22,7 @@
     disabled={disabled || (!unselected && options.length === 1)}
     bind:value
     on:change
-    class="mr-6 w-full rounded-sm border border-gray-300 px-2 py-1 text-sm text-gray-700 sm:w-full"
+    class="w-full rounded-sm border border-gray-300 py-1 pl-2 pr-8 text-sm text-gray-700 sm:w-full"
   >
     {#if unselected !== undefined && options.length > 1}
       <option class="text-gray-500" value={unselected} disabled={unselected === null}>{placeholder}</option>

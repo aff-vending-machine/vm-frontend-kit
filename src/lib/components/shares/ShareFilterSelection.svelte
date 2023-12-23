@@ -10,16 +10,21 @@
   export let value: string | number;
   export let unselected: string | number | undefined = undefined;
   export let placeholder: string | undefined = undefined;
+  export let saveOnUrl: boolean = true;
 
   async function changeValue(event: Event) {
     const newValue = (event.target as HTMLSelectElement).value;
-    const params = new URLSearchParams($page.url.searchParams);
+    if (saveOnUrl) {
+      const params = new URLSearchParams($page.url.searchParams);
 
-    if (newValue === '0' || newValue === '') params.delete(key);
-    else params.set(key, newValue);
-    params.sort();
+      if (newValue === '0' || newValue === '') params.delete(key);
+      else params.set(key, newValue);
+      params.sort();
 
-    await goto(`?${params.toString()}`, { keepFocus: true, invalidateAll: true });
+      await goto(`?${params.toString()}`, { keepFocus: true, invalidateAll: true });
+    } else {
+      value = newValue;
+    }
   }
 </script>
 

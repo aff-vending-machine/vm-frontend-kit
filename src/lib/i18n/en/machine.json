@@ -13,6 +13,7 @@
     "actions": "Actions"
   },
   "field": {
+    "id": "ID",
     "name": "Name",
     "serial-number": "Serial Number",
     "branch-id": "Branch ID",

@@ -18,7 +18,7 @@
   $: subactive = (sub: string) => checkActiveSubLink($page.route.id!, sub);
 
   function checkActiveLink(ref: string, link: string) {
-    const currentPath = ref.split('/');
+    const currentPath = ref.split('/').filter(s => s !== '(app)');
     const comparePath = link.split('/');
 
     if (comparePath.length == 5) comparePath.pop();
@@ -34,12 +34,12 @@
   }
 
   function checkActiveSubLink(ref: string, link: string) {
-    const currentPath = ref.split('/');
+    const currentPath = ref.split('/').filter(s => s !== '(app)');
     const comparePath = link.split('/');
 
     if (currentPath.length !== comparePath.length) return false;
 
-    for (let i = 0; i < currentPath.length; i++) {
+    for (let i = 0; i < comparePath.length; i++) {
       if (currentPath[i].startsWith('[') && currentPath[i].endsWith(']')) continue;
       if (currentPath[i] !== comparePath[i]) return false;
     }
@@ -98,7 +98,7 @@
         {#each submenu as item}
           <li class="px-4">
             <a
-              class="flex cursor-pointer items-center py-1 font-serif text-sm text-gray-600 hover:text-emerald-600"
+              class="flex cursor-pointer items-center py-1 font-serif text-sm text-gray-600 hover:text-emerald-600 dark:hover:text-gray-200"
               rel="noreferrer"
               href={item.link}
               class:font-extrabold={subactive(item.link)}
@@ -108,10 +108,7 @@
               {:else}
                 <Icon icon="mdi:minus" class="h-4 w-4" />
               {/if}
-              <span
-                class="ml-2 text-gray-500 hover:text-emerald-600 dark:hover:text-gray-200"
-                class:text-primary-500={subactive(item.link)}
-              >
+              <span class="ml-2" class:text-primary-500={subactive(item.link)}>
                 {item.title}
               </span>
             </a>

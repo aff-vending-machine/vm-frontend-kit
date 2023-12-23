@@ -30,7 +30,7 @@
   <Content>
     <Table let:Header let:Footer let:Body let:Loading>
       <Header {columns} />
-      {#await call.summary(data.branch_id, query)}
+      {#await call.summary(data.branchID, query)}
         <Loading {columns} />
       {:then response}
         <Body {columns} source={response.data} on:select={handle.action} />

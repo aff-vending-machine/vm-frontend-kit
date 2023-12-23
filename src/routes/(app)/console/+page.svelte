@@ -1,16 +1,14 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   import { goto } from '$app/navigation';
 
-  export let data;
+  let { data } = $props();
 
-  onMount(async () => {
+  $effect(() => {
     if (data.options.branches.length === 1) {
-      const key = data.options.branches[0].data;
-      await goto(`/console/${key}`);
+      const key = data.options.branches[0].value;
+      goto(`/console/${key}`);
     } else {
-      await goto('/console/all');
+      goto('/console/all');
     }
   });
 </script>

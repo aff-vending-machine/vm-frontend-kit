@@ -1,9 +1,16 @@
 export async function load({ params, parent }) {
-  const { mapper } = await parent();
-  if (!mapper) throw new Error('Mapper not found');
-  const branch_id = mapper[params.branch];
+  const { options } = await parent();
+  const branch = options.branches.find(b => b.value === params.branch);
+
+  if (branch == null) {
+    return {
+      branchID: 0,
+      branch: params.branch,
+    };
+  }
 
   return {
-    branch_id,
+    branchID: branch.data.id,
+    branch: params.branch,
   };
 }

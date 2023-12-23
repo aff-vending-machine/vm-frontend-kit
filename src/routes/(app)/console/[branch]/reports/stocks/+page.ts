@@ -3,9 +3,9 @@ const machineAPI = MachineService.getInstance();
 
 export async function load({ parent }) {
   const fetchMachineOptions = async () => {
-    const { branch_id } = await parent();
+    const { branchID } = await parent();
     const query = new URLSearchParams();
-    if (branch_id > 0) query.set('branch_id', branch_id.toString());
+    if (branchID > 0) query.set('branch_id', branchID.toString());
 
     const machines = await machineAPI.find(query.toString());
     return machines.data!.map(m => ({ label: m.name, value: m.id }));

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { handle } from './handle';
+  import { handle } from './event.svelte';
 
   import { page } from '$app/stores';
   import SelectField from '$lib/components/forms/inputs/SelectField.svelte';
@@ -27,7 +27,7 @@
             unselected="all"
             placeholder={$t('options.branch.all')}
             disabled={data.options.branches.length < 2}
-            on:change={handle.changeBranch}
+            on:change={handle.change}
           />
         {/if}
       </Content>

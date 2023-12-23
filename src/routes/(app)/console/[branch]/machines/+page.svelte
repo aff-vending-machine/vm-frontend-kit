@@ -27,7 +27,7 @@
   <Content>
     <Table let:Loading let:Header let:Footer let:Body>
       <Header {columns} />
-      {#await fetch.machines(data.branch_id, query, $cached)}
+      {#await fetch.machines(data.branchID, query, $cached)}
         <Loading {columns} />
       {:then response}
         <Body {columns} source={response.data} on:action={handle.action} on:select={handle.select} />

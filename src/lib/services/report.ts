@@ -1,10 +1,10 @@
 import api, { type Result } from '$lib/helpers/apis/api';
+import { getAccessTokenWithAuthRefresh } from '$lib/helpers/apis/jwt';
 import { convertToDate } from '$lib/helpers/converter';
 import { generateError } from '$lib/helpers/generator';
-import { getAccessTokenWithAuthRefresh } from '$lib/helpers/jwt';
 import type { MachineReport, StockReport, TransactionReport } from '$lib/types/report';
 
-const ROOT_PATH = 'report';
+const ROOT_PATH = 'reports';
 
 export class ReportService {
   private static instance: ReportService;
@@ -42,16 +42,17 @@ export class ReportService {
     });
   }
 
-  async stocks(machine_id: number, query?: string): Promise<Result<StockReport[]>> {
+  async stocks(query?: string): Promise<Result<StockReport[]>> {
     return this.requestWrapper(async token => {
-      const result = await api.get<StockReport[]>(`${this.PATH}/${machine_id}/stocks`, { query, token });
+      const result = await api.get<StockReport[]>(`${this.PATH}/stocks`, { query, token });
       return { ...result };
     });
   }
-  async transactions(machine_id: number, query?: string): Promise<Result<TransactionReport[]>> {
+  async transactions(query?: string): Promise<Result<TransactionReport[]>> {
     return this.requestWrapper(async token => {
-      const result = await api.get<TransactionReport[]>(`${this.PATH}/${machine_id}/transactions`, { query, token });
-      return { ...result, data: result.data!.map(this.remapTransaction) };
+      const result = await api.get<TransactionReport[]>(`${this.PATH}/transactions`, { query, token });
+      if (result.status === 'error') return { ...result };
+      return { ...result, data: result.data.map(this.remapTransaction) };
     });
   }
 }

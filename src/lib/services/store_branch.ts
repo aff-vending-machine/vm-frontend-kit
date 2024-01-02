@@ -4,14 +4,14 @@ import type { StoreBranch } from '$lib/types/store_branch';
 
 const ROOT_PATH = 'branches';
 
-export class BranchService extends CRUDService<StoreBranch> {
-  private static instance: BranchService;
-  static getInstance(): BranchService {
-    if (!BranchService.instance) {
-      BranchService.instance = new BranchService(ROOT_PATH);
+export class StoreBranchService extends CRUDService<StoreBranch> {
+  private static instance: StoreBranchService;
+  static getInstance(): StoreBranchService {
+    if (!StoreBranchService.instance) {
+      StoreBranchService.instance = new StoreBranchService(ROOT_PATH);
     }
 
-    return BranchService.instance;
+    return StoreBranchService.instance;
   }
 
   private constructor(PATH: string) {

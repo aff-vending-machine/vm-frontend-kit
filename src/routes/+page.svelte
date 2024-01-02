@@ -1,12 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { authenticate } from '$lib/stores/auth';
+
+  let { data } = $props();
 
   $effect(() => {
-    if ($authenticate) {
-      goto('/console');
-    } else if ($authenticate === false) {
-      goto('/login');
+    if (data.isAuthenticated) {
+      goto('/portal');
     }
   });
 </script>

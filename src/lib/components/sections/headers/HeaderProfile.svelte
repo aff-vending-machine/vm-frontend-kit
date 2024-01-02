@@ -24,41 +24,43 @@
 
   <div class="relative">
     {#if showUI}
-      <div class="absolute right-0 top-6 z-40 flex min-w-[16rem] flex-row rounded-lg border border-gray-300 bg-white">
-        <ul class="flex w-full flex-col text-sm text-gray-500 dark:text-gray-300">
+      <div
+        class="absolute right-0 top-6 z-40 flex min-w-[16rem] flex-row rounded-lg border border-neutral-light bg-white"
+      >
+        <ul class="flex w-full flex-col text-sm text-neutral dark:text-neutral-light">
           <li class="flex items-center space-x-4 p-4">
             <Icon icon="mdi:user" class="h-12 w-12" />
             <div class="flex flex-col">
               <span class="text-xl font-bold">{username}</span>
-              <span class="text-sm text-gray-500">{role}</span>
+              <span class="text-sm text-neutral">{role}</span>
             </div>
           </li>
           <li>
-            <hr class="h-0.5 w-full bg-slate-300" />
+            <hr class="bg-slate-300 h-0.5 w-full" />
           </li>
           <li class="p-4 pb-2">
-            <a href="/main/dashboard" class="flex space-x-2 text-slate-500 hover:text-slate-800">
+            <a href="/main/dashboard" class="text-slate-500 hover:text-slate-800 flex space-x-2">
               <Icon icon="mdi:view-dashboard" class="h-5 w-5" />
               <span>Dashboard</span>
             </a>
           </li>
           <li class="px-4 py-2">
-            <a href="/main/profile" class="flex space-x-2 text-slate-500 hover:text-slate-800">
+            <a href="/main/profile" class="text-slate-500 hover:text-slate-800 flex space-x-2">
               <Icon icon="mdi:account-edit-outline" class="h-5 w-5" />
               <span>Profile</span>
             </a>
           </li>
           <li class="p-4 pt-2">
-            <a href="/main/settings" class="flex space-x-2 text-slate-500 hover:text-slate-800">
+            <a href="/main/settings" class="text-slate-500 hover:text-slate-800 flex space-x-2">
               <Icon icon="mdi:cog" class="h-5 w-5" />
               <span>Settings</span>
             </a>
           </li>
           <li>
-            <hr class="h-0.5 w-full bg-slate-300" />
+            <hr class="bg-slate-300 h-0.5 w-full" />
           </li>
           <li class="p-4">
-            <a href="/logout" class="flex space-x-2 text-slate-500 hover:text-slate-800">
+            <a href="/logout" class="text-slate-500 hover:text-slate-800 flex space-x-2">
               <Icon icon="mdi:logout" class="h-5 w-5" />
               <span>Logout</span>
             </a>

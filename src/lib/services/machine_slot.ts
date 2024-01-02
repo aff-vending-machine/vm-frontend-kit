@@ -1,12 +1,12 @@
 import api, { type Result } from '$lib/helpers/apis/api';
 import { CRUDService } from '$lib/helpers/apis/api_2nd';
 import { convertToDate } from '$lib/helpers/converter';
-import type { BulkUpdateMachineSlot, MachineSlot } from '$lib/types/machine_slot';
+import type { MachineSlotEntity, MachineSlotUpdateEntity } from '$lib/types/machine_slot';
 
 const ROOT_PATH = 'machines';
 const SUB_PATH = 'slots';
 
-export class MachineSlotService extends CRUDService<MachineSlot> {
+export class MachineSlotService extends CRUDService<MachineSlotEntity> {
   private static instance: MachineSlotService;
   static getInstance(): MachineSlotService {
     if (!MachineSlotService.instance) {
@@ -20,7 +20,7 @@ export class MachineSlotService extends CRUDService<MachineSlot> {
     super(ROOT_PATH, SUB_PATH);
   }
 
-  protected remap = (slot: MachineSlot) => {
+  protected remap = (slot: MachineSlotEntity) => {
     slot.created_at = convertToDate(slot.created_at);
     slot.updated_at = convertToDate(slot.updated_at);
 
@@ -28,7 +28,7 @@ export class MachineSlotService extends CRUDService<MachineSlot> {
   };
 
   // Bulk Update Slot // PUT 	{machines/:id/slots/bulk}
-  async bulkUpdate(machine_id: number, payload: BulkUpdateMachineSlot): Promise<Result<void>> {
+  async bulkUpdate(machine_id: number, payload: MachineSlotUpdateEntity[]): Promise<Result<void>> {
     return this.requestWrapper(async token => {
       const result = await api.put<void>(`${this.ROOT_PATH}/${machine_id}/${this.SUB_PATH}/bulk`, payload, { token });
       return { ...result };

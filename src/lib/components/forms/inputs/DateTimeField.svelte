@@ -13,6 +13,6 @@
   <label for={id} class="mb-1 block text-sm font-medium">{label}:</label>
   <DateTimePicker {id} {rangeFrom} {rangeTo} {value} on:change on:input />
   {#if error}
-    <p class="m-2 text-sm text-red-500">{error}</p>
+    <p class="m-2 text-sm text-danger">{error}</p>
   {/if}
 </div>

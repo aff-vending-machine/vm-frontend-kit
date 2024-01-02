@@ -1,6 +1,11 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+
+  let { children } = $props<{
+    children: Snippet;
+  }>();
 </script>
 
-<tfoot class="border-y border-primary-300 bg-primary-50 font-bold">
-  <slot />
+<tfoot class="border-y border-primary-light bg-neutral-lightest font-bold">
+  {@render children()}
 </tfoot>

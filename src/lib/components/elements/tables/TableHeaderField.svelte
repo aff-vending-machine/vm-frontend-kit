@@ -1,30 +1,30 @@
 <script lang="ts">
   import type { ColumnSortType, ColumnType } from './table';
 
-  export let column: ColumnType;
-
-  let sort: ColumnSortType = { direction: 'asc' };
+  let {
+    column,
+    sort = { direction: 'asc' },
+    onsort,
+  } = $props<{
+    column: ColumnType;
+    sort?: ColumnSortType;
+    onsort?: (column: string, sort: 'asc' | 'desc') => void;
+  }>();
 
   const toggleSort = (column: ColumnType) => {
-    if (!column.sortable) {
-      return;
-    }
+    return (e: MouseEvent) => {
+      e.preventDefault();
+      if (!column.sortable || !onsort) return;
 
-    if (sort.key === column.key) {
-      sort.direction = sort.direction === 'asc' ? 'desc' : 'asc';
-    } else {
-      sort.key = column.key;
-      sort.direction = 'asc';
-    }
+      if (sort.key === column.key) {
+        sort.direction = sort.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        sort.key = column.key;
+        sort.direction = 'asc';
+      }
 
-    const sortEvent = new CustomEvent('sort', {
-      detail: {
-        column: sort.key,
-        direction: sort.direction,
-      },
-    });
-
-    dispatchEvent(sortEvent);
+      onsort(sort.key, sort.direction);
+    };
   };
 </script>
 
@@ -32,11 +32,11 @@
   scope="col"
   class="sticky -top-4 cursor-pointer whitespace-nowrap"
   class:selected={column.key === sort.key}
-  on:click={() => toggleSort(column)}
+  onclick={toggleSort(column)}
 >
-  <div class="border-y border-primary-300 px-6 py-4 text-sm font-bold uppercase tracking-wide text-gray-500">
+  <div class="border-y border-primary-light px-6 py-4 text-sm font-bold uppercase tracking-wide text-neutral">
     <div class="flex select-none justify-center">
-      <span class="font-medium text-gray-900">{column.title}</span>
+      <span class="font-medium text-neutral-darkest">{column.title}</span>
     </div>
   </div>
 </th>

@@ -1,25 +1,29 @@
-import api from '$lib/helpers/apis/api';
+import api, { type Result } from '$lib/helpers/apis/api';
 import { CRUDService } from '$lib/helpers/apis/api_1st';
 import { convertToAnyDate, convertToDate } from '$lib/helpers/converter';
-import type { AccountUser, ChangePassword, ChangeRole } from '$lib/types/account_user';
+import type {
+  AccountUserChangePasswordEntity,
+  AccountUserChangeRoleEntity,
+  AccountUserEntity,
+} from '$lib/types/account_user';
 
 const ROOT_PATH = 'users';
 
-export class UserService extends CRUDService<AccountUser> {
-  private static instance: UserService;
-  static getInstance(): UserService {
-    if (!UserService.instance) {
-      UserService.instance = new UserService(ROOT_PATH);
+export class AccountUserService extends CRUDService<AccountUserEntity> {
+  private static instance: AccountUserService;
+  static getInstance(): AccountUserService {
+    if (!AccountUserService.instance) {
+      AccountUserService.instance = new AccountUserService(ROOT_PATH);
     }
 
-    return UserService.instance;
+    return AccountUserService.instance;
   }
 
   private constructor(PATH: string) {
     super(PATH);
   }
 
-  protected remap = (data: AccountUser) => {
+  protected remap = (data: AccountUserEntity) => {
     data.created_at = convertToDate(data.created_at);
     data.updated_at = convertToDate(data.updated_at);
     data.last_login = convertToAnyDate(data.last_login);
@@ -28,23 +32,26 @@ export class UserService extends CRUDService<AccountUser> {
   };
 
   // ChangeRole // POST 	{users/:id/change-role}
-  async changeRoleByID(id: number, payload: ChangeRole): Promise<void> {
+  async changeRoleByID(id: number, payload: AccountUserChangeRoleEntity): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.post<void>(`${this.ROOT_PATH}/${id}/change-role`, payload, { token });
+      const result = await api.post<void>(`${this.ROOT_PATH}/${id}/change-role`, payload, { token });
+      return { ...result };
     });
   }
 
   // ChangePassword // POST 	{users/me/change-password}
-  async changePassword(payload: ChangePassword): Promise<void> {
+  async changePassword(payload: AccountUserChangePasswordEntity): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.post<void>(`${this.ROOT_PATH}/me/change-password`, payload, { token });
+      const result = await api.post<void>(`${this.ROOT_PATH}/me/change-password`, payload, { token });
+      return { ...result };
     });
   }
 
   // ResetPassword // POST 	{users/:id/reset-password}
-  async resetPasswordByID(id: number): Promise<void> {
+  async resetPasswordByID(id: number): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.post<void>(`${this.ROOT_PATH}/${id}/reset-password`, null, { token });
+      const result = await api.post<void>(`${this.ROOT_PATH}/${id}/reset-password`, null, { token });
+      return { ...result };
     });
   }
 }

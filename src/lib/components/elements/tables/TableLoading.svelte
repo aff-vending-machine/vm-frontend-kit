@@ -3,23 +3,27 @@
 
   import { isMobile, isTablet, isDesktop } from '$lib/stores/media';
 
-  export let columns: ColumnType[];
+  let { columns } = $props<{
+    columns: ColumnType[];
+  }>();
 
-  $: fillterdColumns = columns.filter(c => {
-    if (!c.responsive || c.responsive === 'all') return true;
-    if (c.responsive.includes('mobile') && $isMobile) return true;
-    if (c.responsive.includes('tablet') && $isTablet) return true;
-    if (c.responsive.includes('desktop') && $isDesktop) return true;
-    return false;
-  });
+  const fillterdColumns = $derived(
+    columns.filter(c => {
+      if (!c.responsive || c.responsive === 'all') return true;
+      if (c.responsive.includes('mobile') && $isMobile) return true;
+      if (c.responsive.includes('tablet') && $isTablet) return true;
+      if (c.responsive.includes('desktop') && $isDesktop) return true;
+      return false;
+    }),
+  );
 </script>
 
-<tbody class="animate-pulse divide-y divide-gray-200 border-t border-gray-100">
+<tbody class="animate-pulse divide-y divide-neutral-lightest border-t border-neutral-lightest">
   {#each [...Array(10).keys()] as _}
-    <tr class="space-x-4 odd:bg-white even:bg-gray-50 hover:bg-primary-100">
+    <tr class="space-x-4 odd:bg-white even:bg-neutral-lightest hover:bg-primary-light">
       {#each fillterdColumns as _}
         <td class="px-6 py-4">
-          <div class="h-3 w-full rounded-full bg-gray-300" />
+          <div class="h-3 w-full rounded-full bg-neutral-light" />
           <span class="sr-only">Loading...</span>
         </td>
       {/each}

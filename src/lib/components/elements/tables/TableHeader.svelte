@@ -4,21 +4,26 @@
 
   import { isDesktop, isMobile, isTablet } from '$lib/stores/media';
 
-  export let columns: ColumnType[];
+  let { columns, onsort } = $props<{
+    columns: ColumnType[];
+    onsort?: (column: string, sort: 'asc' | 'desc') => void;
+  }>();
 
-  $: fillterdColumns = columns.filter(c => {
-    if (!c.responsive || c.responsive === 'all') return true;
-    if (c.responsive.includes('mobile') && $isMobile) return true;
-    if (c.responsive.includes('tablet') && $isTablet) return true;
-    if (c.responsive.includes('desktop') && $isDesktop) return true;
-    return false;
-  });
+  const fillterdColumns = $derived(
+    columns.filter(c => {
+      if (!c.responsive || c.responsive === 'all') return true;
+      if (c.responsive.includes('mobile') && $isMobile) return true;
+      if (c.responsive.includes('tablet') && $isTablet) return true;
+      if (c.responsive.includes('desktop') && $isDesktop) return true;
+      return false;
+    }),
+  );
 </script>
 
-<thead class="sticky -top-4 start-0 bg-primary-50">
+<thead class="sticky -top-4 start-0 bg-primary-lightest">
   <tr>
     {#each fillterdColumns as column}
-      <TableHeaderField {column} />
+      <TableHeaderField {column} {onsort} />
     {/each}
   </tr>
 </thead>

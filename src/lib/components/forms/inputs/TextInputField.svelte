@@ -16,9 +16,9 @@
     bind:value
     on:input
     on:change
-    class="w-full min-w-[120px] rounded border border-gray-300 px-2 py-1 text-sm text-gray-700 disabled:border-blue-300 disabled:text-blue-500"
+    class="disabled:text-blue-500 w-full min-w-[120px] rounded border border-neutral-light px-2 py-1 text-sm text-neutral-dark disabled:border-primary-light"
   />
   {#if error}
-    <p class="m-2 text-sm text-red-500">{error}</p>
+    <p class="m-2 text-xs text-danger">{error}</p>
   {/if}
 </div>

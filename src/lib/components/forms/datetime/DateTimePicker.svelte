@@ -92,33 +92,33 @@
 
 <div class="date-time-picker-{id} relative" use:clickOutside on:click-outside={handleClickOutside}>
   <button
-    class="flex w-full cursor-pointer items-center rounded-md border border-gray-300 bg-white"
+    class="flex w-full cursor-pointer items-center rounded-md border border-neutral-light bg-white"
     on:click={togglePicker}
   >
     <span
-      class="box-shadow-none w-full border-0 bg-transparent px-2 py-1 text-sm text-gray-700 focus:border-none focus:outline-none"
+      class="box-shadow-none w-full border-0 bg-transparent px-2 py-1 text-sm text-neutral-dark focus:border-none focus:outline-none"
     >
       {dayjs(value).format('YYYY-MM-DD HH:mm')}
     </span>
 
     <div class="flex pr-2">
-      <Icon icon="mdi:calendar" class="h-3 w-3 text-gray-700" />
+      <Icon icon="mdi:calendar" class="h-3 w-3 text-neutral-dark" />
     </div>
   </button>
   {#if showPicker}
-    <div class="absolute left-0 z-50 mt-2 rounded-md border border-gray-200 bg-white shadow-lg">
+    <div class="absolute left-0 z-50 mt-2 rounded-md border border-neutral-light bg-white shadow-lg">
       <div class="flex justify-center space-x-4 p-2">
         <button
           class="rounded-md px-4 py-2 transition-colors focus:outline-none {$selectedTab === 'calendar'
-            ? 'bg-primary-500 text-white'
-            : 'hover:bg-gray-100'}"
+            ? 'bg-primary text-white'
+            : 'hover:bg-neutral-lightest'}"
           on:click={() => ($selectedTab = 'calendar')}
           class:selected={$selectedTab === 'calendar'}>{$t('common.button.date')}</button
         >
         <button
           class="rounded-md px-4 py-2 transition-colors focus:outline-none {$selectedTab === 'time'
-            ? 'bg-primary-500 text-white'
-            : 'hover:bg-gray-100'}"
+            ? 'bg-primary text-white'
+            : 'hover:bg-neutral-lightest'}"
           on:click={() => ($selectedTab = 'time')}
           class:selected={$selectedTab === 'time'}>{$t('common.button.time')}</button
         >

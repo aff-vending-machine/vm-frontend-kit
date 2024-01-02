@@ -48,15 +48,15 @@
     on:blur={fixTimeFormat}
     maxlength={5}
     placeholder="hh:mm"
-    class="rounded-md border-2 border-gray-300 p-1 text-center"
+    class="rounded-md border-2 border-neutral-light p-1 text-center"
   />
 
-  <div class="mt-2 grid max-h-40 grid-cols-2 divide-x divide-gray-200 overflow-hidden">
+  <div class="mt-2 grid max-h-40 grid-cols-2 divide-x divide-neutral-light overflow-hidden">
     <div class="hide-scrollbar overflow-auto" style="max-height: 10rem;">
       {#each hours as hour (hour)}
         <button
-          class="block w-full px-4 py-2 text-left hover:bg-gray-100 {time.split(':')[0] === hour
-            ? 'bg-gray-100 font-semibold'
+          class="block w-full px-4 py-2 text-left hover:bg-neutral-lightest {time.split(':')[0] === hour
+            ? 'bg-neutral-lightest font-semibold'
             : ''}"
           on:click={() => (time = `${hour}:${time.split(':')[1]}`)}>{hour}</button
         >
@@ -65,8 +65,8 @@
     <div class="hide-scrollbar overflow-auto" style="max-height: 10rem;">
       {#each minutes as minute (minute)}
         <button
-          class="block w-full px-4 py-2 text-left hover:bg-gray-100 {time.split(':')[1] === minute
-            ? 'bg-gray-100 font-semibold'
+          class="block w-full px-4 py-2 text-left hover:bg-neutral-lightest {time.split(':')[1] === minute
+            ? 'bg-neutral-lightest font-semibold'
             : ''}"
           on:click={() => (time = `${time.split(':')[0]}:${minute}`)}>{minute}</button
         >

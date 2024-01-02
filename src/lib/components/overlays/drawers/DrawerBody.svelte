@@ -1,5 +1,13 @@
-<div class="relative h-full w-full dark:bg-gray-700 dark:text-gray-200">
+<script lang="ts">
+  import type { Snippet } from 'svelte';
+
+  let { children } = $props<{
+    children: Snippet;
+  }>();
+</script>
+
+<div class="relative h-full w-full dark:bg-neutral-dark dark:text-neutral-light">
   <div class="absolute inset-0 h-full w-full overflow-auto p-4">
-    <slot />
+    {@render children()}
   </div>
 </div>

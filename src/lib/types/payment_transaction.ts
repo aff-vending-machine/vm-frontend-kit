@@ -1,15 +1,12 @@
-import type { Machine } from './machine';
-import type { PaymentChannel } from './payment_channel';
+import type { MachineEntity } from './machine';
+import type { PaymentEntity } from './payment';
 import type { StoreBranch } from './store_branch';
 
-export type PaymentTransaction = {
+export type PaymentTransactionEntity = {
   id: number;
   branch_id: number;
-  branch: StoreBranch;
   machine_id: number;
-  machine: Machine;
-  channel_id: number;
-  channel: PaymentChannel;
+  payment_id: number;
   created_at: Date;
   updated_at: Date;
   merchant_order_id: string;
@@ -36,4 +33,8 @@ export type PaymentTransaction = {
   is_error: boolean;
   error?: string;
   error_at?: Date;
+
+  branch?: StoreBranch;
+  machine?: MachineEntity;
+  payment?: PaymentEntity;
 };

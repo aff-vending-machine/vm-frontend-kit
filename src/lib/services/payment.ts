@@ -1,11 +1,11 @@
-import api from '$lib/helpers/apis/api';
+import api, { type Result } from '$lib/helpers/apis/api';
 import { CRUDService } from '$lib/helpers/apis/api_1st';
 import { convertToDate } from '$lib/helpers/converter';
-import type { PaymentChannel } from '$lib/types/payment_channel';
+import type { PaymentEntity } from '$lib/types/payment';
 
 const ROOT_PATH = 'payments';
 
-export class PaymentService extends CRUDService<PaymentChannel> {
+export class PaymentService extends CRUDService<PaymentEntity> {
   private static instance: PaymentService;
   static getInstance(): PaymentService {
     if (!PaymentService.instance) {
@@ -19,36 +19,40 @@ export class PaymentService extends CRUDService<PaymentChannel> {
     super(PATH);
   }
 
-  protected remap = (channel: PaymentChannel) => {
-    channel.created_at = convertToDate(channel.created_at);
-    channel.updated_at = convertToDate(channel.updated_at);
+  protected remap = (payment: PaymentEntity) => {
+    payment.created_at = convertToDate(payment.created_at);
+    payment.updated_at = convertToDate(payment.updated_at);
 
-    return channel;
+    return payment;
   };
 
-  async enable(id: number): Promise<void> {
+  async enable(id: number): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.put<void>(`${this.ROOT_PATH}/${id}/enable`, null, { token });
+      const result = await api.put<void>(`${this.ROOT_PATH}/${id}/enable`, null, { token });
+      return { ...result };
     });
   }
 
-  async disable(id: number): Promise<void> {
+  async disable(id: number): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.put<void>(`${this.ROOT_PATH}/${id}/disable`, null, { token });
+      const result = await api.put<void>(`${this.ROOT_PATH}/${id}/disable`, null, { token });
+      return { ...result };
     });
   }
 
-  async fetchChannels(machineID: number): Promise<void> {
+  async fetch(machineID: number): Promise<Result<void>> {
     return this.requestWrapper(async token => {
       const query = `machine_id=${machineID}`;
-      await api.post<void>(`${this.ROOT_PATH}/fetch`, null, { query, token });
+      const result = await api.post<void>(`${this.ROOT_PATH}/fetch`, null, { query, token });
+      return { ...result };
     });
   }
 
-  async pushChannels(machineID: number): Promise<void> {
+  async push(machineID: number): Promise<Result<void>> {
     return this.requestWrapper(async token => {
       const query = `machine_id=${machineID}`;
-      await api.post<void>(`${this.ROOT_PATH}/push`, null, { query, token });
+      const result = await api.post<void>(`${this.ROOT_PATH}/push`, null, { query, token });
+      return { ...result };
     });
   }
 }

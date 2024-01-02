@@ -4,14 +4,14 @@ import type { AccountRole } from '$lib/types/account_role';
 
 const ROOT_PATH = 'roles';
 
-export class RoleService extends CRUDService<AccountRole> {
-  private static instance: RoleService;
-  static getInstance(): RoleService {
-    if (!RoleService.instance) {
-      RoleService.instance = new RoleService(ROOT_PATH);
+export class AccountRoleService extends CRUDService<AccountRole> {
+  private static instance: AccountRoleService;
+  static getInstance(): AccountRoleService {
+    if (!AccountRoleService.instance) {
+      AccountRoleService.instance = new AccountRoleService(ROOT_PATH);
     }
 
-    return RoleService.instance;
+    return AccountRoleService.instance;
   }
 
   private constructor(PATH: string) {

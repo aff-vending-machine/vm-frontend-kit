@@ -55,9 +55,9 @@
 {#if link}
   <li class="flex flex-nowrap">
     <a
-      class="flex flex-grow items-center whitespace-nowrap px-6 py-4 text-sm font-semibold transition-colors duration-150 hover:text-emerald-700 dark:hover:text-gray-200"
+      class="hover:text-emerald-700 flex flex-grow items-center whitespace-nowrap px-6 py-4 text-sm font-semibold transition-colors duration-150 dark:hover:text-neutral-light"
       href={link}
-      class:text-primary-500={active}
+      class:text-primary={active}
       class:bg-primary-100={active}
     >
       <Icon {icon} class="h-6 w-6" />
@@ -65,15 +65,15 @@
     </a>
     {#if active}
       <span class="w-3 bg-white" />
-      <span class="w-1 flex-shrink rounded-l bg-primary-300" />
+      <span class="w-1 flex-shrink rounded-l bg-primary-light" />
     {/if}
   </li>
 {:else}
   <li class="relative">
     <button
-      class="inline-flex h-14 w-full items-center justify-between px-6 py-3 text-sm font-semibold transition-colors duration-150 hover:text-emerald-600 focus:outline-none dark:hover:text-gray-200"
+      class="hover:text-emerald-600 inline-flex h-14 w-full items-center justify-between px-6 py-3 text-sm font-semibold transition-colors duration-150 focus:outline-none dark:hover:text-neutral-light"
       on:click={handleToggle}
-      class:text-primary-500={active}
+      class:text-primary={active}
       class:bg-primary-100={active}
     >
       <span class="inline-flex items-center py-4">
@@ -85,12 +85,12 @@
       </span>
       {#if active}
         <span class="absolute right-0 h-14 w-4 bg-white" />
-        <span class="absolute right-0 h-14 w-1 rounded-l bg-primary-300" />
+        <span class="absolute right-0 h-14 w-1 rounded-l bg-primary-light" />
       {/if}
     </button>
     {#if open}
       <ul
-        class="overflow-hidden rounded-md p-2 text-sm font-medium text-gray-500 group-hover:block dark:bg-gray-900 dark:text-gray-400"
+        class="dark:text-gray-400 overflow-hidden rounded-md p-2 text-sm font-medium text-neutral group-hover:block dark:bg-neutral-darkest"
         aria-label="submenu"
         class:hidden={iconOnly}
         transition:slide={{ delay: 100, duration: 300, easing: quintOut, axis: 'y' }}
@@ -98,17 +98,17 @@
         {#each submenu as item}
           <li class="px-4">
             <a
-              class="flex cursor-pointer items-center py-1 font-serif text-sm text-gray-600 hover:text-emerald-600 dark:hover:text-gray-200"
+              class="text-gray-600 hover:text-emerald-600 flex cursor-pointer items-center py-1 font-serif text-sm dark:hover:text-neutral-light"
               rel="noreferrer"
               href={item.link}
               class:font-extrabold={subactive(item.link)}
             >
               {#if subactive(item.link)}
-                <Icon icon="mdi:circle-multiple" class="h-4 w-4 text-primary-500" />
+                <Icon icon="mdi:circle-multiple" class="h-4 w-4 text-primary" />
               {:else}
                 <Icon icon="mdi:minus" class="h-4 w-4" />
               {/if}
-              <span class="ml-2" class:text-primary-500={subactive(item.link)}>
+              <span class="ml-2" class:text-primary={subactive(item.link)}>
                 {item.title}
               </span>
             </a>

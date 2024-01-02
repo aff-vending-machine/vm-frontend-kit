@@ -17,13 +17,19 @@ export interface Pagination {
   total_items: number;
 }
 
-export interface Result<T> {
-  status: 'success' | 'error';
-  data?: T;
+export type Result<T> = SuccessResult<T> | ErrorResult;
+
+type SuccessResult<T> = {
+  status: 'success';
+  data: T;
   id?: number;
   pagination?: Pagination;
-  message?: string;
-}
+};
+
+type ErrorResult = {
+  status: 'error';
+  message: string;
+};
 
 type CacheData = { result: Result<unknown>; timestamp: number };
 const cache: Record<string, CacheData> = {};
@@ -53,15 +59,13 @@ async function requester<T>(method: string, path: string, fetcher: Fetcher = {})
     if (!response.ok) {
       if (response.headers.get('Content-Type')?.includes('application/json')) {
         const result = await response.json();
-        // error(response.status, result.message);
         error(400, result.message);
       } else {
-        // error(response.status, response.statusText || 'An error occurred during the request');
         error(500, response.statusText || 'An error occurred during the request');
       }
     }
 
-    if (response.status === 204) return { status: 'success' };
+    if (response.status === 204) return { status: 'success', data: null } as Result<T>;
     return await response.json();
   } catch (err) {
     error(500, generateError(err));
@@ -80,7 +84,8 @@ export const get = async <T>(path: string, fetcher?: Fetcher, useCache: boolean 
   }
 
   const result = await requester<T>('GET', path, fetcher);
-  if (!result.data) error(404, 'Resource is not found');
+  if (result.status === 'error') error(400, result.message);
+  if (result.status === 'success' && !result.data) error(404, 'Resource is not found');
   cache[cacheKey] = { result, timestamp: Date.now() };
   return result;
 };

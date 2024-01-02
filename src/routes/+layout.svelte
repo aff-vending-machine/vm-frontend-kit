@@ -1,14 +1,15 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { navigating } from '$app/stores';
-  import Alert from '$lib/components/overlays/alerts/Alert.svelte';
-  import alert from '$lib/stores/alert';
+  import Toast from '$lib/components/overlays/toasts/Toast.svelte';
+  import { toast } from '$lib/state.svelte';
   import { windowWidth } from '$lib/stores/media';
   import '../app.css';
-  import { authenticate } from '$lib/stores/auth';
-  import { goto } from '$app/navigation';
+
+  let { data, children } = $props();
 
   $effect(() => {
-    if ($authenticate === false) {
+    if (!data.isAuthenticated) {
       goto('/login');
     }
   });
@@ -23,12 +24,12 @@
 <svelte:window bind:innerWidth={$windowWidth} />
 
 {#if !$navigating}
-  <slot />
+  {@render children()}
 {/if}
 
-<!-- Display alerts -->
-<div class="fixed right-4 top-4 z-50 space-y-2">
-  {#each $alert as { id, type, message }}
-    <Alert {type} {message} on:remove={() => alert.remove(id)} />
+<!-- Display toast -->
+<div class="fixed right-8 top-8 z-50 flex flex-col space-y-2">
+  {#each toast.stack as { id, type, message }}
+    <Toast {id} {type} {message} onclose={toast.onClose} />
   {/each}
 </div>

@@ -1,44 +1,20 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
   import { t } from '$lib/i18n/translations';
-  import { handle } from './lib.svelte';
+  import { Auth } from './state.svelte';
 
-  let seconds = $state(5);
-
-  $effect.pre(() => {
-    handle.logout();
-  });
-
-  $effect(() => {
-    const timeoutID = setTimeout(() => {
-      goto('/');
-    }, 5000);
-
-    const intervalID = setInterval(() => {
-      seconds -= 1;
-      if (seconds === 0) clearInterval(intervalID);
-    }, 1000);
-
-    return () => {
-      clearTimeout(timeoutID);
-      clearInterval(intervalID);
-    };
-  });
-
-  const returnToHome = async (event: MouseEvent): Promise<void> => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    goto('/');
-  };
+  const auth = new Auth();
 </script>
 
-<div class="flex h-screen items-center justify-center bg-gradient-to-b from-primary-200 to-white">
+<svelte:head>
+  <title>Logout | Vending Machine Portal</title>
+</svelte:head>
+
+<div class="flex h-screen items-center justify-center bg-neutral-lightest">
   <div class="text-center">
-    <h1 class="mb-6 text-4xl font-semibold text-gray-800">{$t('auth.logout-success')}</h1>
+    <h1 class="mb-8 text-4xl font-semibold text-neutral-dark">{$t('auth.logout-success')}</h1>
     <button
-      class="rounded-md bg-primary-500 px-6 py-3 text-lg font-medium text-white hover:bg-primary-600"
-      onclick={returnToHome}
+      class="rounded-md bg-accent px-6 py-3 text-lg font-medium text-white hover:bg-accent-light"
+      onclick={auth.onReturnHome}
     >
       {$t('auth.return-to-home')}
     </button>

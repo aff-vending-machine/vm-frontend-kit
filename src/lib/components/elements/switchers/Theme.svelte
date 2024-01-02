@@ -3,10 +3,14 @@
 
   import theme from '$lib/stores/theme';
 
-  $: isLight = $theme === 'light';
+  let { class: className } = $props<{
+    class?: string;
+  }>();
+
+  const isLight = $derived($theme === 'light');
 </script>
 
-<button class={$$props.class} on:click={theme.toggle}>
+<button class={className} on:click={theme.toggle}>
   <span class:hidden={!isLight}>
     <Icon icon="mdi:weather-sunny" class="h-8 w-8" />
   </span>

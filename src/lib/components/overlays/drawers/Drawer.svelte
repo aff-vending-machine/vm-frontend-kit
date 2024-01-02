@@ -1,27 +1,48 @@
 <script lang="ts">
-  import { quintOut } from 'svelte/easing';
-  import { fade, slide } from 'svelte/transition';
+  import type { Snippet } from 'svelte';
+  import { blur, fly } from 'svelte/transition';
 
   import Body from './DrawerBody.svelte';
   import Footer from './DrawerFooter.svelte';
   import Header from './DrawerHeader.svelte';
 
-  import drawer from '$lib/stores/overlay';
+  type Components = {
+    Header: typeof Header;
+    Body: typeof Body;
+    Footer: typeof Footer;
+  };
+
+  let {
+    show = false,
+    children,
+    onclose,
+  } = $props<{
+    show?: boolean;
+    onclose: () => void;
+    children: Snippet<Components>;
+  }>();
+
+  function onclick(e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    onclose && onclose();
+  }
 </script>
 
-{#if $drawer}
-  <div tabindex="-1" class="fixed right-0 top-0 z-50 h-full w-full overflow-visible">
+{#if show}
+  <div tabindex="-1" class="fixed bottom-0 left-0 right-0 top-0 z-40 flex items-center justify-center">
     <button
-      class="absolute left-0 top-0 h-full w-full bg-black opacity-30 transition-opacity duration-300"
-      transition:fade={{ duration: 300, easing: quintOut }}
-      on:click={drawer.close}
+      class="absolute left-0 top-0 h-full w-full bg-black opacity-30"
+      transition:blur={{ amount: 10 }}
+      {onclick}
     />
     <div
       class="absolute right-0 h-full w-full bg-white shadow-md shadow-white md:w-1/2 xl:w-1/3"
-      transition:slide={{ duration: 300, easing: quintOut, axis: 'x' }}
+      transition:fly={{ x: '100%' }}
     >
       <div class="flex h-full w-full flex-col justify-between">
-        <slot {Header} {Body} {Footer} />
+        {@render children({ Header, Body, Footer })}
       </div>
     </div>
   </div>

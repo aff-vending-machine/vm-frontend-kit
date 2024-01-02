@@ -1,4 +1,4 @@
-import { type Writable, writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 
 export const windowWidth: Writable<number> = writable(0);
 

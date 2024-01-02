@@ -22,16 +22,16 @@
     disabled={disabled || (!unselected && options.length === 1)}
     bind:value
     on:change
-    class="w-full rounded-sm border border-gray-300 py-1 pl-2 pr-8 text-sm text-gray-700 sm:w-full"
+    class="w-full rounded-sm border border-neutral-light py-1 pl-2 pr-8 text-sm text-neutral-dark sm:w-full"
   >
     {#if unselected !== undefined && options.length > 1}
-      <option class="text-gray-500" value={unselected} disabled={unselected === null}>{placeholder}</option>
+      <option class="text-neutral" value={unselected} disabled={unselected === null}>{placeholder}</option>
     {/if}
     {#each options as option}
       <option value={option.value}>{option.label}</option>
     {/each}
   </select>
   {#if error}
-    <p class="m-2 text-sm text-red-500">{error}</p>
+    <p class="m-2 text-sm text-danger">{error}</p>
   {/if}
 </div>

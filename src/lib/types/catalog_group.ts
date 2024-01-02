@@ -1,23 +1,16 @@
-import type { CatalogProduct } from './catalog_product';
+import type { CatalogProductEntity } from './catalog_product';
 
-export type CatalogGroup = {
+export type CatalogGroupEntity = {
   id: number;
-  products: CatalogProduct[];
   created_at: Date;
   updated_at: Date;
   name: string;
   description: string;
   is_enable: boolean;
+
+  products?: CatalogProductEntity[];
 };
 
-export type CreateCatalogGroup = {
-  name: string;
-  description: string;
-  is_enable: boolean;
-};
+export type CatalogGroupCreateEntity = Omit<CatalogGroupEntity, 'id' | 'created_at' | 'updated_at'>;
 
-export type UpdateCatalogGroup = {
-  name?: string;
-  description?: string;
-  is_enable?: boolean;
-};
+export type CatalogGroupUpdateEntity = Omit<CatalogGroupEntity, 'id' | 'created_at' | 'updated_at'>;

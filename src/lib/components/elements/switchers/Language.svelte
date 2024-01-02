@@ -1,12 +1,28 @@
 <script lang="ts">
+  import { page } from '$app/stores';
+  import { loadTranslations } from '$lib/i18n/translations';
+  import { language } from '$lib/state.svelte';
   import Icon from '@iconify/svelte';
 
-  import language from '$lib/stores/language';
+  let { class: className } = $props<{
+    class?: string;
+  }>();
 
-  $: isUS = $language === 'en';
+  const isUS = $derived(language.value !== 'th');
+
+  async function onToggle(e: MouseEvent) {
+    e.preventDefault();
+
+    if (language.value === 'en') {
+      language.value = 'th';
+    } else {
+      language.value = 'en';
+    }
+    await loadTranslations(language.value ?? 'en', $page.url.pathname);
+  }
 </script>
 
-<button class={$$props.class} on:click={language.toggle}>
+<button class={className} on:click={onToggle}>
   <span class:hidden={!isUS}>
     <Icon icon="emojione:flag-for-us-outlying-islands" class="h-8 w-8" />
   </span>

@@ -1,11 +1,11 @@
 import api from '$lib/helpers/apis/api';
 import { CRUDService } from '$lib/helpers/apis/api_1st';
 import { convertToAnyDate, convertToDate } from '$lib/helpers/converter';
-import type { Machine } from '$lib/types/machine';
+import type { MachineEntity } from '$lib/types/machine';
 
 const ROOT_PATH = 'machines';
 
-export class MachineService extends CRUDService<Machine> {
+export class MachineService extends CRUDService<MachineEntity> {
   private static instance: MachineService;
   static getInstance(): MachineService {
     if (!MachineService.instance) {
@@ -19,7 +19,7 @@ export class MachineService extends CRUDService<Machine> {
     super(PATH);
   }
 
-  protected remap = (data: Machine) => {
+  protected remap = (data: MachineEntity) => {
     data.created_at = convertToDate(data.created_at);
     data.updated_at = convertToDate(data.updated_at);
     data.sync_time = convertToAnyDate(data.sync_time);

@@ -1,5 +1,6 @@
 import { generateError } from '../generator';
-import { getAccessTokenWithAuthRefresh } from '../jwt';
+
+import { getAccessTokenWithAuthRefresh } from './jwt';
 
 import api, { type Result } from '$lib/helpers/apis/api';
 
@@ -20,21 +21,24 @@ export abstract class CRUDService<T, U = unknown> {
   async find(query?: string, cache = true): Promise<Result<T[]>> {
     return this.requestWrapper(async token => {
       const result = await api.get<T[]>(this.ROOT_PATH, { query, token }, cache);
-      return { ...result, data: result.data!.map(this.remap) };
+      if (result.status === 'error') return result;
+      return { ...result, data: result.data.map(this.remap) };
     });
   }
 
   async findByID(id: number, query?: string, cache = true): Promise<Result<T>> {
     return this.requestWrapper(async token => {
       const result = await api.get<T>(`${this.ROOT_PATH}/${id}`, { query, token }, cache);
-      return { ...result, data: this.remap(result.data!) };
+      if (result.status === 'error') return result;
+      return { ...result, data: result.data && this.remap(result.data) };
     });
   }
 
   async create(payload: U): Promise<Result<number>> {
     return this.requestWrapper(async token => {
       const result = await api.post<number>(this.ROOT_PATH, payload, { token });
-      return { ...result, data: result.id! };
+      if (result.status === 'error') return result;
+      return { ...result };
     });
   }
 

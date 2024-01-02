@@ -14,11 +14,11 @@
     itemsPerPage: number;
     totalItems: number;
     maxVisiblePages?: number;
-    onpagechange?: (p: number) => void;
+    onpagechange?: (page: number) => void;
   }>();
 
-  let paginationButtons = $state<PaginationButton[]>([]);
-  let totalPages = $derived(Math.ceil(totalItems / itemsPerPage));
+  const totalPages = $derived(Math.ceil(totalItems / itemsPerPage));
+  const paginationButtons = $derived<PaginationButton[]>(findPaginationButtons(totalPages, page, maxVisiblePages));
 
   interface PaginationButton {
     type: 'page' | 'ellipsis';
@@ -31,29 +31,40 @@
     }
   };
 
-  $effect.pre(() => {
+  function findPaginationButtons(totalPages: number, currentPage: number, maxVisiblePages: number) {
     const buttons: PaginationButton[] = [];
-    for (let i = 1; i <= totalPages; i++) {
-      if (i === 1 || i === totalPages || Math.abs(page - i) <= Math.floor(maxVisiblePages / 2)) {
-        buttons.push({ type: 'page', value: i });
-      } else if (i === page - Math.floor(maxVisiblePages / 2) - 1 || i === page + Math.floor(maxVisiblePages / 2) + 1) {
-        buttons.push({ type: 'ellipsis', value: 0 });
-      }
-    }
-    paginationButtons.push(...buttons);
-  });
+    let start = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let end = Math.min(totalPages, currentPage + Math.floor(maxVisiblePages / 2));
 
-  function handlePrevious() {
+    if (start > 1) buttons.push({ type: 'ellipsis', value: 0 });
+    for (let i = start; i <= end; i++) {
+      buttons.push({ type: 'page', value: i });
+    }
+    if (end < totalPages) buttons.push({ type: 'ellipsis', value: 0 });
+
+    return buttons;
+  }
+
+  function handleSetPage(page: number) {
+    return (e: MouseEvent) => {
+      e.preventDefault();
+      setPage(page);
+    };
+  }
+
+  function handlePrevious(e: MouseEvent) {
+    e.preventDefault();
     setPage(page - 1);
   }
 
-  function handleNext() {
+  function handleNext(e: MouseEvent) {
+    e.preventDefault();
     setPage(page + 1);
   }
 </script>
 
 <div class="mt-4 flex items-center justify-between">
-  <p class="text-sm text-gray-700">
+  <p class="text-sm text-neutral-dark">
     {$t('pagination.message', {
       begin: (page - 1) * itemsPerPage + 1,
       end: Math.min(page * itemsPerPage, totalItems),
@@ -61,26 +72,25 @@
     })}
   </p>
   <nav class="flex items-center">
-    <Button class="w-24" on:click={handlePrevious} disabled={page === 1}>
+    <Button class="w-24" onclick={handlePrevious} disabled={page === 1}>
       {$t('pagination.previous')}
     </Button>
     <div class="mx-2 flex flex-wrap gap-1">
       {#each paginationButtons as button}
         {#if button.type === 'page'}
           <button
-            class="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300"
-            class:active:bg-primary-200={page === button.value}
-            class:bg-red-200={page === button.value}
-            on:click={() => setPage(button.value)}
+            class="rounded-md px-3 py-2 text-sm font-medium text-neutral hover:bg-neutral-lightest focus:outline-none focus:ring focus:ring-neutral-light active:bg-primary"
+            class:active={page === button.value}
+            onclick={handleSetPage(button.value)}
           >
             {button.value}
           </button>
         {:else}
-          <span class="px-2 py-1 text-sm font-medium text-gray-500">...</span>
+          <span class="px-2 py-1 text-sm font-medium text-neutral">...</span>
         {/if}
       {/each}
     </div>
-    <Button class="w-24" on:click={handleNext} disabled={page === totalPages}>
+    <Button class="w-24" onclick={handleNext} disabled={page === totalPages}>
       {$t('pagination.next')}
     </Button>
   </nav>

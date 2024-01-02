@@ -1,5 +1,6 @@
 import { generateError } from '../generator';
-import { getAccessTokenWithAuthRefresh } from '../jwt';
+
+import { getAccessTokenWithAuthRefresh } from './jwt';
 
 import api, { type Result } from '$lib/helpers/apis/api';
 
@@ -23,33 +24,38 @@ export abstract class CRUDService<T, P = unknown> {
   async find(rootID: number, query?: string, cache = true): Promise<Result<T[]>> {
     return this.requestWrapper(async token => {
       const result = await api.get<T[]>(`${this.ROOT_PATH}/${rootID}/${this.SUB_PATH}`, { query, token }, cache);
-      return { ...result, data: result.data!.map(this.remap) };
+      if (result.status === 'error') return result;
+      return { ...result, data: result.data?.map(this.remap) };
     });
   }
 
   async findByID(rootID: number, id: number, cache = true): Promise<Result<T>> {
     return this.requestWrapper(async token => {
       const result = await api.get<T>(`${this.ROOT_PATH}/${rootID}/${this.SUB_PATH}/${id}`, { token }, cache);
-      return { ...result, data: this.remap(result.data!) };
+      if (result.status === 'error') return result;
+      return { ...result, data: result.data && this.remap(result.data) };
     });
   }
 
   async create(rootID: number, payload: P): Promise<Result<number>> {
     return this.requestWrapper(async token => {
       const result = await api.post<number>(`${this.ROOT_PATH}/${rootID}/${this.SUB_PATH}`, payload, { token });
+      if (result.status === 'error') return result;
       return { ...result, data: result.id! };
     });
   }
 
-  async updateByID(rootID: number, id: number, payload: P): Promise<void> {
+  async updateByID(rootID: number, id: number, payload: unknown): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.put(`${this.ROOT_PATH}/${rootID}/${this.SUB_PATH}/${id}`, payload, { token });
+      const result = await api.put<void>(`${this.ROOT_PATH}/${rootID}/${this.SUB_PATH}/${id}`, payload, { token });
+      return { ...result };
     });
   }
 
-  async deleteByID(rootID: number, id: number): Promise<void> {
+  async deleteByID(rootID: number, id: number): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.del(`${this.ROOT_PATH}/${rootID}/${this.SUB_PATH}/${id}`, { token });
+      const result = await api.del<void>(`${this.ROOT_PATH}/${rootID}/${this.SUB_PATH}/${id}`, { token });
+      return { ...result };
     });
   }
 }

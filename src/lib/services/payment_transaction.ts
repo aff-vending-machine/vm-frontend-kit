@@ -1,11 +1,11 @@
 import api from '$lib/helpers/apis/api';
 import { CRUDService } from '$lib/helpers/apis/api_1st';
 import { convertToAnyDate, convertToDate } from '$lib/helpers/converter';
-import type { PaymentTransaction } from '$lib/types/payment_transaction';
+import type { PaymentTransactionEntity } from '$lib/types/payment_transaction';
 
 const ROOT_PATH = 'transactions';
 
-export class PaymentTransactionService extends CRUDService<PaymentTransaction> {
+export class PaymentTransactionService extends CRUDService<PaymentTransactionEntity> {
   private static instance: PaymentTransactionService;
   static getInstance(): PaymentTransactionService {
     if (!PaymentTransactionService.instance) {
@@ -19,7 +19,7 @@ export class PaymentTransactionService extends CRUDService<PaymentTransaction> {
     super(PATH);
   }
 
-  protected remap = (data: PaymentTransaction) => {
+  protected remap = (data: PaymentTransactionEntity) => {
     data.created_at = convertToDate(data.created_at);
     data.updated_at = convertToDate(data.updated_at);
     data.ordered_at = convertToDate(data.ordered_at);

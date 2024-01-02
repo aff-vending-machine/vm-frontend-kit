@@ -27,10 +27,7 @@
   });
 </script>
 
-<div
-  class:hidden={!$sidebar || $isDesktop}
-  class="absolute bottom-0 left-0 right-0 top-0 z-10 bg-gray-500 opacity-50"
-/>
+<div class:hidden={!$sidebar || $isDesktop} class="absolute bottom-0 left-0 right-0 top-0 z-10 bg-neutral opacity-50" />
 <aside
   class="z-30 w-0 flex-shrink-0 overflow-y-auto transition-all"
   class:xl:w-20={!$sidebar}
@@ -40,19 +37,23 @@
   on:click-outside={handleClickOutside}
 >
   <div
-    class="group fixed h-full w-0 bg-white py-4 text-gray-500 shadow shadow-gray-300 transition-all hover:xl:w-[13.5rem] dark:bg-gray-800 dark:text-gray-400"
+    class="dark:text-gray-400 group fixed h-full w-0 bg-white py-4 text-neutral shadow shadow-neutral-light transition-all hover:xl:w-[13.5rem] dark:bg-neutral-dark"
     class:xl:w-20={!$sidebar}
     class:w-[13.5rem]={$sidebar}
   >
     <div class="flex h-16 flex-nowrap items-center justify-center">
-      <a href="/console" class=" text-gray-900 group-hover:inline-block dark:text-gray-200" class:hidden={!$sidebar}>
+      <a
+        href="/portal"
+        class=" text-neutral-darkest group-hover:inline-block dark:text-neutral-light"
+        class:hidden={!$sidebar}
+      >
         <span class="whitespace-nowrap text-center">
           {title}
         </span>
       </a>
       {#if $isDesktop}
         <button
-          class="absolute left-14 top-8 z-50 flex h-12 w-12 items-center justify-center rounded-full border-8 border-slate-200 bg-secondary-500 transition-all hover:bg-gray-500 group-hover:left-48"
+          class="absolute left-14 top-8 z-50 flex h-12 w-12 items-center justify-center rounded-full border-8 border-neutral-lightest bg-secondary transition-all hover:bg-neutral group-hover:left-48"
           class:left-48={$sidebar}
           class:rotate-180={$sidebar}
           on:click={sidebar.toggle}

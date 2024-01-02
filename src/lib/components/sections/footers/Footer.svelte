@@ -5,10 +5,10 @@
 </script>
 
 <footer class="flex w-full items-center justify-center whitespace-nowrap lg:justify-between">
-  <small class="text-sm text-gray-500 dark:text-gray-300">
+  <small class="text-sm text-neutral dark:text-neutral-light">
     Copyright © {year} <a href="https://www.at44.co.th/" class="mx-1 hover:underline">AT44 co., ltd.</a> All Rights Reserved.
   </small>
-  <ul class="hidden space-x-4 text-sm text-gray-500 lg:flex dark:text-gray-300">
+  <ul class="hidden space-x-4 text-sm text-neutral lg:flex dark:text-neutral-light">
     <li>
       <a href="https://www.at44.co.th/about-us/" class="hover:underline">About</a>
     </li>

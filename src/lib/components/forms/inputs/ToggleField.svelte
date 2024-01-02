@@ -17,7 +17,7 @@
       name={id}
       bind:checked={value}
       on:change
-      class="h-4 w-4 rounded border border-gray-300 text-indigo-600 focus:ring-indigo-500"
+      class="text-indigo-600 focus:ring-indigo-500 h-4 w-4 rounded border border-neutral-light"
     />
     <span class="ml-2 text-sm">{value ? labelOn : labelOff}</span>
   </label>

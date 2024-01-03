@@ -1,9 +1,11 @@
 <!-- Breadcrumb -->
 <script lang="ts">
-  export let home = true;
-  export let path: string;
+  let { home = true, path } = $props<{
+    home: boolean;
+    path: string;
+  }>();
 
-  $: items = generateBreadcrumbItems(path, home);
+  const items = $derived(generateBreadcrumbItems(path, home));
 
   function generateBreadcrumbItems(path: string, home: boolean) {
     const items = path.split('/').map((p: string, index: number, a: string[]) => {

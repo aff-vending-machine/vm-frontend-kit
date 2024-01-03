@@ -27,7 +27,7 @@ export class ActionState {
     return query;
   }
 
-  get data() {
+  get filter() {
     return {
       from: this.#from,
       to: this.#to,

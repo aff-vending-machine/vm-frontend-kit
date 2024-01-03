@@ -84,13 +84,13 @@
               <div class="text-center">
                 <h3>{machine.name}</h3>
                 <div class="flex flex-col">
-                  <span class="text-sm">{machine.branch.name}</span>
-                  <span class="text-sm">{machine.serial_number}</span>
-                  <span class="text-sm">{machine.location}</span>
+                  <span class="text-xs">BRANCH: {machine.branch.name}</span>
+                  <span class="text-xs">{machine.serial_number}</span>
+                  <span class="text-xs">{machine.location}</span>
                 </div>
               </div>
               <div class="flex space-x-4">
-                <ButtonLink href="machines/{machine.id}/slots" color="secondary" class="flex-1">Slot</ButtonLink>
+                <ButtonLink href="machines/{machine.id}/slots" color="accent" class="flex-1">Slot</ButtonLink>
                 <ButtonLink href="machines/{machine.id}/payments" color="secondary" class="flex-1">Payment</ButtonLink>
               </div>
             </button>

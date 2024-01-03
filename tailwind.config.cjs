@@ -71,6 +71,10 @@ module.exports = {
   plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
   safelist: [
     {
+      pattern: /(text|bg|border|fill)-(primary|secondary|accent|info|warning|success|danger)/,
+      variants: ['hover'],
+    },
+    {
       pattern: /(text|bg|border|fill)-(primary|secondary|accent|info|warning|success|danger)-(light|heavy)/,
       variants: ['hover'],
     },

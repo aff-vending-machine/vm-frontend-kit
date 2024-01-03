@@ -31,6 +31,7 @@ export class ReportState {
 
     const result = await reportAPI.summary(query.toString());
     if (result.status === 'error') throw generateError(result.message);
+
     this.#reports = result.data;
   };
 

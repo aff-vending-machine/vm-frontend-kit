@@ -22,10 +22,10 @@
     <Content>
       <Header>{$t('common.search-filter')}</Header>
       <Filter
-        from={action.data.from}
-        to={action.data.to}
-        bind:group={action.data.group}
-        machineID={action.data.machineID}
+        from={action.filter.from}
+        to={action.filter.to}
+        bind:group={action.filter.group}
+        machineID={action.filter.machineID}
         machineOptions={data.options.machines}
       />
     </Content>

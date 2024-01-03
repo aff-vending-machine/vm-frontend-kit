@@ -1,3 +1,4 @@
+import { goto } from '$app/navigation';
 import type { ActionState } from '$lib/components/ui/transaction/actions';
 import type { OverlayState } from '$lib/components/ui/transaction/overlays';
 import type { Pagination } from '$lib/helpers/apis/api';
@@ -38,6 +39,12 @@ export class TransactionState {
 
     const result = await transactionAPI.find(query.toString(), false);
     if (result.status === 'error') throw generateError(result.message);
+    if (result.data.length === 0 && this.#action.filter.page !== 1) {
+      const query = new URLSearchParams(this.#action.query);
+      query.delete('page');
+      return await goto(`?${query.toString()}`, { keepFocus: true });
+    }
+
     this.#transactions = result.data;
     this.#pagination = result.pagination!;
   };

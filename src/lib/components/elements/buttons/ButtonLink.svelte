@@ -34,7 +34,7 @@
 <a
   class={`
     inline-flex items-center justify-center border px-4 py-2 text-xs font-medium shadow-sm outline-none
-    ${buttonClasses()} ${externalClass || ''}
+    ${buttonClasses()} ${externalClass ?? ''}
   `}
   {href}
   {target}

@@ -24,7 +24,7 @@
   }>();
 </script>
 
-<Modal show={mode !== 'none'} {onclose}>
+<Modal {onclose}>
   {#snippet children({ Header, Body })}
     <Header {title} {subtitle} {onclose} />
     <Body>

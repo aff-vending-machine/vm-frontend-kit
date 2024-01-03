@@ -57,7 +57,7 @@ export class ReportState {
   };
 
   #regroupData = () => {
-    if (this.#action.data.group) {
+    if (this.#action.filter.group) {
       return this.#reports.reduce((result, data) => {
         const idx = result.findIndex(r => r.name === data.name && r.sale_price === data.sale_price);
 

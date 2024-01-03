@@ -31,10 +31,9 @@
       classes += ' opacity-50 cursor-wait';
     } else {
       classes += outline
-        ? ` bg-transparent hover:bg-${color} text-${color}`
-        : ` bg-${color} hover:bg-${color}-dark text-white`;
+        ? ` bg-transparent text-${color} hover:bg-${color} hover:text-white`
+        : ` bg-${color} text-white hover:bg-${color}-dark hover:text-white`;
 
-      classes += ` hover:bg-${color}-dark hover:text-white`;
       classes += ' hover:shadow';
       classes += ` border border-${color} hover:border-${color}-dark`;
       classes += ` rounded-${rounded}`;
@@ -53,11 +52,10 @@
 </script>
 
 <button
-  class={`
+  class="
     inline-flex items-center justify-center border px-4 py-2 text-xs font-medium shadow-sm outline-none
-    disabled:cursor-not-allowed disabled:opacity-50 
-    ${buttonClasses()} ${externalClass || ''}
-  `}
+    disabled:cursor-not-allowed disabled:opacity-50
+    {buttonClasses()} {externalClass || ''}"
   {type}
   {form}
   disabled={disabled || loading}

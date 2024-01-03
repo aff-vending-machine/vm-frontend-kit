@@ -24,7 +24,7 @@
   }>();
 </script>
 
-<Drawer show={mode !== 'none'} {onclose}>
+<Drawer {onclose}>
   {#snippet children({ Header, Body })}
     <Header {title} {subtitle} {onclose} />
     <Body>

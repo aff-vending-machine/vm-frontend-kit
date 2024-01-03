@@ -18,7 +18,7 @@
   {#snippet children({ Header, Content })}
     <Content>
       <Header>{$t('common.search-filter')}</Header>
-      <Filter from={action.data.from} to={action.data.to} />
+      <Filter from={action.filter.from} to={action.filter.to} />
     </Content>
     <Content>
       <Table>

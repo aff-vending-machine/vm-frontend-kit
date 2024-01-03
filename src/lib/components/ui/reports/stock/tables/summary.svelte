@@ -10,12 +10,12 @@
 </script>
 
 <div class="flex flex-col">
-  <span class="text-green-900 flex justify-between text-sm">
+  <span class="flex justify-between text-sm text-success-darkest">
     <span class="sm:hidden">{$t('report.credit-card-short')} </span>
     <span class="hidden sm:inline-block">{$t('report.credit-card')}</span>
     <Currency amount={source.total_payments.creditcard} />
   </span>
-  <span class="text-lime-900 flex justify-between text-sm">
+  <span class="flex justify-between text-sm text-info-darkest">
     <span class="sm:hidden">{$t('report.promptpay-short')} </span>
     <span class="hidden sm:inline-block">{$t('report.promptpay')}</span>
     <Currency amount={source.total_payments.promptpay} />

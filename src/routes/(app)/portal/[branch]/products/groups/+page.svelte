@@ -20,7 +20,7 @@
   {#snippet children({ Header, Content })}
     <Content>
       <Header>{$t('common.search-filter')}</Header>
-      <Filter perPage={action.data.perPage} />
+      <Filter perPage={action.filter.perPage} />
     </Content>
     <Content>
       <Command oncreate={overlay.onOpenCreator} />

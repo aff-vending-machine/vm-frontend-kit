@@ -36,31 +36,31 @@
             </div>
           </li>
           <li>
-            <hr class="bg-slate-300 h-0.5 w-full" />
+            <hr class="h-0.5 w-full bg-neutral-light" />
           </li>
           <li class="p-4 pb-2">
-            <a href="/main/dashboard" class="text-slate-500 hover:text-slate-800 flex space-x-2">
+            <a href="/main/dashboard" class="flex space-x-2 text-neutral hover:text-neutral-darkest">
               <Icon icon="mdi:view-dashboard" class="h-5 w-5" />
               <span>Dashboard</span>
             </a>
           </li>
           <li class="px-4 py-2">
-            <a href="/main/profile" class="text-slate-500 hover:text-slate-800 flex space-x-2">
+            <a href="/main/profile" class="flex space-x-2 text-neutral hover:text-neutral-darkest">
               <Icon icon="mdi:account-edit-outline" class="h-5 w-5" />
               <span>Profile</span>
             </a>
           </li>
           <li class="p-4 pt-2">
-            <a href="/main/settings" class="text-slate-500 hover:text-slate-800 flex space-x-2">
+            <a href="/main/settings" class="flex space-x-2 text-neutral hover:text-neutral-darkest">
               <Icon icon="mdi:cog" class="h-5 w-5" />
               <span>Settings</span>
             </a>
           </li>
           <li>
-            <hr class="bg-slate-300 h-0.5 w-full" />
+            <hr class="h-0.5 w-full bg-neutral-light" />
           </li>
           <li class="p-4">
-            <a href="/logout" class="text-slate-500 hover:text-slate-800 flex space-x-2">
+            <a href="/logout" class="flex space-x-2 text-neutral hover:text-neutral-darkest">
               <Icon icon="mdi:logout" class="h-5 w-5" />
               <span>Logout</span>
             </a>

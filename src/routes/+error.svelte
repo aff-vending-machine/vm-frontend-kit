@@ -3,13 +3,13 @@
   import ButtonLink from '$lib/components/elements/buttons/ButtonLink.svelte';
 </script>
 
-<main class="bg-gray-800 grid h-screen place-items-center px-6 py-24 sm:py-32 lg:px-8">
+<main class="grid h-screen place-items-center bg-neutral-dark px-6 py-24 sm:py-32 lg:px-8">
   <div class="text-center">
-    <p class="text-indigo-600 text-base font-semibold">{$page.status}</p>
-    <h1 class="text-gray-50 mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
+    <p class="text-base font-semibold text-info">{$page.status}</p>
+    <h1 class="mt-4 text-3xl font-bold tracking-tight text-neutral-lightest sm:text-5xl">
       {$page.status === 404 ? 'Page not found' : 'Something went wrong'}
     </h1>
-    <p class="text-gray-400 mt-6 text-base leading-7">
+    <p class="mt-6 text-base leading-7 text-neutral">
       {$page.error?.message ?? 'Unknown error'}
     </p>
     <div class="mt-10 flex items-center justify-center gap-x-6">

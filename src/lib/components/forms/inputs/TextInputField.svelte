@@ -16,7 +16,7 @@
     bind:value
     on:input
     on:change
-    class="disabled:text-blue-500 w-full min-w-[120px] rounded border border-neutral-light px-2 py-1 text-sm text-neutral-dark disabled:border-primary-light"
+    class="w-full min-w-[120px] rounded border border-neutral-light px-2 py-1 text-sm text-neutral-dark disabled:border-primary-light disabled:text-info"
   />
   {#if error}
     <p class="m-2 text-xs text-danger">{error}</p>

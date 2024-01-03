@@ -1,18 +1,21 @@
 <!-- Image -->
 <script lang="ts">
-  export let src: string | undefined;
-  export let alt = '-';
+  let {
+    class: className,
+    src,
+    alt,
+  } = $props<{
+    class?: string;
+    src?: string;
+    alt?: string;
+  }>();
 
-  const handleImageError = () => {
+  const onerror = (e: Event) => {
+    e.preventDefault();
+
     src = 'https://placehold.co/512x512?text=No+Image';
   };
 </script>
 
 <!-- HTML -->
-<img
-  class={$$props.class}
-  {alt}
-  {src}
-  placeholder="https://placehold.co/512x512?text=No+Image"
-  on:error={handleImageError}
-/>
+<img class={className} {alt} {src} placeholder="https://placehold.co/512x512?text=No+Image" {onerror} />

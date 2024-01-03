@@ -31,7 +31,7 @@ export class ActionState {
     return query;
   }
 
-  get data() {
+  get filter() {
     return {
       machineID: this.#machineID,
       group: this.#group,

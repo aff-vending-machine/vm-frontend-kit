@@ -79,8 +79,10 @@
       {#each paginationButtons as button}
         {#if button.type === 'page'}
           <button
-            class="rounded-md px-3 py-2 text-sm font-medium text-neutral hover:bg-neutral-lightest focus:outline-none focus:ring focus:ring-neutral-light active:bg-primary"
-            class:active={page === button.value}
+            class="rounded-md px-3 py-2 text-sm font-medium text-neutral hover:bg-neutral-lightest focus:outline-none focus:ring focus:ring-neutral-light {page ===
+            button.value
+              ? 'bg-primary text-white'
+              : ''}"
             onclick={handleSetPage(button.value)}
           >
             {button.value}

@@ -18,7 +18,7 @@ export class ActionState {
     return query;
   }
 
-  get data() {
+  get filter() {
     return {
       machineID: this.#machineID,
       page: this.#page,

@@ -1,3 +1,4 @@
+import { goto } from '$app/navigation';
 import type { ActionState } from '$lib/components/ui/user/actions';
 import type { OverlayState } from '$lib/components/ui/user/overlays';
 import type { Pagination } from '$lib/helpers/apis/api';
@@ -43,6 +44,12 @@ export class UserState {
 
     const result = await userAPI.find(query.toString(), false);
     if (result.status === 'error') throw generateError(result.message);
+    if (result.data.length === 0 && this.#action.filter.page !== 1) {
+      const query = new URLSearchParams(this.#action.query);
+      query.delete('page');
+      return await goto(`?${query.toString()}`, { keepFocus: true });
+    }
+
     this.#users = result.data;
     this.#pagination = result.pagination!;
   };

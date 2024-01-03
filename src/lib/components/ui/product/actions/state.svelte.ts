@@ -19,7 +19,7 @@ export class ActionState {
     return query;
   }
 
-  get data() {
+  get filter() {
     return {
       groupID: this.#groupID,
       page: this.#page,

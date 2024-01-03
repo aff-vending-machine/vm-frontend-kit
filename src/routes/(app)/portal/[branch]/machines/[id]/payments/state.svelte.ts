@@ -1,3 +1,4 @@
+import { goto } from '$app/navigation';
 import type { ActionState } from '$lib/components/ui/payment/actions';
 import type { Pagination } from '$lib/helpers/apis/api';
 import { generateError } from '$lib/helpers/generator';
@@ -33,6 +34,12 @@ export class PaymentState {
 
     const result = await paymentAPI.find(query.toString(), false);
     if (result.status === 'error') throw generateError(result.message);
+    if (result.data.length === 0 && this.#action.filter.page !== 1) {
+      const query = new URLSearchParams(this.#action.query);
+      query.delete('page');
+      return await goto(`?${query.toString()}`, { keepFocus: true });
+    }
+
     this.#payments = result.data;
     this.#pagination = result.pagination!;
   };
@@ -56,7 +63,7 @@ export class PaymentState {
     this.#error = undefined;
 
     try {
-      const result = await paymentAPI.fetch(this.#action.data.machineID);
+      const result = await paymentAPI.fetch(this.#action.filter.machineID);
       if (result.status === 'error') throw generateError(result.message);
       salert.success('The payments is synced');
     } catch (e) {

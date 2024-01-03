@@ -38,9 +38,9 @@
       <p class="text-neutral-dark">
         {$t('group.field.status')}:
         {#if group.is_enable}
-          <span class="text-success-500">{$t('group.status-on')}</span>
+          <span class="text-success">{$t('group.status-on')}</span>
         {:else}
-          <span class="text-danger-500">{$t('group.status-off')}</span>
+          <span class="text-danger">{$t('group.status-off')}</span>
         {/if}
       </p>
     </div>

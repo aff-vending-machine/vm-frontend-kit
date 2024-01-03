@@ -20,10 +20,10 @@
   {#snippet children({ Header, Content })}
     <Content>
       <Header>{$t('common.search-filter')}</Header>
-      <Filter perPage={action.data.perPage} />
+      <Filter perPage={action.filter.perPage} />
     </Content>
     <Content>
-      <Header>{$t('common.search-action')}</Header>
+      <Header>{$t('common.search-command')}</Header>
       <Command onsync={state.onSync} />
     </Content>
     <Content>

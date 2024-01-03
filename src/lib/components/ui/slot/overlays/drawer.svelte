@@ -23,7 +23,7 @@
   }>();
 </script>
 
-<Drawer show={mode !== 'none'} {onclose}>
+<Drawer {onclose}>
   {#snippet children({ Header, Footer, Body })}
     <Header {title} {subtitle} />
     <Body>

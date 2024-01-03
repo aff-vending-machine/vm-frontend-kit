@@ -13,7 +13,7 @@
   }>();
 </script>
 
-<div class="bg-secondary-50 flex flex-col justify-between space-y-4 rounded border p-4">
+<div class="flex flex-col justify-between space-y-4 rounded border bg-secondary-lightest p-4">
   <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
     <TextInputField
       class="col-span-2"

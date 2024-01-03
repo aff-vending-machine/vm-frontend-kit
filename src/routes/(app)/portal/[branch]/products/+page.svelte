@@ -2,13 +2,13 @@
   import { t } from '$lib/i18n/translations';
   import Table from '$lib/components/elements/tables/Table.svelte';
   import Card from '$lib/components/sections/cards/Card.svelte';
+  import Command from '$lib/components/ui/product/actions/command.svelte';
+  import SharePaginationTable from '$lib/components/shares/SharePaginationTable.svelte';
 
   import { columns } from './table';
   import { ActionState, Filter } from '$lib/components/ui/product/actions';
   import { Alert, Drawer, OverlayState } from '$lib/components/ui/product/overlays';
   import { ProductState } from './state.svelte';
-  import Command from '$lib/components/ui/product/actions/command.svelte';
-  import SharePaginationTable from '$lib/components/shares/SharePaginationTable.svelte';
 
   let { data } = $props();
 
@@ -21,7 +21,7 @@
   {#snippet children({ Header, Content })}
     <Content>
       <Header>{$t('common.search-filter')}</Header>
-      <Filter perPage={action.data.perPage} groupId={action.data.groupID} groupOptions={data.options.groups} />
+      <Filter perPage={action.filter.perPage} groupId={action.filter.groupID} groupOptions={data.options.groups} />
     </Content>
     <Content>
       <Command oncreate={overlay.onOpenCreator} />

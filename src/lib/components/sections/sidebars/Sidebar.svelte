@@ -13,10 +13,12 @@
   import { isDesktop } from '$lib/stores/media';
   import sidebar from '$lib/stores/sidebar';
 
-  export let title: string;
-  export let branch: string;
+  let { title, branch } = $props<{
+    title: string;
+    branch: string;
+  }>();
 
-  function handleClickOutside() {
+  function onClickOutside() {
     if (!$isDesktop) sidebar.close();
   }
 
@@ -34,10 +36,10 @@
   class:w-56={$sidebar}
   class:fixed={!$isDesktop}
   use:clickOutside
-  on:click-outside={handleClickOutside}
+  on:click-outside={onClickOutside}
 >
   <div
-    class="dark:text-gray-400 group fixed h-full w-0 bg-white py-4 text-neutral shadow shadow-neutral-light transition-all hover:xl:w-[13.5rem] dark:bg-neutral-dark"
+    class="group fixed h-full w-0 bg-white py-4 text-neutral shadow shadow-neutral-light transition-all hover:xl:w-[13.5rem] dark:bg-neutral-dark dark:text-neutral-light"
     class:xl:w-20={!$sidebar}
     class:w-[13.5rem]={$sidebar}
   >

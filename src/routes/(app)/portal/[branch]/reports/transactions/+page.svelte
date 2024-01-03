@@ -21,11 +21,11 @@
     <Content>
       <Header>{$t('common.search-filter')}</Header>
       <Filter
-        from={action.data.from}
-        to={action.data.to}
-        channelID={action.data.channelID}
+        from={action.filter.from}
+        to={action.filter.to}
+        channelID={action.filter.channelID}
         channelOptions={data.options.channel}
-        machineID={action.data.machineID}
+        machineID={action.filter.machineID}
         machineOptions={data.options.machines}
       />
     </Content>

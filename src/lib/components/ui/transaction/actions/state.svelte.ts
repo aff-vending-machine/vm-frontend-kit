@@ -15,7 +15,7 @@ export class ActionState {
     return query;
   }
 
-  get data() {
+  get filter() {
     return {
       page: this.#page,
       perPage: this.#perPage,

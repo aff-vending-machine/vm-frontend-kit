@@ -6,16 +6,24 @@
   import { page } from '$app/stores';
   import type { SidebarSubMenuType } from '$lib/sidebar';
 
-  export let title: string;
-  export let icon: string;
-  export let submenu: SidebarSubMenuType[] = [];
-  export let link: string | undefined = undefined;
-  export let iconOnly: boolean = false;
+  let {
+    title,
+    icon,
+    submenu = [],
+    link,
+    iconOnly = false,
+  } = $props<{
+    title: string;
+    icon: string;
+    submenu?: SidebarSubMenuType[];
+    link?: string | undefined;
+    iconOnly?: boolean;
+  }>();
 
-  let open = false;
+  let open = $state(checkActiveLink($page.route.id || '', link || submenu[0].link));
 
-  $: active = checkActiveLink($page.route.id || '', link || submenu[0].link);
-  $: subactive = (sub: string) => checkActiveSubLink($page.route.id!, sub);
+  const active = $derived(checkActiveLink($page.route.id || '', link || submenu[0].link));
+  const subactive = (sub: string) => checkActiveSubLink($page.route.id!, sub);
 
   function checkActiveLink(ref: string, link: string) {
     const currentPath = ref.split('/').filter(s => s !== '(app)');
@@ -47,7 +55,8 @@
     return true;
   }
 
-  function handleToggle() {
+  function onclick(e: MouseEvent) {
+    e.preventDefault();
     open = !open;
   }
 </script>
@@ -55,10 +64,10 @@
 {#if link}
   <li class="flex flex-nowrap">
     <a
-      class="hover:text-emerald-700 flex flex-grow items-center whitespace-nowrap px-6 py-4 text-sm font-semibold transition-colors duration-150 dark:hover:text-neutral-light"
+      class="flex flex-grow items-center whitespace-nowrap px-6 py-4 text-sm font-semibold transition-colors duration-150 hover:text-success-dark dark:hover:text-neutral-light {active
+        ? 'bg-primary-lightest text-primary'
+        : ''}"
       href={link}
-      class:text-primary={active}
-      class:bg-primary-100={active}
     >
       <Icon {icon} class="h-6 w-6" />
       <span class="ml-4 group-hover:block" class:hidden={iconOnly}>{title}</span>
@@ -71,10 +80,10 @@
 {:else}
   <li class="relative">
     <button
-      class="hover:text-emerald-600 inline-flex h-14 w-full items-center justify-between px-6 py-3 text-sm font-semibold transition-colors duration-150 focus:outline-none dark:hover:text-neutral-light"
-      on:click={handleToggle}
-      class:text-primary={active}
-      class:bg-primary-100={active}
+      class="inline-flex h-14 w-full items-center justify-between px-6 py-3 text-sm font-semibold transition-colors duration-150 hover:text-success focus:outline-none active:bg-primary-lightest active:text-primary dark:hover:text-neutral-light {active
+        ? 'bg-primary-lightest text-primary'
+        : ''}"
+      {onclick}
     >
       <span class="inline-flex items-center py-4">
         <Icon {icon} class="h-6 w-6" />
@@ -90,7 +99,7 @@
     </button>
     {#if open}
       <ul
-        class="dark:text-gray-400 overflow-hidden rounded-md p-2 text-sm font-medium text-neutral group-hover:block dark:bg-neutral-darkest"
+        class="overflow-hidden rounded-md p-2 text-sm font-medium text-neutral group-hover:block dark:bg-neutral-darkest dark:text-neutral-light"
         aria-label="submenu"
         class:hidden={iconOnly}
         transition:slide={{ delay: 100, duration: 300, easing: quintOut, axis: 'y' }}
@@ -98,7 +107,7 @@
         {#each submenu as item}
           <li class="px-4">
             <a
-              class="text-gray-600 hover:text-emerald-600 flex cursor-pointer items-center py-1 font-serif text-sm dark:hover:text-neutral-light"
+              class="flex cursor-pointer items-center py-1 font-serif text-sm text-neutral hover:text-accent-dark dark:hover:text-neutral-light"
               rel="noreferrer"
               href={item.link}
               class:font-extrabold={subactive(item.link)}

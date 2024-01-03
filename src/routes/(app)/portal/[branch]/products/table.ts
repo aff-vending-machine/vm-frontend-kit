@@ -25,6 +25,12 @@ export const columns: ColumnType[] = [
     render: () => Title,
   },
   {
+    key: 'description',
+    title: 'description',
+    type: 'string',
+    sortable: true,
+  },
+  {
     key: 'sale_price',
     title: 'price',
     type: 'currency',

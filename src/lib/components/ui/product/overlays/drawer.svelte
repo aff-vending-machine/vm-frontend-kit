@@ -17,13 +17,13 @@
   } = $props<{
     title: string;
     subtitle: string;
-    mode: 'creator' | 'editor' | 'viewer' | 'none';
+    mode: string;
     onclose: () => void;
     children: Snippet<Components>;
   }>();
 </script>
 
-<Drawer show={mode !== 'none'} {onclose}>
+<Drawer {onclose}>
   {#snippet children({ Header, Body })}
     <Header {title} {subtitle} {onclose} />
     <Body>

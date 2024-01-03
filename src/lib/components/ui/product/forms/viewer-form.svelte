@@ -39,9 +39,9 @@
       <p class="text-neutral-dark">
         {$t('product.field.status')}:
         {#if product.is_enable}
-          <span class="text-success-500">{$t('product.status-on')}</span>
+          <span class="text-success-light">{$t('product.status-on')}</span>
         {:else}
-          <span class="text-danger-500">{$t('product.status-off')}</span>
+          <span class="text-neutral-light">{$t('product.status-off')}</span>
         {/if}
       </p>
       <p class="pt-4 text-xl font-semibold">{product.sale_price?.toFixed(2)} {$t('common.unit.baht')}</p>

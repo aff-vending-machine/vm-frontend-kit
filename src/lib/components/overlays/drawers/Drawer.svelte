@@ -12,12 +12,7 @@
     Footer: typeof Footer;
   };
 
-  let {
-    show = false,
-    children,
-    onclose,
-  } = $props<{
-    show?: boolean;
+  let { children, onclose } = $props<{
     onclose: () => void;
     children: Snippet<Components>;
   }>();
@@ -30,20 +25,14 @@
   }
 </script>
 
-{#if show}
-  <div tabindex="-1" class="fixed bottom-0 left-0 right-0 top-0 z-40 flex items-center justify-center">
-    <button
-      class="absolute left-0 top-0 h-full w-full bg-black opacity-30"
-      transition:blur={{ amount: 10 }}
-      {onclick}
-    />
-    <div
-      class="absolute right-0 h-full w-full bg-white shadow-md shadow-white md:w-1/2 xl:w-1/3"
-      transition:fly={{ x: '100%' }}
-    >
-      <div class="flex h-full w-full flex-col justify-between">
-        {@render children({ Header, Body, Footer })}
-      </div>
+<div class="fixed bottom-0 left-0 right-0 top-0 z-40 flex items-center justify-center">
+  <button class="absolute left-0 top-0 h-full w-full bg-black opacity-30" transition:blur={{ amount: 10 }} {onclick} />
+  <div
+    class="absolute right-0 h-full w-full bg-white shadow-md shadow-white md:w-1/2 xl:w-1/3"
+    transition:fly={{ x: '100%' }}
+  >
+    <div class="flex h-full w-full flex-col justify-between">
+      {@render children({ Header, Body, Footer })}
     </div>
   </div>
-{/if}
+</div>

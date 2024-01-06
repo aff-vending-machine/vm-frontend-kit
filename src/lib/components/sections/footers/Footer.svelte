@@ -8,7 +8,7 @@
   <small class="text-sm text-neutral dark:text-neutral-light">
     Copyright © {year} <a href="https://www.at44.co.th/" class="mx-1 hover:underline">AT44 co., ltd.</a> All Rights Reserved.
   </small>
-  <ul class="hidden space-x-4 text-sm text-neutral lg:flex dark:text-neutral-light">
+  <ul class="hidden space-x-4 text-sm text-neutral dark:text-neutral-light lg:flex">
     <li>
       <a href="https://www.at44.co.th/about-us/" class="hover:underline">About</a>
     </li>

@@ -39,7 +39,7 @@
   on:click-outside={onClickOutside}
 >
   <div
-    class="group fixed h-full w-0 bg-white py-4 text-neutral shadow shadow-neutral-light transition-all hover:xl:w-[13.5rem] dark:bg-neutral-dark dark:text-neutral-light"
+    class="group fixed h-full w-0 bg-white py-4 text-neutral shadow shadow-neutral-light transition-all dark:bg-neutral-dark dark:text-neutral-light hover:xl:w-[13.5rem]"
     class:xl:w-20={!$sidebar}
     class:w-[13.5rem]={$sidebar}
   >

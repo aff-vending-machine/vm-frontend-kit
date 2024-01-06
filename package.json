@@ -48,13 +48,9 @@
     "test:integration": "playwright test",
     "test:unit": "vitest",
     "hook:prepare": "husky install && chmod ug+x .husky/*",
-    "hook:commit-msg": "npx husky add .husky/commit-msg 'npx --no -- commitlint --edit $1'",
-    "hook:pre-commit": "npx husky add .husky/pre-commit 'pnpm exec lint-staged'",
+    "hook:pre-commit": "npx husky add .husky/pre-commit 'pnpm exec pre-commit'",
     "hook:pre-push": "npx husky add .husky/pre-push 'pnpm check'",
-    "hook": "pnpm hook:commit-msg && pnpm hook:pre-commit && pnpm hook:pre-push && chmod ug+x .husky/*",
-    "precommit": "pnpm check && pnpm format && pnpm lint",
-    "commit": "git-cz",
-    "release": "commit-and-tag-version --no-verify --skip.tag"
+    "pre-commit": "pnpm check && pnpm format && pnpm lint"
   },
   "dependencies": {
     "@iconify/svelte": "^3.1.6",
@@ -68,9 +64,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.3",
-    "@commitlint/config-conventional": "^18.4.3",
-    "@commitlint/cz-commitlint": "^18.4.3",
     "@playwright/test": "^1.40.1",
     "@sveltejs/adapter-static": "^3.0.1",
     "@sveltejs/kit": "^2.0.6",
@@ -81,9 +74,7 @@
     "@typescript-eslint/eslint-plugin": "^6.17.0",
     "@typescript-eslint/parser": "^6.17.0",
     "autoprefixer": "^10.4.16",
-    "commit-and-tag-version": "^12.0.0",
-    "commitizen": "^4.3.0",
-    "cssnano": "^6.0.2",
+    "cssnano": "^6.0.3",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -91,8 +82,7 @@
     "eslint-plugin-svelte": "^2.35.1",
     "husky": "^8.0.3",
     "inquirer": "^8.2.6",
-    "lint-staged": "^15.2.0",
-    "postcss": "^8.4.32",
+    "postcss": "^8.4.33",
     "postcss-cli": "^10.1.0",
     "postcss-import": "^15.1.0",
     "postcss-load-config": "^5.0.2",
@@ -100,16 +90,16 @@
     "prettier": "^3.1.1",
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-svelte": "^3.1.2",
-    "prettier-plugin-tailwindcss": "^0.5.10",
+    "prettier-plugin-tailwindcss": "^0.5.11",
     "sass": "^1.69.7",
-    "svelte": "5.0.0-next.28",
+    "svelte": "5.0.0-next.29",
     "svelte-check": "^3.6.2",
     "svelte-preprocess": "^5.1.3",
     "sveltekit-i18n": "^2.4.2",
-    "tailwindcss": "^3.4.0",
+    "tailwindcss": "^3.4.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10",
-    "vitest": "^1.1.1"
+    "vite": "^5.0.11",
+    "vitest": "^1.1.3"
   }
 }

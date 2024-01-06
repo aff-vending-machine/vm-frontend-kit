@@ -1,16 +1,27 @@
 <script lang="ts">
+  import { invalidateAll } from '$app/navigation';
+  import { theme } from '$lib/state.svelte';
   import Icon from '@iconify/svelte';
-
-  import theme from '$lib/stores/theme';
 
   let { class: className } = $props<{
     class?: string;
   }>();
 
-  const isLight = $derived($theme === 'light');
+  const isLight = $derived(theme.value === 'light');
+
+  function onToggle(e: MouseEvent) {
+    e.preventDefault();
+
+    if (theme.value === 'light') {
+      theme.value = 'dark';
+    } else {
+      theme.value = 'light';
+    }
+    invalidateAll();
+  }
 </script>
 
-<button class={className} on:click={theme.toggle}>
+<button class={className} onclick={onToggle}>
   <span class:hidden={!isLight}>
     <Icon icon="mdi:weather-sunny" class="h-8 w-8" />
   </span>

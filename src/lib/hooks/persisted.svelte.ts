@@ -31,7 +31,6 @@ const DefaultSerializer = <T>() => ({
     }
   },
   stringify: (value: T) => {
-    console.log(typeof value);
     return typeof value === 'string' || typeof value === 'boolean' || typeof value === 'number'
       ? String(value) // Convert primitives directly to strings
       : JSON.stringify(value); // Otherwise, use JSON

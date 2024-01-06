@@ -3,7 +3,6 @@
   import { tippy } from 'svelte-tippy';
 
   import Image from '$lib/components/elements/images/Image.svelte';
-  import { mousePress } from '$lib/hooks/useMousePress';
   import { t } from '$lib/i18n/translations';
   import type { MachineSlotEntity } from '$lib/types/machine_slot';
 

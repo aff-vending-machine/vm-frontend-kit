@@ -3,8 +3,8 @@
   import type { ColumnType } from './table';
   import TableBodyField from './TableBodyField.svelte';
 
-  import { isDesktop, isTablet, isMobile } from '$lib/stores/media';
   import type { Entity } from '$lib/types/common';
+  import { filterColumns } from '$lib/utils/check';
 
   let { columns, source, onselect, onaction } = $props<{
     columns: ColumnType[];
@@ -13,15 +13,7 @@
     onaction?: (mode: string, data: Entity) => void;
   }>();
 
-  const fillterdColumns = $derived(
-    columns.filter(c => {
-      if (!c.responsive || c.responsive === 'all') return true;
-      if (c.responsive.includes('mobile') && $isMobile) return true;
-      if (c.responsive.includes('tablet') && $isTablet) return true;
-      if (c.responsive.includes('desktop') && $isDesktop) return true;
-      return false;
-    }),
-  );
+  const fillterdColumns = $derived(filterColumns(columns));
 
   function onSelect(data: Record<string, any>) {
     return (e: MouseEvent) => {

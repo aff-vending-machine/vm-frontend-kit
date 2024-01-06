@@ -2,7 +2,7 @@
   import Currency from '$lib/components/elements/labels/Currency.svelte';
   import type { ColumnType } from '$lib/components/elements/tables/table';
   import { t } from '$lib/i18n/translations';
-  import { isTablet, isDesktop } from '$lib/stores/media';
+  import { media } from '$lib/state.svelte';
   import type { MachineReport } from '$lib/types/report';
 
   let { columns, data } = $props<{
@@ -10,7 +10,7 @@
     data: MachineReport[];
   }>();
 
-  const colspan = $derived(columns.length - ($isDesktop ? 6 : $isTablet ? 8 : 7));
+  const colspan = $derived(columns.length - (media.isDesktop ? 6 : media.isTablet ? 8 : 7));
   const totalCreditCard = $derived(data.reduce((total, row) => total + row.total_payments['creditcard'], 0));
   const totalPromptPay = $derived(data.reduce((total, row) => total + row.total_payments['promptpay'], 0));
   const totalPayment = $derived(totalCreditCard + totalPromptPay);
@@ -18,7 +18,7 @@
 
 <tr>
   <td class="px-6 py-4" {colspan}>{$t('report.total')}</td>
-  {#if $isDesktop}
+  {#if media.isDesktop}
     <td class="px-6 py-4"><Currency amount={totalCreditCard} /></td>
     <td class="px-6 py-4"><Currency amount={totalPromptPay} /></td>
   {:else}

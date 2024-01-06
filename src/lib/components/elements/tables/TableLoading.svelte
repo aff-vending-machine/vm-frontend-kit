@@ -1,21 +1,12 @@
 <script lang="ts">
+  import { filterColumns } from '$lib/utils/check';
   import type { ColumnType } from './table';
-
-  import { isMobile, isTablet, isDesktop } from '$lib/stores/media';
 
   let { columns } = $props<{
     columns: ColumnType[];
   }>();
 
-  const fillterdColumns = $derived(
-    columns.filter(c => {
-      if (!c.responsive || c.responsive === 'all') return true;
-      if (c.responsive.includes('mobile') && $isMobile) return true;
-      if (c.responsive.includes('tablet') && $isTablet) return true;
-      if (c.responsive.includes('desktop') && $isDesktop) return true;
-      return false;
-    }),
-  );
+  const fillterdColumns = $derived(filterColumns(columns));
 </script>
 
 <tbody class="animate-pulse divide-y divide-neutral-lightest border-t border-neutral-lightest">

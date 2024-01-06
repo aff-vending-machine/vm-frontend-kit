@@ -22,7 +22,7 @@
   }
 </script>
 
-<button class={className} on:click={onToggle}>
+<button class={className} onclick={onToggle}>
   <span class:hidden={!isUS}>
     <Icon icon="emojione:flag-for-us-outlying-islands" class="h-8 w-8" />
   </span>

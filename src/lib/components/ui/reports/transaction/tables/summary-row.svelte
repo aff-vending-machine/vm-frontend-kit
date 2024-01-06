@@ -2,7 +2,7 @@
   import Currency from '$lib/components/elements/labels/Currency.svelte';
   import type { ColumnType } from '$lib/components/elements/tables/table';
   import { t } from '$lib/i18n/translations';
-  import { isTablet, isDesktop } from '$lib/stores/media';
+  import { media } from '$lib/state.svelte';
   import type { TransactionReport } from '$lib/types/report';
 
   let { columns, data } = $props<{
@@ -10,7 +10,7 @@
     data: TransactionReport[];
   }>();
 
-  const colspan = $derived(columns.length - ($isDesktop ? 3 : $isTablet ? 4 : 5));
+  const colspan = $derived(columns.length - (media.isDesktop ? 3 : media.isTablet ? 4 : 5));
   const totalPayment = $derived(data.reduce((total, s) => total + s.paid_price, 0));
 </script>
 

@@ -5,40 +5,44 @@
   import Header from '$lib/components/sections/headers/Header.svelte';
   import Footer from '$lib/components/sections/footers/Footer.svelte';
   import { t } from '$lib/i18n/translations';
-  import sidebar from '$lib/stores/sidebar';
   import BranchSelection from '$lib/components/ui/home/BranchSelection.svelte';
 
   let { data, children } = $props();
+  let sidebar = $state(true);
 
-  const state = new PortalState($page.url, $page.route?.id, $page.params.id);
+  const internal = new PortalState($page.url, $page.route?.id, $page.params.id);
+
+  function toggleSidebar() {
+    sidebar = !sidebar;
+  }
 </script>
 
 <div class="flex h-screen w-screen bg-neutral-lightest">
-  <Sidebar title="Portal Center" branch={$page.params.branch || 'all'} />
+  <Sidebar title="Portal Center" branch={data.branch || 'all'}  bind:sidebar />
   <div class="flex w-0 flex-1 flex-col overflow-x-hidden xl:px-8 xl:py-2">
     <Header let:Content>
       <Content let:Hamburger>
         <span class="xl:hidden">
-          <Hamburger open={$sidebar} --color="gray" on:click={sidebar.toggle} />
+          <Hamburger bind:open={sidebar} --color="gray" on:click={toggleSidebar} />
         </span>
         <BranchSelection
           label="branch"
           placeholder={$t('options.branch.all')}
           options={data.options.branches}
           value={$page.params.branch}
-          onchange={state.onChange}
+          onchange={internal.onChange}
         />
-        {#if !!state.machine}
+        {#if !!internal.machine}
           <div class="flex flex-col rounded-lg border border-neutral-light px-4 py-2">
             <span class="text-xs text-neutral">machine</span>
-            <span class="text-sm">{state.machine?.name} ({state.machine?.location})</span>
+            <span class="text-sm">{internal.machine?.name} ({internal.machine?.location})</span>
           </div>
         {/if}
       </Content>
       <Content let:Language let:Theme let:Profile>
         <Language class="hidden sm:block" />
         <Theme class="hidden sm:block" />
-        <Profile username={state.username} role={state.role} />
+        <Profile username={internal.username} role={internal.role} />
       </Content>
     </Header>
     <main class="my-2 w-full max-w-full flex-1 lg:p-4 lg:px-0">

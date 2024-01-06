@@ -13,7 +13,7 @@ export const columns: ColumnType[] = [
     key: 'branch.name',
     title: 'branch',
     type: 'string',
-    responsive: 'tablet|desktop',
+    responsive: 'desktop',
     sortable: true,
   },
   {
@@ -27,6 +27,7 @@ export const columns: ColumnType[] = [
     key: 'status',
     title: 'status',
     type: 'component',
+    responsive: 'tablet|desktop',
     sortable: true,
     render: () => Status,
   },
@@ -46,6 +47,7 @@ export const columns: ColumnType[] = [
     key: 'actions',
     title: 'actions',
     type: 'component',
+    responsive: 'desktop',
     render: () => Actions,
   },
 ];

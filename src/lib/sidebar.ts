@@ -9,6 +9,7 @@ export type SidebarMenuType = {
 export type SidebarSubMenuType = {
   title: string;
   link: string;
+  params?: Record<string, string>;
   role?: string;
 };
 
@@ -58,7 +59,26 @@ export const menulist = (t: (s: string) => string, branch: string) => [
   {
     icon: 'mdi:clipboard-text-outline',
     title: t('sidebar.transaction'),
-    link: `/portal/${branch}/transactions`,
+    submenu: [
+      {
+        title: t('sidebar.transaction-all'),
+        link: `/portal/${branch}/transactions`,
+      },
+      {
+        title: t('sidebar.transaction-done'),
+        link: `/portal/${branch}/transactions`,
+        params: {
+          status: 'done',
+        }
+      },
+      {
+        title: t('sidebar.transaction-error'),
+        link: `/portal/${branch}/transactions`,
+        params: {
+          status: 'error',
+        }
+      },
+    ],
   },
   {
     icon: 'mdi:account-group-outline',

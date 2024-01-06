@@ -9,11 +9,12 @@ export type SidebarMenuType = {
 export type SidebarSubMenuType = {
   title: string;
   link: string;
+  ignored?: Record<string, string>;
   params?: Record<string, string>;
   role?: string;
 };
 
-export const menulist = (t: (s: string) => string, branch: string) => [
+export const menulist = (t: (s: string) => string, branch: string): SidebarMenuType[] => [
   {
     icon: 'mdi:view-dashboard',
     title: t('sidebar.portal'),
@@ -55,6 +56,7 @@ export const menulist = (t: (s: string) => string, branch: string) => [
         link: `/portal/${branch}/products`,
       },
     ],
+    role: 'manager',
   },
   {
     icon: 'mdi:clipboard-text-outline',
@@ -63,20 +65,25 @@ export const menulist = (t: (s: string) => string, branch: string) => [
       {
         title: t('sidebar.transaction-all'),
         link: `/portal/${branch}/transactions`,
+        ignored: {
+          order_status: 'DONE',
+          is_error: 'true',
+        },
       },
       {
         title: t('sidebar.transaction-done'),
         link: `/portal/${branch}/transactions`,
         params: {
-          status: 'done',
-        }
+          order_status: 'DONE',
+        },
       },
       {
         title: t('sidebar.transaction-error'),
         link: `/portal/${branch}/transactions`,
         params: {
-          status: 'error',
-        }
+          order_status: 'REQUEST_ACTION',
+          is_error: 'true',
+        },
       },
     ],
   },
@@ -84,5 +91,6 @@ export const menulist = (t: (s: string) => string, branch: string) => [
     icon: 'mdi:account-group-outline',
     title: t('sidebar.staff'),
     link: `/portal/${branch}/staffs`,
+    role: 'manager',
   },
 ];

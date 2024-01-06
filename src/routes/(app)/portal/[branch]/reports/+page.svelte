@@ -15,10 +15,12 @@
 </script>
 
 <Card>
-  {#snippet children({ Header, Content })}
+  {#snippet children({ Header, Content, Block })}
     <Content>
-      <Header>{$t('common.search-filter')}</Header>
-      <Filter from={action.filter.from} to={action.filter.to} />
+      <Block>
+        <Header>{$t('common.search-filter')}</Header>
+        <Filter from={action.filter.from} to={action.filter.to} />
+      </Block>
     </Content>
     <Content>
       <Table>

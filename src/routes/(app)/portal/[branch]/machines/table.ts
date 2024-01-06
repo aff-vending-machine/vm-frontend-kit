@@ -44,10 +44,11 @@ export const columns: ColumnType[] = [
     render: () => Channels,
   },
   {
-    key: 'actions',
-    title: 'actions',
+    key: '',
+    title: 'more',
     type: 'component',
-    responsive: 'desktop',
+    responsive: 'tablet|desktop',
+    width: '64px',
     render: () => Actions,
   },
 ];

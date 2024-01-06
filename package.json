@@ -50,7 +50,7 @@
     "hook:prepare": "husky install && chmod ug+x .husky/*",
     "hook:pre-commit": "npx husky add .husky/pre-commit 'pnpm exec pre-commit'",
     "hook:pre-push": "npx husky add .husky/pre-push 'pnpm check'",
-    "pre-commit": "pnpm check && pnpm format && pnpm lint"
+    "pre-commit": "pnpm check && pnpm format && pnpm lint && git add ."
   },
   "dependencies": {
     "@iconify/svelte": "^3.1.6",

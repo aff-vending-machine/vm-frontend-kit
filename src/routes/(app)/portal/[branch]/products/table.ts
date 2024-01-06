@@ -7,7 +7,7 @@ export const columns: ColumnType[] = [
     title: 'image',
     type: 'image',
     align: 'center',
-    width: '40px',
+    width: '64px',
     responsive: 'tablet|desktop',
   },
   {
@@ -25,21 +25,31 @@ export const columns: ColumnType[] = [
     render: () => Title,
   },
   {
+    key: 'sku',
+    title: 'SKU',
+    type: 'string',
+    responsive: 'tablet|desktop',
+    sortable: true,
+  },
+  {
     key: 'description',
     title: 'description',
     type: 'string',
+    responsive: 'desktop',
     sortable: true,
   },
   {
     key: 'sale_price',
     title: 'price',
-    type: 'currency',
+    type: 'string',
     sortable: true,
   },
   {
-    key: 'actions',
-    title: 'actions',
+    key: '',
+    title: 'more',
     type: 'component',
+    responsive: 'tablet|desktop',
+    width: '64px',
     render: () => Actions,
   },
 ];

@@ -15,12 +15,16 @@
 </script>
 
 <Card>
-  {#snippet children({ Header, Content })}
-    <Content>
-      <Header>{$t('common.search-filter')}</Header>
-      <Filter perPage={action.filter.perPage} />
-      <Header>{$t('common.search-command')}</Header>
-      <Command onsync={state.onSync} />
+  {#snippet children({ Header, Content, Block })}
+    <Content row>
+      <Block>
+        <Header>{$t('common.search-filter')}</Header>
+        <Filter perPage={action.filter.perPage} />
+      </Block>
+      <Block>
+        <Header>{$t('common.search-command')}</Header>
+        <Command onsync={state.onSync} />
+      </Block>
     </Content>
     <Content>
       <Table>

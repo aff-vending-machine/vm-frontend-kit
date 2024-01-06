@@ -42,10 +42,12 @@
 </script>
 
 <Card>
-  {#snippet children({ Header, Content })}
+  {#snippet children({ Header, Content, Block })}
     <Content>
-      <Header>{$t('common.search-filter')}</Header>
-      <Filter perPage={action.filter.perPage} table={action.filter.table} />
+      <Block>
+        <Header>{$t('common.search-filter')}</Header>
+        <Filter perPage={action.filter.perPage} table={action.filter.table} />
+      </Block>
     </Content>
 
     <Content>

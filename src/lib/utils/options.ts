@@ -42,3 +42,13 @@ export const displayOptions: SelectOptionsTypeFunction = (t: TranslationType) =>
   { label: t('options.display.hidden'), value: '' },
   { label: t('options.display.show'), value: 'show' },
 ];
+
+export const orderStatusOptions: SelectOptionsTypeFunction = (t: TranslationType) => [
+  { label: t('options.status.all'), value: '' },
+  { label: 'ORDERED', value: 'ORDERED' },
+  { label: 'PAID', value: 'PAID' },
+  { label: 'DONE', value: 'DONE' },
+  { label: 'CANCELLED', value: 'CANCELLED' },
+  { label: 'REJECTED', value: 'REJECTED' },
+  { label: 'REQUEST_ACTION', value: 'REQUEST_ACTION' },
+];

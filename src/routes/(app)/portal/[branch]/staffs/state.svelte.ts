@@ -39,7 +39,7 @@ export class UserState {
 
   #fetch = async () => {
     const query = new URLSearchParams(this.#action.query);
-    query.set('preloads', 'Role');
+    query.set('preloads', 'Branch:Role');
     query.sort();
 
     const result = await userAPI.find(query.toString(), false);

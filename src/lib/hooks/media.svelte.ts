@@ -1,8 +1,7 @@
 export class Media {
-  #width = $state(0)
+  #width = $state(0);
 
-  constructor() {
-  }
+  constructor() {}
 
   get isMobile() {
     // xs
@@ -24,6 +23,6 @@ export class Media {
   }
 
   set width(w: number) {
-    this.#width = w
+    this.#width = w;
   }
 }

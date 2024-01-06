@@ -17,13 +17,16 @@
 </script>
 
 <Card>
-  {#snippet children({ Header, Content })}
-    <Content>
-      <Header>{$t('common.search-filter')}</Header>
-      <Filter perPage={action.filter.perPage} />
-    </Content>
-    <Content>
-      <Command oncreate={overlay.onOpenCreator} />
+  {#snippet children({ Header, Content, Block })}
+    <Content row>
+      <Block>
+        <Header>{$t('common.search-filter')}</Header>
+        <Filter perPage={action.filter.perPage} />
+      </Block>
+      <Block>
+        <Header>{$t('common.search-command')}</Header>
+        <Command oncreate={overlay.onOpenCreator} />
+      </Block>
     </Content>
     <Content>
       <Table>

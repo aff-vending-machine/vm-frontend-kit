@@ -1,4 +1,4 @@
-import type { AccountRole } from './account_role';
+import type { AccountRoleEntity } from './account_role';
 import type { StoreBranch } from './store_branch';
 
 export type AccountUserEntity = {
@@ -13,7 +13,7 @@ export type AccountUserEntity = {
   role_id: number;
 
   branch?: StoreBranch;
-  role?: AccountRole;
+  role?: AccountRoleEntity;
 };
 
 export type AccountUserCreateEntity = Omit<AccountUserEntity, 'id' | 'created_at' | 'updated_at' | 'created_by'> & {

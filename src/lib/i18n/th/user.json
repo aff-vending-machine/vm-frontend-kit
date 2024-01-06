@@ -3,7 +3,7 @@
   "create-title": "Create User",
   "edit-title": "Edit User",
   "delete-title": "Delete User",
-  "all-branches": "All Branches",
+  "all-branches": "ทุกสาขา",
   "columns": {
     "ีusername": "Username",
     "role": "Role",
@@ -13,11 +13,9 @@
   },
   "field": {
     "id": "ID",
-    "username": "Username",
-    "password": "Password",
-    "confirm-password": "Confirm Password",
-    "role": "Role",
-    "branch": "Branch",
-    "last-login": "Last Login"
+    "username": "ชื่อผู้ใช้",
+    "role": "ตำแหน่ง",
+    "branch": "สาขา",
+    "last-login": "เข้าใช้งานล่าสุด"
   }
 }

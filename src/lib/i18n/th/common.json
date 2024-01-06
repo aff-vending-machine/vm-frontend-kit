@@ -19,6 +19,8 @@
     "add-slot": "เพิ่มช่อง",
     "add-product-group": "เพิ่มกลุ่มสินค้า",
     "add-user": "เพิ่มพนักงาน",
+    "change-password": "เปลี่ยนรหัสผ่าน",
+    "change-role": "เปลี่ยนตำแหน่ง",
     "save": "บันทึก",
     "edit": "แก้ไข",
     "confirm": "ตกลง",

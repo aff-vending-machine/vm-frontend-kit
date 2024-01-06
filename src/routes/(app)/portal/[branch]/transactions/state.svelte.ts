@@ -34,7 +34,7 @@ export class TransactionState {
 
   #fetch = async () => {
     const query = new URLSearchParams(this.#action.query);
-    query.set('preloads', 'Payment');
+    query.set('preloads', 'Branch:Machine:Channel');
     query.sort();
 
     const result = await transactionAPI.find(query.toString(), false);

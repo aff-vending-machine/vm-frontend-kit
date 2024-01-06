@@ -4,13 +4,13 @@
   import SelectField from '$lib/components/forms/inputs/SelectField.svelte';
   import TextInputField from '$lib/components/forms/inputs/TextInputField.svelte';
   import { t } from '$lib/i18n/translations';
-  import type { AccountRole } from '$lib/types/account_role';
+  import type { AccountRoleEntity } from '$lib/types/account_role';
   import type { AccountUserCreateEntity } from '$lib/types/account_user';
   import type { SelectOptionsType } from '$lib/utils/options';
   import { CreatorForm } from './creator-form';
 
   let { roleOptions, oncreate, oncancel } = $props<{
-    roleOptions: SelectOptionsType<number, AccountRole>[];
+    roleOptions: SelectOptionsType<number, AccountRoleEntity>[];
     oncreate: (data: AccountUserCreateEntity) => void;
     oncancel: () => void;
   }>();

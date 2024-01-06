@@ -2,9 +2,6 @@
   "portal": "Portal",
   "branch": "Branch",
   "machine": "Machine",
-  "machine-info": "Info",
-  "machine-slot": "Slot",
-  "machine-payment": "Payment",
   "report": "Report",
   "report-info": "Info",
   "report-stock": "Stocks",
@@ -13,5 +10,8 @@
   "product-group": "Group",
   "product-item": "Item",
   "transaction": "Transaction",
+  "transaction-all": "All Transactions",
+  "transaction-done": "Completed",
+  "transaction-error": "Error",
   "staff": "Staff"
 }

@@ -1,4 +1,4 @@
-export type AccountRole = {
+export type AccountRoleEntity = {
   id: number;
   created_at: Date;
   updated_at: Date;

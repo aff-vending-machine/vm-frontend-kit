@@ -6,8 +6,6 @@
   }>();
 </script>
 
-<div class="mb-2">
-  <h3 class="text-lg font-semibold text-primary-darkest">
-    {@render children()}
-  </h3>
+<div class="flex-1 rounded-md border-2 border-neutral-light p-4">
+  {@render children()}
 </div>

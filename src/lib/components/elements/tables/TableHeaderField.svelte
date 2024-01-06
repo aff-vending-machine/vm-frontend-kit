@@ -33,9 +33,10 @@
   class="sticky -top-4 cursor-pointer whitespace-nowrap"
   class:selected={column.key === sort.key}
   onclick={toggleSort(column)}
+  style="width: {column.width};"
 >
-  <div class="border-y border-primary-light px-6 py-4 text-sm font-bold uppercase tracking-wide text-neutral">
-    <div class="flex select-none justify-center">
+  <div class="border-y border-primary-light p-4 text-sm font-bold uppercase tracking-wide text-neutral">
+    <div class="flex select-none justify-start">
       <span class="font-medium text-neutral-darkest">{column.title}</span>
     </div>
   </div>

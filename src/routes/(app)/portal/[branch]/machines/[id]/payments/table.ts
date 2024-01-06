@@ -21,9 +21,16 @@ export const columns: ColumnType[] = [
     type: 'string',
   },
   {
-    key: 'actions',
-    title: 'actions',
+    key: 'is_enable',
+    title: 'Status',
+    type: 'string',
+  },
+  {
+    key: '',
+    title: 'more',
     type: 'component',
+    responsive: 'tablet|desktop',
+    width: '64px',
     render: () => Actions,
   },
 ];

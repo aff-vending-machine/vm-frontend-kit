@@ -18,19 +18,22 @@
 </script>
 
 <Card>
-  {#snippet children({ Header, Content })}
-    <Content>
-      <Header>{$t('common.search-filter')}</Header>
-      <Filter
-        from={action.filter.from}
-        to={action.filter.to}
-        bind:group={action.filter.group}
-        machineID={action.filter.machineID}
-        machineOptions={data.options.machines}
-      />
-    </Content>
-    <Content>
-      <Command />
+  {#snippet children({ Header, Content, Block })}
+    <Content row>
+      <Block>
+        <Header>{$t('common.search-filter')}</Header>
+        <Filter
+          from={action.filter.from}
+          to={action.filter.to}
+          bind:group={action.filter.group}
+          machineID={action.filter.machineID}
+          machineOptions={data.options.machines}
+        />
+      </Block>
+      <Block>
+        <Header>{$t('common.search-command')}</Header>
+        <Command />
+      </Block>
     </Content>
     <Content>
       <Table>

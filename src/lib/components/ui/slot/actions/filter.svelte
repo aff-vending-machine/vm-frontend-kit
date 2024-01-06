@@ -13,47 +13,45 @@
   }>();
 </script>
 
-<div class="flex flex-col justify-between space-y-4 rounded border bg-secondary-lightest p-4">
-  <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
-    <TextInputField
-      class="col-span-2"
-      id="search"
-      label={$t('common.field.search')}
-      bind:value={search}
-      maxlength={3}
-      saveOnUrl={false}
-    />
+<div class="mb-4 flex flex-col space-x-0 space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+  <TextInputField
+    class="col-span-2"
+    id="search"
+    label={$t('common.field.search')}
+    bind:value={search}
+    maxlength={3}
+    saveOnUrl={false}
+  />
 
-    <ShareFilterSelection
-      key="stock"
-      label={$t('common.field.stock')}
-      bind:value={stock}
-      options={stockOptions($t)}
-      saveOnUrl={false}
-    />
+  <ShareFilterSelection
+    key="stock"
+    label={$t('common.field.stock')}
+    bind:value={stock}
+    options={stockOptions($t)}
+    saveOnUrl={false}
+  />
 
-    <ShareFilterSelection
-      key="status"
-      label={$t('common.field.status')}
-      bind:value={status}
-      options={statusOptions($t)}
-      saveOnUrl={false}
-    />
+  <ShareFilterSelection
+    key="status"
+    label={$t('common.field.status')}
+    bind:value={status}
+    options={statusOptions($t)}
+    saveOnUrl={false}
+  />
 
-    <ShareFilterSelection
-      key="changed"
-      label={$t('common.field.changed')}
-      bind:value={changed}
-      options={editOptions($t)}
-      saveOnUrl={false}
-    />
+  <ShareFilterSelection
+    key="changed"
+    label={$t('common.field.changed')}
+    bind:value={changed}
+    options={editOptions($t)}
+    saveOnUrl={false}
+  />
 
-    <ShareFilterSelection
-      key="image"
-      label={$t('common.field.image')}
-      bind:value={image}
-      options={displayOptions($t)}
-      saveOnUrl={false}
-    />
-  </div>
+  <ShareFilterSelection
+    key="image"
+    label={$t('common.field.image')}
+    bind:value={image}
+    options={displayOptions($t)}
+    saveOnUrl={false}
+  />
 </div>

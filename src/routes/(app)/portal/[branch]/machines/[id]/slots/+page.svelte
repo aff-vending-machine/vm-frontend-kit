@@ -31,28 +31,30 @@
 </Card>
 
 <Card>
-  {#snippet children({ Header, Content })}
-    <Content>
-      <Header>{$t('common.search-filter')}</Header>
-      <Filter
-        bind:search={action.search}
-        bind:stock={action.stock}
-        bind:status={action.status}
-        bind:changed={action.changed}
-        bind:image={action.image}
-      />
-    </Content>
-    <Content>
-      <Header>{$t('common.field.instructions')}</Header>
-      <Command
-        time={state.time}
-        editing={state.editing}
-        syncing={state.syncing}
-        loading={state.loading}
-        onrefresh={state.onRefresh}
-        onsave={state.onSave}
-        oncancel={state.onReset}
-      />
+  {#snippet children({ Header, Content, Block })}
+    <Content row>
+      <Block>
+        <Header>{$t('common.search-filter')}</Header>
+        <Filter
+          bind:search={action.search}
+          bind:stock={action.stock}
+          bind:status={action.status}
+          bind:changed={action.changed}
+          bind:image={action.image}
+        />
+      </Block>
+      <Block>
+        <Header>{$t('common.field.instructions')}</Header>
+        <Command
+          time={state.time}
+          editing={state.editing}
+          syncing={state.syncing}
+          loading={state.loading}
+          onrefresh={state.onRefresh}
+          onsave={state.onSave}
+          oncancel={state.onReset}
+        />
+      </Block>
     </Content>
     <Content>
       <div class="max-w-full select-none overflow-auto border-b border-t border-neutral-light p-4">

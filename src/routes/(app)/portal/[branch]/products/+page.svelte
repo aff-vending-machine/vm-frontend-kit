@@ -18,13 +18,16 @@
 </script>
 
 <Card>
-  {#snippet children({ Header, Content })}
-    <Content>
-      <Header>{$t('common.search-filter')}</Header>
-      <Filter perPage={action.filter.perPage} groupId={action.filter.groupID} groupOptions={data.options.groups} />
-    </Content>
-    <Content>
-      <Command oncreate={overlay.onOpenCreator} />
+  {#snippet children({ Header, Content, Block })}
+    <Content row>
+      <Block>
+        <Header>{$t('common.search-filter')}</Header>
+        <Filter perPage={action.filter.perPage} groupId={action.filter.groupID} groupOptions={data.options.groups} />
+      </Block>
+      <Block>
+        <Header>{$t('common.search-command')}</Header>
+        <Command oncreate={overlay.onOpenCreator} />
+      </Block>
     </Content>
     <Content>
       <Table>

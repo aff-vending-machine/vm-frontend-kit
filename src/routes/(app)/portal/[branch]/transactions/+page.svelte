@@ -4,27 +4,25 @@
   import Card from '$lib/components/sections/cards/Card.svelte';
 
   import { columns } from './table';
-  import { ActionState, Command, Filter } from '$lib/components/ui/transaction/actions';
+  import { ActionState, Filter } from '$lib/components/ui/transaction/actions';
   import { TransactionState } from './state.svelte';
-  import { Modal, Drawer, OverlayState } from '$lib/components/ui/transaction/overlays';
+  import { Drawer, OverlayState } from '$lib/components/ui/transaction/overlays';
   import SharePaginationTable from '$lib/components/shares/SharePaginationTable.svelte';
 
   let { data } = $props();
 
-  const action = new ActionState(data.query);
+  const action = new ActionState(data.branchID, data.query);
   const overlay = new OverlayState();
   const state = new TransactionState(action, overlay);
 </script>
 
 <Card>
-  {#snippet children({ Header, Content })}
+  {#snippet children({ Header, Content, Block })}
     <Content>
-      <Header>{$t('common.search-filter')}</Header>
-      <Filter perPage={action.filter.perPage} />
-    </Content>
-    <Content>
-      <Header>{$t('common.search-command')}</Header>
-      <Command onsync={state.onSync} />
+      <Block>
+        <Header>{$t('common.search-filter')}</Header>
+        <Filter {...action.filter} machineOptions={data.options.machine} channelOptions={data.options.channel} />
+      </Block>
     </Content>
     <Content>
       <Table>

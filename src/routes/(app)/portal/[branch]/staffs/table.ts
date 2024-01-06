@@ -4,20 +4,42 @@ import { Actions } from '$lib/components/ui/product/tables';
 export const columns: ColumnType[] = [
   {
     key: 'username',
-    title: 'username',
+    title: 'Username',
     type: 'string',
     sortable: true,
   },
   {
     key: 'role.name',
-    title: 'role',
+    title: 'Role',
     type: 'string',
     sortable: true,
   },
   {
-    key: 'actions',
-    title: 'actions',
+    key: 'branch.name',
+    title: 'Branch',
+    type: 'string',
+    sortable: true,
+  },
+  {
+    key: 'created_by',
+    title: 'Created By',
+    type: 'string',
+    responsive: 'tablet|desktop',
+    sortable: true,
+  },
+  {
+    key: 'last_login',
+    title: 'Last Login',
+    type: 'date',
+    responsive: 'desktop',
+    sortable: true,
+  },
+  {
+    key: '',
+    title: 'more',
     type: 'component',
+    responsive: 'tablet|desktop',
+    width: '64px',
     render: () => Actions,
   },
 ];

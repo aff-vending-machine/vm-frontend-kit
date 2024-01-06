@@ -18,7 +18,7 @@
 </script>
 
 <div class="flex h-screen w-screen bg-neutral-lightest">
-  <Sidebar title="Portal Center" branch={data.branch || 'all'}  bind:sidebar />
+  <Sidebar title="Portal Center" branch={data.branch || 'all'} bind:sidebar />
   <div class="flex w-0 flex-1 flex-col overflow-x-hidden xl:px-8 xl:py-2">
     <Header let:Content>
       <Content let:Hamburger>
@@ -41,7 +41,7 @@
       </Content>
       <Content let:Language let:Theme let:Profile>
         <Language class="hidden sm:block" />
-        <Theme class="hidden sm:block" />
+        <!-- <Theme class="hidden sm:block" /> -->
         <Profile username={internal.username} role={internal.role} />
       </Content>
     </Header>

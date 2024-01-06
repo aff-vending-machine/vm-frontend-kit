@@ -13,7 +13,7 @@ export const getPermissionType = (level: number) => {
   }
 };
 
-export const getRoleLevel = (role: string) => {
+export const getRoleLevel = (role?: string) => {
   switch (role) {
     case 'super-admin':
       return 99;

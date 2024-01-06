@@ -6,12 +6,12 @@
   "report-stock": "สรุปสินค้า",
   "report-transaction": "สรุปธุรกรรม/การขาย",
   "machine": "เครื่อง",
-  "machine-info": "ข้อมูล",
-  "machine-slot": "ช่องสินค้า",
-  "machine-payment": "ช่องทางชำระเงิน",
   "product": "ผลิตภัณฑ์",
   "product-group": "กลุ่มสินค้า",
   "product-item": "สินค้า",
   "transaction": "ธุรกรรมการขาย",
+  "transaction-all": "ทั้งหมด",
+  "transaction-done": "สำเร็จ",
+  "transaction-error": "มีข้อผิดพลาด",
   "staff": "พนักงาน"
 }

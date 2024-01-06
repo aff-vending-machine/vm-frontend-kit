@@ -11,7 +11,7 @@ export async function load() {
 
   return {
     options: {
-      roles: await fetchRoleOptions(),
+      role: await fetchRoleOptions(),
     },
   };
 }

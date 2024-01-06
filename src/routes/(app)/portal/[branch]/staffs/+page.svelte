@@ -11,20 +11,22 @@
 
   let { data } = $props();
 
-  const action = new ActionState(data.query);
+  const action = new ActionState(data.branchID, data.query);
   const overlay = new OverlayState();
   const state = new UserState(action, overlay);
 </script>
 
 <Card>
-  {#snippet children({ Header, Content })}
-    <Content>
-      <Header>{$t('common.search-filter')}</Header>
-      <Filter perPage={action.filter.perPage} />
-    </Content>
-    <Content>
-      <Header>{$t('common.search-command')}</Header>
-      <Command oncreate={overlay.onOpenCreator} />
+  {#snippet children({ Header, Content, Block })}
+    <Content row>
+      <Block>
+        <Header>{$t('common.search-filter')}</Header>
+        <Filter {...action.filter} roleOptions={data.options.role} />
+      </Block>
+      <Block>
+        <Header>{$t('common.search-command')}</Header>
+        <Command oncreate={overlay.onOpenCreator} />
+      </Block>
     </Content>
     <Content>
       <Table>
@@ -57,7 +59,7 @@
     onclose={overlay.onCancel}
   >
     {#snippet children({ Creator, Viewer })}
-      <Creator roleOptions={data.options.roles} oncreate={state.onCreate} oncancel={overlay.onCancel} />
+      <Creator roleOptions={data.options.role} oncreate={state.onCreate} oncancel={overlay.onCancel} />
       <Viewer
         user={overlay.data}
         onchangepassword={overlay.onOpenPasswordChanger}
@@ -79,7 +81,7 @@
     {#snippet children({ RoleChanger, PasswordChanger })}
       <RoleChanger
         user={overlay.data}
-        roleOptions={data.options.roles}
+        roleOptions={data.options.role}
         onchangerole={state.onChangeRole}
         oncancel={overlay.onCancel}
       />

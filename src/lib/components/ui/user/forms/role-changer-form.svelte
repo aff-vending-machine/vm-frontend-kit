@@ -6,11 +6,11 @@
   import type { SelectOptionsType } from '$lib/utils/options';
   import { RoleChangerForm } from './role-changer-form';
   import type { AccountUserChangeRoleEntity, AccountUserEntity } from '$lib/types/account_user';
-  import type { AccountRole } from '$lib/types/account_role';
+  import type { AccountRoleEntity } from '$lib/types/account_role';
 
   let { user, roleOptions, onchangerole, oncancel } = $props<{
     user: AccountUserEntity;
-    roleOptions: SelectOptionsType<number, AccountRole>[];
+    roleOptions: SelectOptionsType<number, AccountRoleEntity>[];
     onchangerole: (id: number, data: AccountUserChangeRoleEntity) => void;
     oncancel: () => void;
   }>();

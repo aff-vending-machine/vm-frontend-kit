@@ -3,11 +3,14 @@ import dayjs from 'dayjs';
 import { parseDate } from '$lib/utils/convert';
 
 export class ActionState {
+  #defaultForm = dayjs().set('hour', 0).set('minute', 0).set('second', 0).toDate();
+  #defaultTo = dayjs().set('hour', 23).set('minute', 59).set('second', 59).toDate();
+
   #branchID = $state(0);
   #page = $state(1);
   #perPage = $state(10);
-  #startDate = $state(new Date());
-  #endDate = $state(new Date());
+  #startDate = $state(this.#defaultForm);
+  #endDate = $state(this.#defaultTo);
   #machineID = $state(0);
   #channelID = $state(0);
   #status = $state('');
@@ -17,14 +20,8 @@ export class ActionState {
     this.#branchID = branchID;
     this.#page = parseInt(query.get('page') ?? '1');
     this.#perPage = parseInt(query.get('per_page') ?? '10');
-    this.#startDate = parseDate(
-      query.get('start_date'),
-      dayjs().set('hour', 0).set('minute', 0).set('second', 0).toDate(),
-    );
-    this.#endDate = parseDate(
-      query.get('end_date'),
-      dayjs().set('hour', 23).set('minute', 59).set('second', 59).toDate(),
-    );
+    this.#startDate = parseDate(query.get('start_date'), this.#defaultForm);
+    this.#endDate = parseDate(query.get('end_date'), this.#defaultTo);
     this.#error = query.get('is_error') === 'true';
     this.#machineID = parseInt(query.get('machine_id') ?? '0');
     this.#channelID = parseInt(query.get('channel_id') ?? '0');
@@ -42,9 +39,9 @@ export class ActionState {
     if (this.#channelID !== 0) query.set('channel_id', this.#channelID.toString());
     if (this.#status !== '') query.set('order_status', this.#status.toString());
     if (this.#error) query.set('is_error', this.#error.toString());
-    query.set('sort_by', 'id:desc');
-
+    query.set('sort_by', 'created_at:desc');
     query.sort();
+
     return query;
   }
 

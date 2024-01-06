@@ -56,7 +56,7 @@ export class ReportState {
     }
   };
 
-  #regroupData = () => {
+  #regroup = () => {
     if (this.#action.filter.group) {
       return this.#reports.reduce((result, data) => {
         const idx = result.findIndex(r => r.name === data.name && r.sale_price === data.sale_price);
@@ -94,7 +94,7 @@ export class ReportState {
 
   onDownload = (e: CustomEvent) => {
     const { filename, application } = e.detail;
-    const data = this.#regroupData().map(toStockReportFile);
+    const data = this.#regroup().map(toStockReportFile);
     switch (application) {
       case 'csv':
         return exportCSV(filename, data);
@@ -109,7 +109,7 @@ export class ReportState {
   }
 
   get data() {
-    return this.#regroupData();
+    return this.#regroup();
   }
 
   get loading() {

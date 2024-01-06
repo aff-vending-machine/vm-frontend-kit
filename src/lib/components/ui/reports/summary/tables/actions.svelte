@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$lib/components/elements/buttons/Button.svelte';
+  import ButtonLink from '$lib/components/elements/buttons/ButtonLink.svelte';
   import { t } from '$lib/i18n/translations';
   import type { MachineReport } from '$lib/types/report';
 
@@ -20,10 +20,10 @@
 </script>
 
 <div class="flex flex-col justify-center space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
-  <a href={link('stocks')} data-sveltekit-prefetch>
-    <Button class="w-full" color="primary" outline>{$t('common.button.stock')}</Button>
-  </a>
-  <a href={link('transactions')} data-sveltekit-prefetch>
-    <Button class="w-full" color="primary" outline>{$t('common.button.payment')}</Button>
-  </a>
+  <ButtonLink class="w-full" href={link('stocks')} color="accent" outline>
+    {$t('common.button.stock')}
+  </ButtonLink>
+  <ButtonLink class="w-full" href={link('transactions')} color="secondary" outline>
+    {$t('common.button.payment')}
+  </ButtonLink>
 </div>

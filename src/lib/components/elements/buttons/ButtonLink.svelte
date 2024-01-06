@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+
   let {
     class: externalClass = '',
     href,
@@ -6,6 +8,7 @@
     color = 'primary',
     outline = false,
     rounded = 'md',
+    children,
   } = $props<{
     class?: string;
     href: string;
@@ -13,7 +16,7 @@
     color?: 'primary' | 'secondary' | 'accent' | 'success' | 'info' | 'warning' | 'danger';
     outline?: boolean;
     rounded?: 'sm' | 'md' | 'lg';
-    children?: () => any;
+    children: Snippet;
   }>();
 
   const buttonClasses = () => {
@@ -39,5 +42,5 @@
   {href}
   {target}
 >
-  <slot />
+  {@render children()}
 </a>

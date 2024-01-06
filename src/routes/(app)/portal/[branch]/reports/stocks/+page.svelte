@@ -13,7 +13,7 @@
   let { data } = $props();
 
   const action = new ActionState(data.branchID, data.query);
-  const state = new ReportState(action);
+  const internal = new ReportState(action);
   const columns = $derived(reportColumns($t));
 </script>
 
@@ -23,10 +23,9 @@
       <Block>
         <Header>{$t('common.search-filter')}</Header>
         <Filter
-          from={action.filter.from}
-          to={action.filter.to}
-          bind:group={action.filter.group}
-          machineID={action.filter.machineID}
+          {...action.filter}
+          group={action.filter.group}
+          onchange={action.onGroupChange}
           machineOptions={data.options.machines}
         />
       </Block>
@@ -39,18 +38,18 @@
       <Table>
         {#snippet children({ Header, Body, Footer, Loading })}
           <Header {columns} />
-          {#if state.loading}
+          {#if internal.loading}
             <Loading {columns} />
           {/if}
 
-          {#if state.error}
-            <div>{state.error}</div>
+          {#if internal.error}
+            <div>{internal.error}</div>
           {/if}
 
-          {#if state.ready}
-            <Body {columns} bind:source={state.data} />
+          {#if internal.ready}
+            <Body {columns} source={internal.data} />
             <Footer>
-              <SummaryRow {columns} data={state.data} />
+              <SummaryRow {columns} data={internal.data} />
             </Footer>
           {/if}
         {/snippet}

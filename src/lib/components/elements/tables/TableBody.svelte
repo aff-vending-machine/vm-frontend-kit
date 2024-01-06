@@ -17,8 +17,12 @@
 
   function onSelect(data: Record<string, any>) {
     return (e: MouseEvent) => {
-      e.preventDefault();
-      onselect && onselect(data);
+      e.stopPropagation();
+
+      if (e.target === e.currentTarget) {
+        e.preventDefault();
+        onselect && onselect(data);
+      }
     };
   }
 

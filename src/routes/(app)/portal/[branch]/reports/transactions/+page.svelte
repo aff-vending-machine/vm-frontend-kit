@@ -21,14 +21,7 @@
     <Content row>
       <Block>
         <Header>{$t('common.search-filter')}</Header>
-        <Filter
-          from={action.filter.from}
-          to={action.filter.to}
-          channelID={action.filter.channelID}
-          channelOptions={data.options.channel}
-          machineID={action.filter.machineID}
-          machineOptions={data.options.machines}
-        />
+        <Filter {...action.filter} channelOptions={data.options.channel} machineOptions={data.options.machines} />
       </Block>
       <Block>
         <Header>{$t('common.search-command')}</Header>

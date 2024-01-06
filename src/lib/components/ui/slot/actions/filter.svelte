@@ -1,6 +1,6 @@
 <script lang="ts">
   import TextInputField from '$lib/components/forms/inputs/TextInputField.svelte';
-  import ShareFilterSelection from '$lib/components/shares/ShareFilterSelection.svelte';
+  import SelectField from '$lib/components/ui-common/forms/SelectField.svelte';
   import { t } from '$lib/i18n/translations';
   import { displayOptions, editOptions, statusOptions, stockOptions } from '$lib/utils/options';
 
@@ -23,35 +23,11 @@
     saveOnUrl={false}
   />
 
-  <ShareFilterSelection
-    key="stock"
-    label={$t('common.field.stock')}
-    bind:value={stock}
-    options={stockOptions($t)}
-    saveOnUrl={false}
-  />
+  <SelectField id="stock" label={$t('common.field.stock')} bind:value={stock} options={stockOptions($t)} />
 
-  <ShareFilterSelection
-    key="status"
-    label={$t('common.field.status')}
-    bind:value={status}
-    options={statusOptions($t)}
-    saveOnUrl={false}
-  />
+  <SelectField id="status" label={$t('common.field.status')} bind:value={status} options={statusOptions($t)} />
 
-  <ShareFilterSelection
-    key="changed"
-    label={$t('common.field.changed')}
-    bind:value={changed}
-    options={editOptions($t)}
-    saveOnUrl={false}
-  />
+  <SelectField id="changed" label={$t('common.field.changed')} bind:value={changed} options={editOptions($t)} />
 
-  <ShareFilterSelection
-    key="image"
-    label={$t('common.field.image')}
-    bind:value={image}
-    options={displayOptions($t)}
-    saveOnUrl={false}
-  />
+  <SelectField id="image" label={$t('common.field.image')} bind:value={image} options={displayOptions($t)} />
 </div>

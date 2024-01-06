@@ -1,22 +1,27 @@
 import type { ColumnType } from '$lib/components/elements/tables/table';
-import { Cart, No, Order, Reference } from '$lib/components/ui/reports/transaction/tables';
+import { Cart, Reference } from '$lib/components/ui/reports/transaction/tables';
 import type { TranslationType } from '$lib/i18n/translations';
 
 export const reportColumns: (t: TranslationType) => ColumnType[] = (t: TranslationType) => [
   {
-    key: 'index',
-    type: 'component',
-    title: t('report.columns.no'),
-    responsive: 'desktop',
-    render: () => No,
+    key: 'merchant_order_id',
+    type: 'string',
+    title: t('report.columns.order-id'),
+    sortable: true,
   },
   {
-    key: 'merchant_order_id',
-    type: 'component',
-    title: t('report.columns.order-id'),
-    responsive: 'mobile|tablet',
+    key: 'payment_channel',
+    type: 'string',
+    responsive: 'tablet',
+    title: t('report.columns.payment-channel'),
     sortable: true,
-    render: () => Order,
+  },
+  {
+    key: 'confirmed_paid_at',
+    type: 'date',
+    title: t('report.columns.timestamp'),
+    sortable: true,
+    responsive: 'tablet|desktop',
   },
   {
     key: 'reference',
@@ -27,17 +32,10 @@ export const reportColumns: (t: TranslationType) => ColumnType[] = (t: Translati
     render: () => Reference,
   },
   {
-    key: 'confirmed_paid_at',
-    type: 'date',
-    title: t('report.columns.timestamp'),
-    sortable: true,
-    responsive: 'tablet|desktop',
-  },
-  {
     key: 'cart',
     type: 'component',
     title: t('report.columns.cart'),
-    responsive: 'tablet|desktop',
+    responsive: 'desktop',
     sortable: true,
     render: () => Cart,
   },

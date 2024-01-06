@@ -1,4 +1,7 @@
 <script lang="ts">
+  import Icon from '@iconify/svelte';
+  import type { Snippet } from 'svelte';
+
   let {
     class: externalClass = '',
     type = 'button',
@@ -9,6 +12,7 @@
     outline = false,
     rounded = 'md',
     onclick,
+    children,
   } = $props<{
     class?: string;
     type?: 'submit' | 'reset' | 'button';
@@ -19,7 +23,7 @@
     outline?: boolean;
     rounded?: 'sm' | 'md' | 'lg';
     onclick?: (e: MouseEvent) => void;
-    children?: () => any;
+    children: Snippet;
   }>();
 
   const buttonClasses = () => {
@@ -62,19 +66,7 @@
   onclick={handleClick}
 >
   {#if loading}
-    <svg
-      class="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-      <path
-        class="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm12 0a8 8 0 100-16 8 8 0 000 16z"
-      />
-    </svg>
+    <Icon icon="eos-icons:bubble-loading" class="mr-2 h-4 w-4 text-accent" />
   {/if}
-  <slot />
+  {@render children()}
 </button>

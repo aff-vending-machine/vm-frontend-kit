@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import SelectField from '$lib/components/forms/inputs/SelectField.svelte';
-  import ShareFilterSelection from '$lib/components/shares/ShareFilterSelection.svelte';
+  import SelectFilter from '$lib/components/ui-common/filters/SelectFilter.svelte';
+  import SelectField from '$lib/components/ui-common/forms/SelectField.svelte';
   import { viewOptions, type SelectOptionsType } from '$lib/utils/options';
 
   let { perPage, groupId, groupOptions } = $props<{
@@ -25,7 +25,7 @@
 </script>
 
 <div class="mb-4 flex flex-col space-x-0 space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
-  <ShareFilterSelection key="per_page" label="view" options={viewOptions} value={perPage} />
+  <SelectFilter key="per_page" label="view" options={viewOptions} value={perPage} />
 
   <SelectField
     id="group_id"

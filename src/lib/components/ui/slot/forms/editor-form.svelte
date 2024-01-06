@@ -3,7 +3,7 @@
   import Button from '$lib/components/elements/buttons/Button.svelte';
   import Image from '$lib/components/elements/images/Image.svelte';
   import NumberInputField from '$lib/components/forms/inputs/NumberInputField.svelte';
-  import SelectField from '$lib/components/forms/inputs/SelectField.svelte';
+  import SelectField from '$lib/components/ui-common/forms/SelectField.svelte';
   import TextInputField from '$lib/components/forms/inputs/TextInputField.svelte';
   import ToggleField from '$lib/components/forms/inputs/ToggleField.svelte';
   import { t } from '$lib/i18n/translations';

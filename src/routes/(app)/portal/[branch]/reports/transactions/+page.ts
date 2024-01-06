@@ -1,12 +1,12 @@
 import { MachineService } from '$lib/services/machine';
-import { PaymentService } from '$lib/services/payment';
+import { PaymentChannelService } from '$lib/services/payment_channel';
 
 const machineAPI = MachineService.getInstance();
-const paymentAPI = PaymentService.getInstance();
+const channelAPI = PaymentChannelService.getInstance();
 
 export async function load({ parent }) {
   const fetchChannelOptions = async () => {
-    const payments = await paymentAPI.find();
+    const payments = await channelAPI.find();
     if (payments.status === 'error') return [];
     return payments.data.map(p => ({ label: p.name, value: p.id }));
   };

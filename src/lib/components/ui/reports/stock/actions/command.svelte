@@ -4,6 +4,16 @@
   import { page } from '$app/stores';
   import Button from '$lib/components/elements/buttons/Button.svelte';
   import { t } from '$lib/i18n/translations';
+  import ButtonLink from '$lib/components/elements/buttons/ButtonLink.svelte';
+
+  function summary() {
+    const params = new URLSearchParams($page.url.searchParams);
+    params.delete('group');
+    params.delete('machine_id');
+    params.sort();
+
+    return `/portal/${$page.params.branch}/reports?${params.toString()}`;
+  }
 
   function link() {
     const params = new URLSearchParams($page.url.searchParams);
@@ -15,9 +25,12 @@
 </script>
 
 <div class="mb-2 flex flex-col justify-end space-x-0 space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
-  <a href={link()} data-sveltekit-prefetch>
-    <Button class="w-full" color="primary" outline>{$t('common.button.payment')}</Button>
-  </a>
+  <ButtonLink color="accent" href={summary()} outline>
+    {$t('common.button.summary')}
+  </ButtonLink>
+  <ButtonLink color="accent" href={link()} outline>
+    {$t('common.button.payment')}
+  </ButtonLink>
   <Button outline class="group">
     <Icon icon="mdi:export" class="h-4 w-4 text-primary group-hover:text-white" />
     <span class="ml-2">{$t('common.button.export')}</span>

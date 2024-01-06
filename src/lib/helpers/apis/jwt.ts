@@ -16,7 +16,7 @@ export const getAccessTokenWithAuthRefresh = async (): Promise<string> => {
     }
 
     try {
-      const result = await api.post<AuthResult>('auth/refresh', { refresh_token: refreshToken });
+      const result = await api.post<AuthResult>('auth/refresh', { refresh_token: refreshToken.value });
       if (result.status === 'success') {
         accessToken.value = result.data.access_token;
         refreshToken.value = result.data.refresh_token;

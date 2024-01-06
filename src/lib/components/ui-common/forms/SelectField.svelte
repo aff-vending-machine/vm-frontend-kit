@@ -1,15 +1,41 @@
 <script lang="ts">
   import type { SelectOptionsType } from '$lib/utils/options';
 
-  export let id: string;
-  export let label: string | null = null;
-  export let value: unknown;
-  export let error: string | null = null;
-  export let options: SelectOptionsType[];
-  export let placeholder = 'Select an option';
-  export let unselected: unknown = undefined;
-  export let disabled = false;
-  export let hidden = false;
+  let {
+    id,
+    value,
+    options,
+    label = null,
+    error = null,
+    placeholder = 'Select an option',
+    unselected = undefined,
+    disabled = false,
+    hidden = false,
+    onchange,
+  } = $props<{
+    id: string;
+    value: unknown;
+    options: SelectOptionsType[];
+    label?: string | null;
+    error?: string | null;
+    placeholder?: string;
+    unselected?: unknown;
+    disabled?: boolean;
+    hidden?: boolean;
+    onchange?: (value: string) => void;
+  }>();
+
+  $effect(() => {
+    if (options.length === 1) {
+      value = options[0].value;
+    }
+  });
+
+  async function onChange(event: Event) {
+    const newValue = (event.target as HTMLSelectElement).value;
+    value = newValue;
+    onchange && onchange(newValue);
+  }
 </script>
 
 <div class:hidden>
@@ -21,7 +47,7 @@
     name={id}
     disabled={disabled || (!unselected && options.length === 1)}
     bind:value
-    on:change
+    onchange={onChange}
     class="w-full rounded-sm border border-neutral-light py-1 pl-2 pr-8 text-sm text-neutral-dark sm:w-full"
   >
     {#if unselected !== undefined && options.length > 1}

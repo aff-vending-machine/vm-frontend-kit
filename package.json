@@ -54,7 +54,6 @@
   },
   "dependencies": {
     "@iconify/svelte": "^3.1.6",
-    "date-picker-svelte": "^2.10.1",
     "dayjs": "^1.11.10",
     "papaparse": "^5.4.1",
     "svelte-hamburgers": "^4.2.0",

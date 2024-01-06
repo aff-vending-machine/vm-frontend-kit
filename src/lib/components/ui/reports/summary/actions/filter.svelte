@@ -5,9 +5,9 @@
   import timezone from 'dayjs/plugin/timezone';
   import utc from 'dayjs/plugin/utc';
 
-  import ShareFilterDateTime from '$lib/components/shares/ShareFilterDateTime.svelte';
   import { locale, t } from '$lib/i18n/translations';
   import 'dayjs/locale/th';
+  import DateTimeFilter from '$lib/components/ui-common/filters/DateTimeFilter.svelte';
 
   dayjs.extend(utc);
   dayjs.extend(timezone);
@@ -23,8 +23,9 @@
 </script>
 
 <div class="mb-4 flex flex-col space-x-0 space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
-  <ShareFilterDateTime key="from" label={$t('common.field.start-date')} bind:value={from} />
-  <ShareFilterDateTime key="to" label={$t('common.field.end-date')} bind:value={to} />
+  <DateTimeFilter key="from" label={$t('common.field.start-date')} max={to} value={from} />
+
+  <DateTimeFilter key="to" label={$t('common.field.end-date')} min={from} value={to} />
 </div>
 <div class="flex justify-end">
   <sub class="text-xs">

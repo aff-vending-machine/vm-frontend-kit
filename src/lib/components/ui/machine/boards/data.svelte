@@ -40,7 +40,7 @@
     >
       <div class="absolute left-2 right-2 top-0 flex items-baseline justify-between">
         <div>
-          <span class="px-2 text-xs text-primary transition-all">{machine.branch.name}</span>
+          <span class="px-2 text-xs text-primary transition-all">{machine.branch?.name}</span>
         </div>
         <div class="mt-2 h-4 w-4 rounded-full {getColorStatus(machine.status)} group hover:w-auto">
           <span class="hidden px-2 text-xs text-white transition-all group-hover:block">{machine.status}</span>

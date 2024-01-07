@@ -48,7 +48,7 @@ async function requester<T>(method: string, path: string, fetcher: Fetcher = {})
 
   let base = config.apiUrl;
   if (config.sameHost) {
-    base = window.location.origin + config.apiUrl;
+    base = window.location.origin + '/' + config.apiPath;
   }
 
   const url = new URL(path, base);

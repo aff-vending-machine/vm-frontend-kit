@@ -24,10 +24,4 @@ export class Auth {
       };
     });
   }
-
-  async onReturnHome(e: MouseEvent) {
-    e.preventDefault();
-
-    await goto('/');
-  }
 }

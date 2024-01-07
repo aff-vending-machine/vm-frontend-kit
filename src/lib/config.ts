@@ -5,11 +5,13 @@ function removeTrailingSlash(str?: string): string {
 }
 
 const baseUrl = removeTrailingSlash(import.meta.env.VITE_BASE_URL);
-const apiUrl = removeTrailingSlash(`${baseUrl}/${import.meta.env.VITE_API_PATH ?? ''}`) + '/';
+const apiPath = removeTrailingSlash(import.meta.env.VITE_API_PATH) || 'api';
+const apiUrl = removeTrailingSlash(`${baseUrl}/${apiPath}`) + '/';
 
 const config = {
   baseUrl,
   apiUrl,
+  apiPath,
   sameHost: baseUrl === '',
 };
 

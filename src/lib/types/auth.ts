@@ -5,7 +5,7 @@ export type AuthResult = {
 };
 
 export type Profile = {
-  user_id: number;
+  id: number;
   branch_id: number;
   username: string;
   role: string;

@@ -1,6 +1,6 @@
 export async function load({ params, parent }) {
   const { options } = await parent();
-  const branch = options.branches.find(b => b.value === params.branch);
+  const branch = options.branch.find(b => b.value === params.branch);
 
   if (branch == null) {
     return {

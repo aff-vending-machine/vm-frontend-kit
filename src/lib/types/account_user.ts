@@ -1,5 +1,5 @@
 import type { AccountRoleEntity } from './account_role';
-import type { StoreBranch } from './store_branch';
+import type { StoreBranchEntity } from './store_branch';
 
 export type AccountUserEntity = {
   id: number;
@@ -12,7 +12,7 @@ export type AccountUserEntity = {
   branch_id?: number;
   role_id: number;
 
-  branch?: StoreBranch;
+  branch?: StoreBranchEntity;
   role?: AccountRoleEntity;
 };
 

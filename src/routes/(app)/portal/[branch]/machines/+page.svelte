@@ -84,7 +84,7 @@
       />
       <Editor
         machine={overlay.data}
-        branchOptions={data.options.branches}
+        branchOptions={data.options.branch}
         onupdate={state.onUpdate}
         oncancel={overlay.onCancel}
       />

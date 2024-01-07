@@ -59,10 +59,16 @@
     onclose={overlay.onCancel}
   >
     {#snippet children({ Creator, Viewer })}
-      <Creator roleOptions={data.options.role} oncreate={state.onCreate} oncancel={overlay.onCancel} />
+      <Creator
+        roleOptions={data.options.role}
+        branchOptions={data.options.branch}
+        oncreate={state.onCreate}
+        oncancel={overlay.onCancel}
+      />
       <Viewer
         user={overlay.data}
         onchangepassword={overlay.onOpenPasswordChanger}
+        onresetpassword={state.onResetPassword}
         onchangerole={overlay.onOpenRoleChanger}
         ondelete={overlay.onOpenEraser}
         oncancel={overlay.onCancel}

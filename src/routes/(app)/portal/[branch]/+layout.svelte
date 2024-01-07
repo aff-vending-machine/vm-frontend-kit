@@ -28,7 +28,7 @@
         <BranchSelection
           label="branch"
           placeholder={$t('options.branch.all')}
-          options={data.options.branches}
+          options={data.options.branch}
           value={$page.params.branch}
           onchange={internal.onChange}
         />

@@ -1,4 +1,4 @@
-export type StoreBranch = {
+export type StoreBranchEntity = {
   id: number;
   created_at: Date;
   updated_at: Date;

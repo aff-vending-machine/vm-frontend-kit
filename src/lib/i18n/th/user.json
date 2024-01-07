@@ -15,7 +15,10 @@
     "id": "ID",
     "username": "ชื่อผู้ใช้",
     "role": "ตำแหน่ง",
+    "confirm-password": "ยืนยันรหัสผ่าน",
     "branch": "สาขา",
-    "last-login": "เข้าใช้งานล่าสุด"
+    "last-login": "เข้าใช้งานล่าสุด",
+    "old-password": "รหัสผ่านเดิม",
+    "new-password": "รหัสผ่านใหม่"
   }
 }

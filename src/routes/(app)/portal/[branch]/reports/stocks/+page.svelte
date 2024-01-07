@@ -57,16 +57,3 @@
     </Content>
   {/snippet}
 </Card>
-
-<!-- <Modal let:Body>
-  <Body>
-    <Export
-      name={data.options.machines.find(m => m.value === $filter.machineId)?.label ?? '-'}
-      report="stocks"
-      from={$filter.from}
-      to={$filter.to}
-      group={$filter.group}
-      on:download={handleDownload}
-    />
-  </Body>
-</Modal> -->

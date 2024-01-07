@@ -34,7 +34,7 @@
 {:else if type === 'currency'}
   <Currency amount={value} />
 {:else if type === 'date'}
-  <time>{dayjs(value).format('DD MMM YYYY HH:mm:ss')}</time>
+  <time datetime={value}>{value ? dayjs(value).format('DD MMM YYYY HH:mm:ss') : '-'}</time>
 {:else if type === 'array'}
   <span>{value.join(', ')}</span>
 {:else}

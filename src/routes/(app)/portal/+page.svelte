@@ -4,8 +4,8 @@
   let { data } = $props();
 
   $effect(() => {
-    if (data.options.branches.length === 1) {
-      const key = data.options.branches[0].value;
+    if (data.options.branch.length === 1) {
+      const key = data.options.branch[0].value;
       goto(`/portal/${key}`);
     } else {
       goto('/portal/all');

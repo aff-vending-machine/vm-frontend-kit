@@ -8,9 +8,12 @@
   import type { AccountUserCreateEntity } from '$lib/types/account_user';
   import type { SelectOptionsType } from '$lib/utils/options';
   import { CreatorForm } from './creator-form';
+  import type { StoreBranchEntity } from '$lib/types/store_branch';
+  import PasswordField from '$lib/components/ui-common/forms/PasswordField.svelte';
 
-  let { roleOptions, oncreate, oncancel } = $props<{
+  let { roleOptions, branchOptions, oncreate, oncancel } = $props<{
     roleOptions: SelectOptionsType<number, AccountRoleEntity>[];
+    branchOptions: SelectOptionsType<number, StoreBranchEntity>[];
     oncreate: (data: AccountUserCreateEntity) => void;
     oncancel: () => void;
   }>();
@@ -45,14 +48,24 @@
       options={roleOptions.map(b => ({ label: b.label, value: b.data?.id || 0 }))}
     />
 
-    <TextInputField
+    <SelectIDField
+      id="branch_id"
+      label={$t('user.field.branch')}
+      bind:value={form.data.branch_id}
+      error={form.errors['branch_id']}
+      options={branchOptions.map(b => ({ label: b.label, value: b.data?.id || 0 }))}
+      unselected={0}
+      placeholder={$t('user.all-branches')}
+    />
+
+    <PasswordField
       id="password"
       label={$t('user.field.password')}
       bind:value={form.data.password}
       error={form.errors['password']}
     />
 
-    <TextInputField
+    <PasswordField
       id="confirm-password"
       label={$t('user.field.confirm-password')}
       bind:value={form.data.confirm_password}

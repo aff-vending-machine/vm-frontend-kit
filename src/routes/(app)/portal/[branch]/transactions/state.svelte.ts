@@ -109,6 +109,7 @@ export class TransactionState {
       const result = await transactionAPI.done(id, reason);
       if (result.status === 'error') throw generateError(result.message);
       salert.success(`transaction '${id}' has been done`);
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -125,6 +126,7 @@ export class TransactionState {
       const result = await transactionAPI.cancel(id, reason);
       if (result.status === 'error') throw generateError(result.message);
       salert.success(`transaction '${id}' has been cancelled`);
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);

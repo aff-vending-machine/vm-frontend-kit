@@ -5,8 +5,8 @@ export class ActionState {
   #branchID = $state(0);
   #page = $state(1);
   #perPage = $state(10);
-  #startDate = $state(defaultForm);
-  #endDate = $state(defaultTo);
+  #form = $state(defaultForm);
+  #to = $state(defaultTo);
   #machineID = $state(0);
   #channelID = $state(0);
   #status = $state('');
@@ -16,8 +16,8 @@ export class ActionState {
     this.#branchID = branchID;
     this.#page = parseInt(query.get('page') ?? '1');
     this.#perPage = parseInt(query.get('per_page') ?? '10');
-    this.#startDate = parseDate(query.get('start_date'), defaultForm);
-    this.#endDate = parseDate(query.get('end_date'), defaultTo);
+    this.#form = parseDate(query.get('from'), defaultForm);
+    this.#to = parseDate(query.get('to'), defaultTo);
     this.#error = query.get('is_error') === 'true';
     this.#machineID = parseInt(query.get('machine_id') ?? '0');
     this.#channelID = parseInt(query.get('channel_id') ?? '0');
@@ -29,8 +29,8 @@ export class ActionState {
     if (this.#branchID !== 0) query.set('branch_id', this.#branchID.toString());
     query.set('page', this.#page.toString());
     query.set('per_page', this.#perPage.toString());
-    query.set('start_date', this.#startDate.toISOString());
-    query.set('end_date', this.#endDate.toISOString());
+    query.set('from', this.#form.toISOString());
+    query.set('to', this.#to.toISOString());
     if (this.#machineID !== 0) query.set('machine_id', this.#machineID.toString());
     if (this.#channelID !== 0) query.set('channel_id', this.#channelID.toString());
     if (this.#status !== '') query.set('order_status', this.#status.toString());
@@ -45,8 +45,8 @@ export class ActionState {
     return {
       page: this.#page,
       perPage: this.#perPage,
-      startDate: this.#startDate,
-      endDate: this.#endDate,
+      from: this.#form,
+      to: this.#to,
       machineID: this.#machineID,
       channelID: this.#channelID,
       status: this.#status,

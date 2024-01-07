@@ -14,8 +14,8 @@
 
 <style lang="scss">
   button {
-    @apply w-full rounded-md bg-accent p-2 text-sm text-neutral-lightest shadow shadow-accent-light;
-    @apply hover:bg-accent-light;
+    @apply w-full rounded-md bg-primary p-2 text-sm text-neutral-lightest shadow shadow-primary-light;
+    @apply hover:bg-primary-light;
     @apply disabled:bg-neutral-light disabled:text-neutral disabled:shadow-neutral-light;
   }
 </style>

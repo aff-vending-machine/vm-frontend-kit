@@ -1,0 +1,31 @@
+{
+  "title": "เครื่อง",
+  "edit-title": "แก้ไขข้อมูลเครื่อง",
+  "delete-title": "ลบเครื่อง",
+  "columns": {
+    "id": "รหัส",
+    "name": "ชื่อ",
+    "serial-number": "หมายเลขเครื่อง",
+    "location": "สถานที่ตั้ง",
+    "type": "ชนิด",
+    "vendor": "ผู้ใช้บริการ",
+    "status": "สถานะ",
+    "actions": "คำสั่ง"
+  },
+  "field": {
+    "id": "ID",
+    "name": "ชื่อ",
+    "serial-number": "หมายเลขเครื่อง",
+    "branch-id": "รหัสสาขา",
+    "branch": "สาขา",
+    "location": "สถานที่ตั้ง",
+    "type": "ชนิด",
+    "vendor": "ผู้ใช้บริการ",
+    "temperature": "อุณหภูมิ",
+    "status": "สถานะ",
+    "sync-time": "ข้อมูลล่าสุด",
+    "sync-slot-time": "ข้อมูลช่องสินค้าล่าสุด",
+    "sync-channel-time": "ข้อมูลชำระเงินล่าสุด",
+    "sync-transaction-time": "ข้อมูลธุรกรรมล่าสุด"
+  }
+}

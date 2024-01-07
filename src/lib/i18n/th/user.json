@@ -1,0 +1,21 @@
+{
+  "title": "User",
+  "create-title": "Create User",
+  "edit-title": "Edit User",
+  "delete-title": "Delete User",
+  "all-branches": "ทุกสาขา",
+  "columns": {
+    "ีusername": "Username",
+    "role": "Role",
+    "branch": "Branch",
+    "created-by": "Created By",
+    "more": "More"
+  },
+  "field": {
+    "id": "ID",
+    "username": "ชื่อผู้ใช้",
+    "role": "ตำแหน่ง",
+    "branch": "สาขา",
+    "last-login": "เข้าใช้งานล่าสุด"
+  }
+}

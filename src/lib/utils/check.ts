@@ -1,12 +1,11 @@
-import type { ColumnType } from '$components/elements/tables/@table';
-import { isDesktop, isMobile, isTablet } from '$lib/stores/media';
-import { get } from 'svelte/store';
+import type { ColumnType } from '$lib/components/elements/tables/table';
+import { media } from '$lib/state.svelte';
 
 export const isExpired = (iat: Date, exp: Date) => {
   if (iat > exp) return true;
 
   const now = new Date();
-  return now < iat || now > exp;
+  return now > exp;
 };
 
 export const isIsoDate = (str?: string | null) => {
@@ -16,11 +15,36 @@ export const isIsoDate = (str?: string | null) => {
   return d instanceof Date && !isNaN(d.getTime()) && d.toISOString() === str; // valid date
 };
 
+export const isMatched = (a?: unknown, b?: unknown) => {
+  if (a === b) return true;
+  return JSON.stringify(a) === JSON.stringify(b);
+};
+
+export const isLink = (element: HTMLElement | null): boolean => {
+  while (element) {
+    if (element.tagName === 'A') {
+      return true;
+    }
+    element = element.parentElement;
+  }
+  return false;
+};
+
+export const isLinkOrButton = (element: HTMLElement | null): boolean => {
+  while (element) {
+    if (element.tagName === 'A' || element.tagName === 'BUTTON') {
+      return true;
+    }
+    element = element.parentElement;
+  }
+  return false;
+};
+
 export const filterColumns = (columns: ColumnType[]) =>
   columns.filter(c => {
     if (!c.responsive || c.responsive === 'all') return true;
-    if (c.responsive.includes('mobile') && get(isMobile)) return true;
-    if (c.responsive.includes('tablet') && get(isTablet)) return true;
-    if (c.responsive.includes('desktop') && get(isDesktop)) return true;
+    if (c.responsive.includes('mobile') && media.isMobile) return true;
+    if (c.responsive.includes('tablet') && media.isTablet) return true;
+    if (c.responsive.includes('desktop') && media.isDesktop) return true;
     return false;
   });

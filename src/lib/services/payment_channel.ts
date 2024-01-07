@@ -1,33 +1,38 @@
-import api from '$lib/api';
-import { CRUDService } from '$lib/utils/base/api_1st';
-import { genError } from '$lib/utils/generate';
-import { getAccessToken } from '$lib/utils/jwt';
-import type { PaymentChannel } from '$types/payment_channel';
+import api, { type Result } from '$lib/helpers/apis/api';
+import { CRUDService } from '$lib/helpers/apis/api_1st';
+import type { PaymentChannelEntity } from '$lib/types/payment_channel';
 
 const ROOT_PATH = 'channels';
 
-export class PaymentChannelService extends CRUDService<PaymentChannel> {
-  constructor() {
-    super(ROOT_PATH);
+export class PaymentChannelService extends CRUDService<PaymentChannelEntity> {
+  private static instance: PaymentChannelService;
+  static getInstance(): PaymentChannelService {
+    if (!PaymentChannelService.instance) {
+      PaymentChannelService.instance = new PaymentChannelService(ROOT_PATH);
+    }
+
+    return PaymentChannelService.instance;
   }
 
-  async enable(id: number): Promise<void> {
-    try {
-      const token = await getAccessToken();
-      const data = await api.put<void>(`${this.ROOT_PATH}/${id}/enable`, null, { token });
-      return Promise.resolve<void>(data);
-    } catch (e) {
-      return Promise.reject(genError(e));
-    }
+  private constructor(PATH: string) {
+    super(PATH);
   }
 
-  async disable(id: number): Promise<void> {
-    try {
-      const token = await getAccessToken();
-      const data = await api.put<void>(`${this.ROOT_PATH}/${id}/disable`, null, { token });
-      return Promise.resolve<void>(data);
-    } catch (e) {
-      return Promise.reject(genError(e));
-    }
+  protected remap = (channel: PaymentChannelEntity) => {
+    return channel;
+  };
+
+  async enable(id: number): Promise<Result<void>> {
+    return this.requestWrapper(async token => {
+      const result = await api.put<void>(`${this.ROOT_PATH}/${id}/enable`, null, { token });
+      return { ...result };
+    });
+  }
+
+  async disable(id: number): Promise<Result<void>> {
+    return this.requestWrapper(async token => {
+      const result = await api.put<void>(`${this.ROOT_PATH}/${id}/disable`, null, { token });
+      return { ...result };
+    });
   }
 }

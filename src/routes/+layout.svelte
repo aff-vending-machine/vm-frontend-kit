@@ -1,36 +1,17 @@
 <script lang="ts">
-  import alert from '$lib/stores/alert';
-  import Alert from '$components/overlays/alerts/Alert.svelte';
-
-  import { onMount } from 'svelte';
-  import language from '$lib/stores/language';
-  import { windowWidth } from '$lib/stores/media';
-  import { loadTranslations, loading } from '$lib/i18n/translations';
-  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+  import { navigating } from '$app/stores';
+  import { media } from '$lib/state.svelte';
   import '../app.css';
 
-  onMount(() => {
-    const unsubLanguage = language.subscribe(lang => {
-      loadTranslations(lang, $page.url.pathname);
-    });
+  let { data, children } = $props();
 
-    const unsubLoading = loading.subscribe(async $loading => {
-      if ($loading) await loading.toPromise();
-    });
-
-    return () => {
-      unsubLanguage();
-      unsubLoading();
-    };
+  $effect(() => {
+    if (!data.isAuthenticated) {
+      goto('/login');
+    }
   });
 </script>
-
-<!-- Display alerts -->
-<div class="fixed right-4 top-4 z-50 space-y-2">
-  {#each $alert as { id, type, message }}
-    <Alert {type} {message} on:remove={() => alert.remove(id)} />
-  {/each}
-</div>
 
 <svelte:head>
   <meta name="description" content="The web application for vending machine" />
@@ -38,6 +19,8 @@
   <meta http-equiv="cache-control" content="public" />
 </svelte:head>
 
-<svelte:window bind:innerWidth={$windowWidth} />
+<svelte:window bind:innerWidth={media.width} />
 
-<slot />
+{#if !$navigating}
+  {@render children()}
+{/if}

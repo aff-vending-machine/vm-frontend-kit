@@ -1,0 +1,40 @@
+import type { MachineEntity } from './machine';
+import type { PaymentChannelEntity } from './payment_channel';
+import type { StoreBranch } from './store_branch';
+
+export type PaymentTransactionEntity = {
+  id: number;
+  branch_id: number;
+  machine_id: number;
+  channel_id: number;
+  created_at: Date;
+  updated_at: Date;
+  merchant_order_id: string;
+  raw_cart: string;
+  note: string;
+  order_quantity: number;
+  order_price: number;
+  order_status: string;
+  ordered_at: Date;
+  payment_requested_at?: Date;
+  reference1?: string;
+  reference2?: string;
+  reference3?: string;
+  cancelled_by?: string;
+  cancelled_at?: Date;
+  confirmed_paid_by?: string;
+  confirmed_paid_at?: Date;
+  ref_error?: string;
+  refund_at?: Date;
+  refund_price: number;
+  received_item_at?: Date;
+  received_quantity: number;
+  paid_price: number;
+  is_error: boolean;
+  error?: string;
+  error_at?: Date;
+
+  branch?: StoreBranch;
+  machine?: MachineEntity;
+  channel?: PaymentChannelEntity;
+};

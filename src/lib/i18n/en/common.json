@@ -1,22 +1,51 @@
 {
-  "loading": "Loading...",
+  "title": "Select Branch",
+  "slots": "Machine Slots",
+  "machine": "Machine",
+  "branch": "Branch",
+  "group": "Product group",
+  "transaction": "Transaction",
+  "role": "Role",
+  "untitled": "Untitled",
+  "loading": "Loading ...",
+  "syncing": "Syncing ...",
+  "search-filter": "Search Filter",
+  "search-command": "Commands",
+  "unseleted-options": "Select an option",
+  "delete-message-header": "Are You Sure!",
+  "delete-message": "Want to Delete {{name}} ?",
+  "note-message-header": "Change status to '{{ status }}'",
+  "note-message-reason": "Please tell me why to change status",
+  "note-message-other-reason": "Note",
+  "error": "An error occurred while loading the data.",
+  "temperature": "Temperature",
   "button": {
     "add-product": "Add Product",
     "add-slot": "Add Slot",
-    "add-group": "Add Product Group",
+    "add-product-group": "Add Product Group",
     "add-user": "Add User",
+    "change-password": "Chnage Password",
+    "change-role": "Chnage Role",
     "save": "Save",
     "edit": "Edit",
     "confirm": "Confirm",
     "cancel": "Cancel",
     "refresh": "Refresh",
+    "reset": "Reset",
     "delete": "Delete",
     "stock": "Stock",
     "payment": "Payment",
+    "summary": "Summary",
+    "products": "Products",
     "date": "Date",
     "time": "Time",
     "done": "Done",
-    "export": "Export"
+    "export": "Export",
+    "slots": "Slots",
+    "payments": "Payments",
+    "confirm-delete": "Yes! delete it",
+    "export-excel": "Excel File",
+    "export-csv": "CSV File"
   },
   "field": {
     "start-date": "Start Date",
@@ -39,6 +68,11 @@
     "stock": "Stock",
     "role": "Role",
     "status": "Status",
-    "changed": "Is edited"
+    "changed": "Is edited",
+    "image": "Image",
+    "size": "Size"
+  },
+  "unit": {
+    "baht": "Baht"
   }
 }

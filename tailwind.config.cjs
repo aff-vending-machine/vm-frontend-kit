@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
@@ -7,58 +6,76 @@ module.exports = {
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,svelte}'],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+    colors: {
+      transparent: 'transparent',
+      black: colors.black,
+      white: colors.white,
+      primary: {
+        lightest: colors.sky['100'],
+        light: colors.sky['300'],
+        DEFAULT: colors.sky['500'], // Primary brand color
+        dark: colors.sky['700'],
+        darkest: colors.sky['900'],
       },
-      colors: {
-        transparent: 'transparent',
-        primary: colors.sky,
-        secondary: colors.amber,
-        tertiary: colors.lime,
-        info: colors.blue,
-        success: colors.green,
-        warning: colors.yellow,
-        danger: colors.red,
-        disable: colors.slate,
+      secondary: {
+        lightest: colors.amber['100'],
+        light: colors.amber['300'],
+        DEFAULT: colors.amber['500'], // Secondary color for accents
+        dark: colors.amber['700'],
+        darkest: colors.amber['900'],
       },
-      animation: {
-        'slide-down': 'slide-down 500ms cubic-bezier(0.4, 0, 0.2, 1) 0ms backwards',
-        ripple: 'ripple 600ms linear',
-        wiggle: 'wiggle 1s ease-in-out 1',
-        'fill-in-5s': 'fill 5s linear 1',
-        notify: 'notify 5s cubic-bezier(0.4, 0, 0.2, 1) 0ms backwards',
+      accent: {
+        lightest: colors.rose['100'],
+        light: colors.rose['300'],
+        DEFAULT: colors.rose['500'], // Accent color for call-to-actions
+        dark: colors.rose['700'],
+        darkest: colors.rose['900'],
       },
-      keyframes: {
-        'slide-down': {
-          '0%': { transform: 'translateY(-5%)', opacity: 0 },
-          '100%': { transform: 'translateY(0%)', opacity: 100 },
-        },
-        ripple: {
-          to: { transform: 'scale(4)', opacity: 0 },
-        },
-        wiggle: {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
-        },
-        fill: {
-          '0%': { width: '0%' },
-          '90%': { width: '100%' },
-        },
-        notify: {
-          '0%': { transform: 'translateY(25%)', opacity: 0 },
-          '10%': { transform: 'translateY(0%)', opacity: 100 },
-          '90%': { transform: 'translateY(0%)', opacity: 100 },
-          '100%': { transform: 'translateY(-25%)', opacity: 0 },
-        },
+      neutral: {
+        lightest: colors.slate['100'],
+        light: colors.slate['300'],
+        DEFAULT: colors.slate['500'], // Neutral color for text, backgrounds, borders, etc.
+        dark: colors.slate['700'],
+        darkest: colors.slate['900'],
+      },
+      success: {
+        lightest: colors.green['100'],
+        light: colors.green['300'],
+        DEFAULT: colors.green['500'],
+        dark: colors.green['700'],
+        darkest: colors.green['900'],
+      },
+      info: {
+        lightest: colors.blue['100'],
+        light: colors.blue['300'],
+        DEFAULT: colors.blue['500'],
+        dark: colors.blue['700'],
+        darkest: colors.blue['900'],
+      },
+      warning: {
+        lightest: colors.yellow['100'],
+        light: colors.yellow['300'],
+        DEFAULT: colors.yellow['500'],
+        dark: colors.yellow['700'],
+        darkest: colors.rose['900'],
+      },
+      danger: {
+        lightest: colors.red['100'],
+        light: colors.red['300'],
+        DEFAULT: colors.red['500'],
+        dark: colors.red['700'],
+        darkest: colors.red['900'],
       },
     },
   },
   plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
   safelist: [
     {
-      pattern:
-        /(text|bg|border|fill)-(primary|secondary|tertiary|info|warning|success|danger)-(50|100|400|500|700|800)/,
+      pattern: /(text|bg|border|fill)-(primary|secondary|accent|info|warning|success|danger)/,
+      variants: ['hover'],
+    },
+    {
+      pattern: /(text|bg|border|fill)-(primary|secondary|accent|info|warning|success|danger)-(light|heavy)/,
       variants: ['hover'],
     },
   ],

@@ -1,0 +1,31 @@
+{
+  "title": "Machines",
+  "edit-title": "Edit Machine",
+  "delete-title": "Delete Machine",
+  "columns": {
+    "id": "ID",
+    "name": "Name",
+    "serial-number": "Serial Number",
+    "location": "Location",
+    "type": "Type",
+    "vendor": "Vendor",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "field": {
+    "id": "ID",
+    "name": "Name",
+    "serial-number": "Serial Number",
+    "branch-id": "Branch ID",
+    "branch": "Branch",
+    "location": "Location",
+    "type": "Type",
+    "vendor": "Vendor",
+    "temperature": "Temperature",
+    "status": "Status",
+    "sync-time": "Sync Time",
+    "sync-slot-time": "Slot Time",
+    "sync-channel-time": "Channel Time",
+    "sync-transaction-time": "Transaction Time"
+  }
+}

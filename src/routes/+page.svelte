@@ -1,18 +1,15 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
 
-  export let data;
+  let { data } = $props();
 
-  onMount(async () => {
+  $effect(() => {
     if (data.isAuthenticated) {
-      await goto('/console');
-    } else {
-      await goto('/login');
+      goto('/portal');
     }
   });
 </script>
 
 <svelte:head>
-  <title>Vending Machine</title>
+  <title>Vending Machine Portal</title>
 </svelte:head>

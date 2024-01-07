@@ -1,12 +1,13 @@
-// import adapter from '@sveltejs/adapter-auto';
 import adapter from '@sveltejs/adapter-static';
-import { vitePreprocess } from '@sveltejs/kit/vite';
+// import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import sveltePreprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   // Consult https://kit.svelte.dev/docs/integrations#preprocessors
   // for more information about preprocessors
-  preprocess: vitePreprocess(),
+  // preprocess: vitePreprocess(),
+  preprocess: sveltePreprocess({ postcss: true }),
 
   kit: {
     // adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
@@ -16,17 +17,13 @@ const config = {
       strict: true,
       fallback: 'index.html',
     }),
-    alias: {
-      $components: 'src/components',
-      $types: 'src/types',
-    },
     version: {
       name: process.env.npm_package_version,
     },
-    csp: {
-      mode: 'hash',
-      directives: { 'script-src': ['self'] },
-    },
+    // csp: {
+    //   mode: 'hash',
+    //   directives: { 'script-src': ['self'] },
+    // },
   },
 };
 

@@ -40,6 +40,7 @@ export class UserState {
   #fetch = async () => {
     const query = new URLSearchParams(this.#action.query);
     query.set('preloads', 'Branch:Role');
+    query.set('sort_by', 'id');
     query.sort();
 
     const result = await userAPI.find(query.toString(), false);
@@ -89,6 +90,24 @@ export class UserState {
       const result = await userAPI.create(data);
       if (result.status === 'error') throw generateError(result.message);
       salert.success(`New user has been created`);
+      await this.#fetch();
+    } catch (e) {
+      this.#error = (e as Error).message;
+      salert.failure(this.#error);
+    } finally {
+      this.#overlay.close();
+      this.#loading = false;
+    }
+  };
+
+  onResetPassword = async (data: AccountUserEntity) => {
+    this.#loading = true;
+    this.#error = undefined;
+
+    try {
+      const result = await userAPI.resetPasswordByID(data.id);
+      if (result.status === 'error') throw generateError(result.message);
+      salert.success(`${data.username}'s password has been reset`);
       await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;

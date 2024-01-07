@@ -18,6 +18,8 @@
     "confirm-password": "Confirm Password",
     "role": "Role",
     "branch": "Branch",
-    "last-login": "Last Login"
+    "last-login": "Last Login",
+    "old-password": "Old Password",
+    "new-password": "New Password"
   }
 }

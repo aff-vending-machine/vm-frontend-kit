@@ -1,5 +1,5 @@
 import type { ColumnType } from '$lib/components/elements/tables/table';
-import { Actions } from '$lib/components/ui/product/tables';
+import { Actions } from '$lib/components/ui/user/tables';
 
 export const columns: ColumnType[] = [
   {

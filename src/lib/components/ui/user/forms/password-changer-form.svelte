@@ -1,10 +1,10 @@
 <!-- UserPasswordChanger -->
 <script lang="ts">
   import Button from '$lib/components/elements/buttons/Button.svelte';
-  import TextInputField from '$lib/components/forms/inputs/TextInputField.svelte';
   import { t } from '$lib/i18n/translations';
   import { PasswordChangerForm } from './password-changer-form';
-  import type { AccountUserChangePasswordEntity, AccountUserEntity } from '$lib/types/account_user';
+  import type { AccountUserChangePasswordEntity } from '$lib/types/account_user';
+  import PasswordField from '$lib/components/ui-common/forms/PasswordField.svelte';
 
   let { onchangepassword, oncancel } = $props<{
     onchangepassword: (data: AccountUserChangePasswordEntity) => void;
@@ -26,21 +26,21 @@
 
 <div class="mr-2 h-full overflow-y-auto">
   <form id={form.id} {onsubmit} class="space-y-4 rounded-md border border-neutral-light p-2 text-sm">
-    <TextInputField
+    <PasswordField
       id="old-password"
       label={$t('user.field.old-password')}
       bind:value={form.data.old_password}
       error={form.errors['old-password']}
     />
 
-    <TextInputField
+    <PasswordField
       id="new-password"
       label={$t('user.field.new-password')}
       bind:value={form.data.new_password}
       error={form.errors['new-password']}
     />
 
-    <TextInputField
+    <PasswordField
       id="confirm-password"
       label={$t('user.field.confirm-password')}
       bind:value={form.data.confirm_password}

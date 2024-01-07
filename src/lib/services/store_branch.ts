@@ -1,10 +1,10 @@
 import { CRUDService } from '$lib/helpers/apis/api_1st';
 import { convertToDate } from '$lib/helpers/converter';
-import type { StoreBranch } from '$lib/types/store_branch';
+import type { StoreBranchEntity } from '$lib/types/store_branch';
 
 const ROOT_PATH = 'branches';
 
-export class StoreBranchService extends CRUDService<StoreBranch> {
+export class StoreBranchService extends CRUDService<StoreBranchEntity> {
   private static instance: StoreBranchService;
   static getInstance(): StoreBranchService {
     if (!StoreBranchService.instance) {
@@ -18,7 +18,7 @@ export class StoreBranchService extends CRUDService<StoreBranch> {
     super(PATH);
   }
 
-  protected remap = (branch: StoreBranch) => {
+  protected remap = (branch: StoreBranchEntity) => {
     branch.created_at = convertToDate(branch.created_at);
     branch.updated_at = convertToDate(branch.updated_at);
 

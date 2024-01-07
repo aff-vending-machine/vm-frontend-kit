@@ -6,6 +6,7 @@ const creatorSchema = z
   .object({
     username: z.string().min(1),
     role_id: z.number().min(1),
+    branch_id: z.number(),
     password: z.string().min(6),
     confirm_password: z.string(),
   })
@@ -21,6 +22,7 @@ export class CreatorForm extends Form<CreatorFormData> {
     const initialValue: CreatorFormData = {
       username: '',
       role_id: 4,
+      branch_id: 0,
       password: '',
       confirm_password: '',
     };

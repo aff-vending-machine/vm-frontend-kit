@@ -1,5 +1,5 @@
 import type { MachineSlotEntity } from './machine_slot';
-import type { StoreBranch } from './store_branch';
+import type { StoreBranchEntity } from './store_branch';
 
 export type MachineEntity = {
   id: number;
@@ -22,7 +22,7 @@ export type MachineEntity = {
   sync_transaction_time?: Date;
 
   // relations
-  branch?: StoreBranch;
+  branch?: StoreBranchEntity;
   slots?: MachineSlotEntity[];
 };
 

@@ -1,13 +1,13 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { generateRandomNumber } from '$lib/helpers/generator';
-  import type { StoreBranch } from '$lib/types/store_branch';
+  import type { StoreBranchEntity } from '$lib/types/store_branch';
   import type { ChangeEventHandler, EventHandler } from 'svelte/elements';
 
   type BranchOptionsType = {
     label: string;
     value: string;
-    data: StoreBranch;
+    data: StoreBranchEntity;
   };
 
   let { label, value, placeholder, options, ...restProps } = $props<{

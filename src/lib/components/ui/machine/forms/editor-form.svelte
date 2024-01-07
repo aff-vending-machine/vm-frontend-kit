@@ -6,12 +6,12 @@
   import { t } from '$lib/i18n/translations';
   import type { SelectOptionsType } from '$lib/utils/options';
   import type { MachineUpdateEntity, MachineEntity } from '$lib/types/machine';
-  import type { StoreBranch } from '$lib/types/store_branch';
+  import type { StoreBranchEntity } from '$lib/types/store_branch';
   import { EditorForm } from './editor-form';
 
   let { machine, branchOptions, onupdate, oncancel } = $props<{
     machine: MachineEntity;
-    branchOptions: SelectOptionsType<string, StoreBranch>[];
+    branchOptions: SelectOptionsType<string, StoreBranchEntity>[];
     onupdate: (id: number, data: MachineUpdateEntity) => void;
     oncancel: () => void;
   }>();

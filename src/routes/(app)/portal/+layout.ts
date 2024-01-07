@@ -15,7 +15,7 @@ export async function load() {
 
   return {
     options: {
-      branches: await fetchBranchOptions(),
+      branch: await fetchBranchOptions(),
     },
   };
 }

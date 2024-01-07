@@ -12,9 +12,9 @@
 
   const action = new ActionState(data.machineID);
   const overlay = new OverlayState();
-  const state = new SlotState(action, overlay);
+  const internal = new SlotState(action, overlay);
 
-  const slots = $derived(state.regroup());
+  const slots = $derived(internal.regroup(internal.data));
 </script>
 
 <Card>
@@ -22,8 +22,8 @@
     <Content>
       <Header>
         <div class="flex flex-col">
-          <span> {$t('common.branch')}: <span class="text-secondary">{state.machine?.location ?? '-'}</span></span>
-          <span> {$t('common.machine')}: <span class="text-secondary">{state.machine?.name ?? '-'}</span></span>
+          <span> {$t('common.branch')}: <span class="text-secondary">{internal.machine?.location ?? '-'}</span></span>
+          <span> {$t('common.machine')}: <span class="text-secondary">{internal.machine?.name ?? '-'}</span></span>
         </div>
       </Header>
     </Content>
@@ -46,32 +46,32 @@
       <Block>
         <Header>{$t('common.field.instructions')}</Header>
         <Command
-          time={state.time}
-          editing={state.editing}
-          syncing={state.syncing}
-          loading={state.loading}
-          onrefresh={state.onRefresh}
-          onsave={state.onSave}
-          oncancel={state.onReset}
+          time={internal.time}
+          editing={internal.editing}
+          syncing={internal.syncing}
+          loading={internal.loading}
+          onrefresh={internal.onRefresh}
+          onsave={internal.onSave}
+          oncancel={internal.onReset}
         />
       </Block>
     </Content>
     <Content>
       <div class="max-w-full select-none overflow-auto border-b border-t border-neutral-light p-4">
-        {#if state.loading}
+        {#if internal.loading}
           <div class="py-4 text-center">{$t('common.syncing')}</div>
         {/if}
 
-        {#if state.ready}
-          <div class="grid w-full gap-6" style="grid-template-columns: repeat({state.border?.cols ?? 10}, auto);">
+        {#if internal.ready}
+          <div class="grid w-full gap-6" style="grid-template-columns: repeat({internal.border?.cols ?? 10}, auto);">
             {#each slots as slot}
               {#if slot.id > 0}
                 <SlotCard
-                  slot={state.getSlot(slot.id)}
-                  editing={state.isEditing(slot.id)}
+                  slot={internal.getSlot(slot.id)}
+                  editing={internal.isEditing(slot.id)}
                   image={action.image === 'show'}
-                  onselect={state.onSelect}
-                  onstock={state.onAdjust}
+                  onselect={internal.onSelect}
+                  onstock={internal.onAdjust}
                 />
               {:else}
                 <SlotEmpty code={slot.code} isExist={true} on:create />
@@ -89,8 +89,8 @@
 
 {#if overlay.mode.display === 'drawer'}
   <Drawer
-    title={overlay.data.code}
-    subtitle={overlay.data.product?.name}
+    title={overlay.data?.code}
+    subtitle={overlay.data?.product?.name}
     mode={overlay.mode.view}
     onclose={overlay.onCancel}
   >
@@ -99,8 +99,8 @@
         slot={overlay.data}
         groupOptions={data.options.groups}
         productOptions={data.options.products}
-        onupdate={state.onUpdate}
-        oncancel={state.onReset}
+        onupdate={internal.onUpdate}
+        oncancel={internal.onReset}
       />
     {/snippet}
   </Drawer>

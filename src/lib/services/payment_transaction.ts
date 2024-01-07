@@ -1,4 +1,4 @@
-import api from '$lib/helpers/apis/api';
+import api, { type Result } from '$lib/helpers/apis/api';
 import { CRUDService } from '$lib/helpers/apis/api_1st';
 import { convertToAnyDate, convertToDate } from '$lib/helpers/converter';
 import type { PaymentTransactionEntity } from '$lib/types/payment_transaction';
@@ -33,22 +33,25 @@ export class PaymentTransactionService extends CRUDService<PaymentTransactionEnt
     return data;
   };
 
-  async done(id: number, note: string): Promise<void> {
+  async done(id: number, note: string): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.put<void>(`${this.ROOT_PATH}/${id}/done`, { note }, { token });
+      const result = await api.post<void>(`${this.ROOT_PATH}/${id}/done`, { note }, { token });
+      return { ...result };
     });
   }
 
-  async cancel(id: number, note: string): Promise<void> {
+  async cancel(id: number, note: string): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.put<void>(`${this.ROOT_PATH}/${id}/cancel`, { note }, { token });
+      const result = await api.post<void>(`${this.ROOT_PATH}/${id}/cancel`, { note }, { token });
+      return { ...result };
     });
   }
 
-  async pullTransactions(machineID: number): Promise<void> {
+  async pull(machineID: number): Promise<Result<void>> {
     return this.requestWrapper(async token => {
       const query = `machine_id=${machineID}`;
-      await api.post<void>(`${this.ROOT_PATH}/transactions/pull`, null, { query, token });
+      const result = await api.post<void>(`${this.ROOT_PATH}/pull`, null, { query, token });
+      return { ...result };
     });
   }
 }

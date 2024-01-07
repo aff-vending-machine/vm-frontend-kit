@@ -59,7 +59,7 @@ export class UserState {
     this.#error = undefined;
 
     try {
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -89,7 +89,7 @@ export class UserState {
       const result = await userAPI.create(data);
       if (result.status === 'error') throw generateError(result.message);
       salert.success(`New user has been created`);
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -107,7 +107,7 @@ export class UserState {
       const result = await userAPI.changePassword(data);
       if (result.status === 'error') throw generateError(result.message);
       salert.success(`Your password has been changed`);
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -125,7 +125,7 @@ export class UserState {
       const result = await userAPI.changeRoleByID(id, data);
       if (result.status === 'error') throw generateError(result.message);
       salert.success(`User '${id}'s Role has been changed`);
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -143,7 +143,7 @@ export class UserState {
       const result = await userAPI.deleteByID(id);
       if (result.status === 'error') throw generateError(result.message);
       salert.success(`User '${id}' has been deleted`);
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);

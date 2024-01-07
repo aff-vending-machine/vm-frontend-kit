@@ -22,9 +22,5 @@
   "display": {
     "hidden": "ซ่อน",
     "show": "แสดง"
-  },
-  "export": {
-    "excel": "ไฟล์ Excel",
-    "csv": "ไฟล์ CSV"
   }
 }

@@ -21,9 +21,10 @@
     "location": "สถานที่ตั้ง",
     "type": "ชนิด",
     "vendor": "ผู้ใช้บริการ",
-    "status": "Status",
-    "sync-time": "ดึงข้อมูลล่าสุด",
-    "sync-slot-time": "ดึงช่องสินค้าล่าสุด",
+    "temperature": "อุณหภูมิ",
+    "status": "สถานะ",
+    "sync-time": "ข้อมูลล่าสุด",
+    "sync-slot-time": "ข้อมูลช่องสินค้าล่าสุด",
     "sync-channel-time": "ข้อมูลชำระเงินล่าสุด",
     "sync-transaction-time": "ข้อมูลธุรกรรมล่าสุด"
   }

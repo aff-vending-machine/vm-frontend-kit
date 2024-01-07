@@ -12,8 +12,10 @@
   "search-filter": "กรองข้อมูล",
   "search-command": "ชุดคำสั่ง",
   "unseleted-options": "เลือก ...",
-  "delete-message": "กรุณายืนยัน! ต้องการลบ",
+  "delete-message-header": "กรุณายืนยัน!",
+  "delete-message": "ต้องการลบ {{name}} ใช่ไหม?",
   "error": "มีข้อผิดพลาดในขณะที่ดึงข้อมูล",
+  "temperature": "อุณหภูมิ",
   "button": {
     "add-product": "เพิ่มสินค้า",
     "add-slot": "เพิ่มช่อง",
@@ -31,10 +33,16 @@
     "stock": "รายงานสรุปสินค้า",
     "payment": "รายงานธุรกรรม",
     "summary": "รายงานสรุป",
+    "products": "ดูสินค้าในกลุ่ม",
     "date": "วัน",
     "time": "เวลา",
     "done": "ยืนยัน",
-    "export": "นำออก"
+    "export": "นำออก",
+    "slots": "ช่องสินค้า",
+    "payments": "ช่องทางชำระเงิน",
+    "confirm-delete": "ใช่! ต้องการลบ",
+    "export-excel": "ไฟล์ Excel",
+    "export-csv": "ไฟล์ CSV"
   },
   "field": {
     "start-date": "เริ่มวันที่",
@@ -59,5 +67,8 @@
     "status": "สถานะ",
     "changed": "การแก้ไข",
     "image": "รูปภาพ"
+  },
+  "unit": {
+    "baht": "บาท"
   }
 }

@@ -4,7 +4,7 @@
   import TableBodyField from './TableBodyField.svelte';
 
   import type { Entity } from '$lib/types/common';
-  import { filterColumns } from '$lib/utils/check';
+  import { filterColumns, isLinkOrButton } from '$lib/utils/check';
 
   let { columns, source, onselect, onaction } = $props<{
     columns: ColumnType[];
@@ -15,12 +15,11 @@
 
   const fillterdColumns = $derived(filterColumns(columns));
 
-  function onSelect(data: Record<string, any>) {
+  function onSelect(data: Record<string, unknown>) {
     return (e: MouseEvent) => {
       e.stopPropagation();
 
-      if (e.target === e.currentTarget) {
-        e.preventDefault();
+      if (!isLinkOrButton(e.target as HTMLElement)) {
         onselect && onselect(data);
       }
     };
@@ -44,11 +43,6 @@
     if (align === 'center') return 'text-center';
     return 'text-right';
   }
-
-  function getWidth(width?: string) {
-    if (!width) return '';
-    return `w-[${width}]`;
-  }
 </script>
 
 <tbody class="divide-y divide-neutral-light border-t border-neutral-lightest">
@@ -66,7 +60,7 @@
       onclick={onSelect(data)}
     >
       {#each fillterdColumns as column (column.key)}
-        <td animate:flip class="p-4 text-sm {getAlignment(column.align)} {getWidth(column.width)}">
+        <td animate:flip class="p-4 text-sm {getAlignment(column.align)}" style="width: {column.width};">
           <TableBodyField
             {index}
             value={column.render ? column.render(data, index) : getValue(column.key, data)}

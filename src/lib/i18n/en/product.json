@@ -1,0 +1,25 @@
+{
+  "title": "Product",
+  "edit-title": "Edit Product",
+  "delete-title": "Delete Product",
+  "status-on": "Enable",
+  "status-off": "Disable",
+  "columns": {
+    "name": "Name",
+    "sku": "SKU",
+    "description": "Description",
+    "status": "Status",
+    "price": "Price",
+    "more": "More"
+  },
+  "field": {
+    "name": "Name",
+    "sku": "SKU",
+    "group": "Group",
+    "description": "Description",
+    "barcode": "Barcode",
+    "status": "Status",
+    "image_url": "Image URL",
+    "price": "Price"
+  }
+}

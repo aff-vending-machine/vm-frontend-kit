@@ -1,0 +1,19 @@
+{
+  "title": "Product Group",
+  "edit-title": "Edit Product Group",
+  "delete-title": "Delete Product Group",
+  "status-on": "Enable",
+  "status-off": "Disable",
+  "columns": {
+    "name": "Name",
+    "description": "Description",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "field": {
+    "name": "Name",
+    "description": "Description",
+    "status": "Status",
+    "products": "Products"
+  }
+}

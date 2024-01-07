@@ -1,7 +1,7 @@
-import api from '$lib/helpers/apis/api';
+import api, { type Result } from '$lib/helpers/apis/api';
 import { CRUDService } from '$lib/helpers/apis/api_1st';
 import { convertToAnyDate, convertToDate } from '$lib/helpers/converter';
-import type { MachineEntity } from '$lib/types/machine';
+import type { Healthz, MachineEntity } from '$lib/types/machine';
 
 const ROOT_PATH = 'machines';
 
@@ -31,16 +31,26 @@ export class MachineService extends CRUDService<MachineEntity> {
   };
 
   // Fetch machine // POST 	{machines/:id/fetch}
-  async fetch(machineID: number): Promise<void> {
+  async fetch(machineID: number): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.post<void>(`${this.ROOT_PATH}/${machineID}/fetch`, null, { token });
+      const result = await api.post<void>(`${this.ROOT_PATH}/${machineID}/fetch`, null, { token });
+      return { ...result };
     });
   }
 
   // Push machine // POST 	{machines/:id/push}
-  async push(machineID: number): Promise<void> {
+  async push(machineID: number): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      await api.post<void>(`${this.ROOT_PATH}/${machineID}/push`, null, { token });
+      const result = await api.post<void>(`${this.ROOT_PATH}/${machineID}/push`, null, { token });
+      return { ...result };
+    });
+  }
+
+  // Healthz machine // GET 	{machines/:id/healthz}
+  async healthz(machineID: number): Promise<Result<Healthz>> {
+    return this.requestWrapper(async token => {
+      const result = await api.get<Healthz>(`${this.ROOT_PATH}/${machineID}/healthz`, { token });
+      return { ...result };
     });
   }
 }

@@ -6,6 +6,10 @@
   import { t } from '$lib/i18n/translations';
   import ButtonLink from '$lib/components/elements/buttons/ButtonLink.svelte';
 
+  let { onexport } = $props<{
+    onexport: (ext: 'xlsx' | 'csv') => void;
+  }>();
+
   function summary() {
     const params = new URLSearchParams($page.url.searchParams);
     params.delete('group');
@@ -22,17 +26,39 @@
 
     return `/portal/${$page.params.branch}/reports/transactions?${params.toString()}`;
   }
+
+  function onExportExcelClick(e: MouseEvent) {
+    e.preventDefault();
+    onexport('xlsx');
+  }
+
+  function onExportCSVClick(e: MouseEvent) {
+    e.preventDefault();
+    onexport('csv');
+  }
 </script>
 
-<div class="mb-2 flex flex-col justify-end space-x-0 space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
-  <ButtonLink color="accent" href={summary()} outline>
-    {$t('common.button.summary')}
-  </ButtonLink>
-  <ButtonLink color="accent" href={link()} outline>
-    {$t('common.button.payment')}
-  </ButtonLink>
-  <Button outline class="group">
-    <Icon icon="mdi:export" class="h-4 w-4 text-primary group-hover:text-white" />
-    <span class="ml-2">{$t('common.button.export')}</span>
-  </Button>
+<div class="mb-2 flex flex-col space-y-4">
+  <div class="flex space-x-2">
+    <ButtonLink color="accent" class="w-32" href={summary()} outline>
+      {$t('common.button.summary')}
+    </ButtonLink>
+    <ButtonLink color="accent" class="w-32" href={link()} outline>
+      {$t('common.button.payment')}
+    </ButtonLink>
+  </div>
+  <div class="flex space-x-2">
+    <Button outline class="group w-32">
+      <Icon
+        icon="fa6-solid:file-excel"
+        class="h-4 w-4 text-primary group-hover:text-white"
+        onclick={onExportExcelClick}
+      />
+      <span class="ml-2">{$t('common.button.export-excel')}</span>
+    </Button>
+    <Button outline class="group w-32">
+      <Icon icon="fa6-solid:file-csv" class="h-4 w-4 text-primary group-hover:text-white" onclick={onExportCSVClick} />
+      <span class="ml-2">{$t('common.button.export-csv')}</span>
+    </Button>
+  </div>
 </div>

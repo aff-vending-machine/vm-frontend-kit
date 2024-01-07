@@ -21,6 +21,7 @@
     "location": "Location",
     "type": "Type",
     "vendor": "Vendor",
+    "temperature": "Temperature",
     "status": "Status",
     "sync-time": "Sync Time",
     "sync-slot-time": "Slot Time",

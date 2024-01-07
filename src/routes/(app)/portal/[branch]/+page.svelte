@@ -1,9 +1,17 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import Card from '$lib/components/ui/home/Card.svelte';
   import Title from '$lib/components/ui/home/Title.svelte';
   import { t } from '$lib/i18n/translations';
 
   let { data } = $props();
+
+  $effect(() => {
+    if (data.options.branches.length === 1) {
+      const branch = data.options.branches[0].value;
+      goto(`/portal/${branch}/machines`);
+    }
+  });
 </script>
 
 <Title />

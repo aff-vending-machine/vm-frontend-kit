@@ -37,6 +37,8 @@ export type TransactionReport = {
   reference2: string;
   reference3: string;
   note: string;
+
+  rew_cart?: string;
 };
 
 export type CartItem = {

@@ -4,6 +4,7 @@ import type { Pagination } from '$lib/helpers/apis/api';
 import { generateError } from '$lib/helpers/generator';
 import { salert } from '$lib/salert';
 import { PaymentService } from '$lib/services/payment';
+import type { Entity } from '$lib/types/common';
 import type { PaymentEntity, PaymentUpdateEntity } from '$lib/types/payment';
 
 const paymentAPI = PaymentService.getInstance();
@@ -30,6 +31,7 @@ export class PaymentState {
 
   #fetch = async () => {
     const query = new URLSearchParams(this.#action.query);
+    query.set('sort_by', 'id');
     query.sort();
 
     const result = await paymentAPI.find(query.toString(), false);
@@ -49,7 +51,7 @@ export class PaymentState {
     this.#error = undefined;
 
     try {
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -79,10 +81,30 @@ export class PaymentState {
     this.#error = undefined;
 
     try {
-      const result = await paymentAPI.updateByID(id, data);
+      const query = new URLSearchParams({ machine_id: this.#action.filter.machineID.toString() });
+      const result = await paymentAPI.updateByID(id, data, query.toString());
       if (result.status === 'error') throw generateError(result.message);
       salert.success('The payments is updated');
-      this.#fetch();
+      await this.#fetch();
+    } catch (e) {
+      this.#error = (e as Error).message;
+      salert.failure(this.#error);
+    } finally {
+      this.#loading = false;
+    }
+  };
+
+  onAction = async (mode: string, data: Entity) => {
+    this.#loading = true;
+    this.#error = undefined;
+
+    try {
+      const query = new URLSearchParams({ machine_id: this.#action.filter.machineID.toString() });
+      const payload = { is_enable: mode === 'enable' };
+      const result = await paymentAPI.updateByID(data.id, payload, query.toString());
+      if (result.status === 'error') throw generateError(result.message);
+      salert.success('The payments is updated');
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -99,7 +121,7 @@ export class PaymentState {
       const result = await paymentAPI.deleteByID(id);
       if (result.status === 'error') throw generateError(result.message);
       salert.success('The payments is deleted');
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.success(this.#error);

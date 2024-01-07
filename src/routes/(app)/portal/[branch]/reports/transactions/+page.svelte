@@ -12,7 +12,7 @@
   let { data } = $props();
 
   const action = new ActionState(data.branchID, data.query);
-  const state = new ReportState(action);
+  const internal = new ReportState(action);
   const columns = $derived(reportColumns($t));
 </script>
 
@@ -25,25 +25,25 @@
       </Block>
       <Block>
         <Header>{$t('common.search-command')}</Header>
-        <Command />
+        <Command onexport={internal.onDownload} />
       </Block>
     </Content>
     <Content>
       <Table>
         {#snippet children({ Header, Body, Footer, Loading })}
           <Header {columns} />
-          {#if state.loading}
+          {#if internal.loading}
             <Loading {columns} />
           {/if}
 
-          {#if state.error}
-            <div>{state.error}</div>
+          {#if internal.error}
+            <div>{internal.error}</div>
           {/if}
 
-          {#if state.ready}
-            <Body {columns} bind:source={state.data} />
+          {#if internal.ready}
+            <Body {columns} bind:source={internal.data} />
             <Footer>
-              <SummaryRow {columns} data={state.data} />
+              <SummaryRow {columns} data={internal.data} />
             </Footer>
           {/if}
         {/snippet}
@@ -51,15 +51,3 @@
     </Content>
   {/snippet}
 </Card>
-
-<!-- <Modal let:Body>
-  <Body>
-    <Export
-      name={data.options.machines.find(m => m.value === filter.machineId)?.label ?? ''}
-      report="transactions"
-      from={filter.from}
-      to={filter.to}
-      on:download={handleDownload}
-    />
-  </Body>
-</Modal> -->

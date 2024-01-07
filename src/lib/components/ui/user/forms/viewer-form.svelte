@@ -3,7 +3,7 @@
   import Button from '$lib/components/elements/buttons/Button.svelte';
   import { t } from '$lib/i18n/translations';
   import type { AccountUserEntity } from '$lib/types/account_user';
-  import { showDate } from '$lib/utils/generate';
+  import { showDate } from '$lib/utils/time';
 
   let { user, onchangepassword, onchangerole, ondelete, oncancel } = $props<{
     user: AccountUserEntity;

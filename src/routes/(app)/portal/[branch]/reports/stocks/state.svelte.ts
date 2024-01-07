@@ -47,7 +47,7 @@ export class ReportState {
     this.#error = undefined;
 
     try {
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -92,10 +92,12 @@ export class ReportState {
     }
   };
 
-  onDownload = (e: CustomEvent) => {
-    const { filename, application } = e.detail;
-    const data = this.#regroup().map(toStockReportFile);
-    switch (application) {
+  onDownload = async (ext: 'xlsx' | 'csv') => {
+    const filename = await salert.filename(ext);
+    if (!filename) return;
+
+    const data = this.data.map(toStockReportFile);
+    switch (ext) {
       case 'csv':
         return exportCSV(filename, data);
 

@@ -16,7 +16,7 @@ export class EditorForm extends Form<EditorFormData> {
     let initialValue: EditorFormData = {
       name: '',
       description: '',
-      is_enable: false,
+      is_enable: true,
     };
 
     if (group) {

@@ -1,19 +1,14 @@
-import dayjs from 'dayjs';
-
 import { parseDate } from '$lib/utils/convert';
+import { defaultForm, defaultTo } from '$lib/utils/time';
 
 export class ActionState {
-  #date = dayjs().set('millisecond', 0).set('second', 0).set('minute', 0).set('hour', 21);
-  #defaultForm = this.#date.add(-1, 'day').toDate();
-  #defaultTo = this.#date.toDate();
-
-  #from = $state(this.#defaultForm);
-  #to = $state(this.#defaultTo);
+  #from = $state(defaultForm);
+  #to = $state(defaultTo);
   #branchID = $state(0);
 
   constructor(branchID: number, query: URLSearchParams) {
-    this.#from = parseDate(query.get('from'), this.#defaultForm);
-    this.#to = parseDate(query.get('to'), this.#defaultTo);
+    this.#from = parseDate(query.get('from'), defaultForm);
+    this.#to = parseDate(query.get('to'), defaultTo);
     this.#branchID = branchID;
   }
 

@@ -19,8 +19,10 @@ export class TransactionState {
 
   #action: ActionState;
   #overlay: OverlayState;
+  #machineIDs: number[];
 
-  constructor(action: ActionState, drawer: OverlayState) {
+  constructor(machineIDs: number[], action: ActionState, drawer: OverlayState) {
+    this.#machineIDs = machineIDs;
     this.#action = action;
     this.#overlay = drawer;
 
@@ -31,6 +33,19 @@ export class TransactionState {
       }
     });
   }
+
+  #pull = async (machineID: number) => {
+    try {
+      const result = await transactionAPI.pull(machineID);
+      if (result.status === 'error') {
+        return;
+      } else {
+        return result.data;
+      }
+    } catch (e) {
+      return;
+    }
+  };
 
   #fetch = async () => {
     const query = new URLSearchParams(this.#action.query);
@@ -54,7 +69,7 @@ export class TransactionState {
     this.#error = undefined;
 
     try {
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -63,11 +78,66 @@ export class TransactionState {
     }
   };
 
-  onSync = () => {};
+  onPull = async () => {
+    const maxConcurrent = 5;
+    const tasks = [];
+
+    for (let i = 0; i < this.#machineIDs.length; i += maxConcurrent) {
+      const chunk = this.#machineIDs.slice(i, i + maxConcurrent);
+      const promises = chunk.map(id => this.#pull(id));
+      tasks.push(...promises);
+    }
+
+    this.#loading = true;
+    this.#error = undefined;
+
+    try {
+      await Promise.all(tasks);
+    } catch (e) {
+      this.#error = (e as Error).message;
+      salert.failure(this.#error);
+    } finally {
+      this.#loading = false;
+    }
+  };
+
+  onDone = async (id: number, reason: string) => {
+    this.#loading = true;
+    this.#error = undefined;
+
+    try {
+      const result = await transactionAPI.done(id, reason);
+      if (result.status === 'error') throw generateError(result.message);
+      salert.success(`transaction '${id}' has been done`);
+    } catch (e) {
+      this.#error = (e as Error).message;
+      salert.failure(this.#error);
+    } finally {
+      this.#loading = false;
+    }
+  };
+
+  onCancel = async (id: number, reason: string) => {
+    this.#loading = true;
+    this.#error = undefined;
+
+    try {
+      const result = await transactionAPI.cancel(id, reason);
+      if (result.status === 'error') throw generateError(result.message);
+      salert.success(`transaction '${id}' has been cancelled`);
+    } catch (e) {
+      this.#error = (e as Error).message;
+      salert.failure(this.#error);
+    } finally {
+      this.#loading = false;
+    }
+  };
 
   onAction = (mode: string, data: Entity) => {
     const entity = data as PaymentTransactionEntity;
     if (mode === 'viewer') this.#overlay.onOpenViewer(entity);
+    if (mode === 'done') this.#overlay.onAlertDone(entity);
+    if (mode === 'cancel') this.#overlay.onAlertCancel(entity);
   };
 
   onSelect = (data: Entity) => {

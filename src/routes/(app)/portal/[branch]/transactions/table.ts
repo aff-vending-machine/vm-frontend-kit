@@ -1,5 +1,5 @@
 import type { ColumnType } from '$lib/components/elements/tables/table';
-import { Actions } from '$lib/components/ui/product/tables';
+import { More } from '$lib/components/ui/transaction/tables';
 
 export const columns: ColumnType[] = [
   {
@@ -54,6 +54,6 @@ export const columns: ColumnType[] = [
     type: 'component',
     responsive: 'tablet|desktop',
     width: '64px',
-    render: () => Actions,
+    render: () => More,
   },
 ];

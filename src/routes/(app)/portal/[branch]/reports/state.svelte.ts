@@ -40,7 +40,7 @@ export class ReportState {
     this.#error = undefined;
 
     try {
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);

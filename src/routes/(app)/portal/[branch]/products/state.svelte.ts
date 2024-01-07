@@ -39,6 +39,7 @@ export class ProductState {
   #fetch = async () => {
     const query = new URLSearchParams(this.#action.query);
     query.set('preloads', 'Group');
+    query.set('sort_by', 'group_id');
     query.sort();
 
     const result = await productAPI.find(query.toString(), false);
@@ -58,7 +59,7 @@ export class ProductState {
     this.#error = undefined;
 
     try {
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -86,8 +87,8 @@ export class ProductState {
     try {
       const result = await productAPI.create(data);
       if (result.status === 'error') throw generateError(result.message);
-      salert.success(`New product has been created`);
-      this.#fetch();
+      salert.success(`New product '${data.name}' has been created`);
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -104,8 +105,8 @@ export class ProductState {
     try {
       const result = await productAPI.updateByID(id, data);
       if (result.status === 'error') throw generateError(result.message);
-      salert.success(`Product '${id}' has been updated`);
-      this.#fetch();
+      salert.success(`Product '${data.name}' has been updated`);
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -115,15 +116,15 @@ export class ProductState {
     }
   };
 
-  onDelete = async (id: number) => {
+  onDelete = async (id: number, name: string) => {
     this.#loading = true;
     this.#error = undefined;
 
     try {
       const result = await productAPI.deleteByID(id);
       if (result.status === 'error') throw generateError(result.message);
-      salert.success(`Product '${id}' has been deleted`);
-      this.#fetch();
+      salert.success(`Product '${name}' has been deleted`);
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);

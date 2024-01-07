@@ -41,7 +41,7 @@ export class ReportState {
     this.#error = undefined;
 
     try {
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -50,10 +50,12 @@ export class ReportState {
     }
   };
 
-  onDownload = (e: CustomEvent) => {
-    const { filename, application } = e.detail;
+  onDownload = async (ext: 'xlsx' | 'csv') => {
+    const filename = await salert.filename(ext);
+    if (!filename) return;
+
     const data = this.#reports.map(toTransactionReportFile);
-    switch (application) {
+    switch (ext) {
       case 'csv':
         return exportCSV(filename, data);
 
@@ -79,11 +81,16 @@ export class ReportState {
   }
 }
 
-function toTransactionReportFile(transaction: TransactionReport) {
-  transaction.ordered_at = convertToDate(transaction.ordered_at);
-  transaction.payment_requested_at = convertToDate(transaction.payment_requested_at);
-  transaction.confirmed_paid_at = convertToDate(transaction.confirmed_paid_at);
-  transaction.received_item_at = convertToDate(transaction.received_item_at);
+function toTransactionReportFile(transaction: TransactionReport): Record<string, unknown> {
+  const result = { ...transaction } as Record<string, unknown>;
+  result.ordered_at = convertToDate(transaction.ordered_at);
+  result.payment_requested_at = convertToDate(transaction.payment_requested_at);
+  result.confirmed_paid_at = convertToDate(transaction.confirmed_paid_at);
+  result.received_item_at = convertToDate(transaction.received_item_at);
+  result.items = transaction.cart.map(item => `${item.quantity} x ${item.name} (${item.code})`).join(', ');
 
-  return transaction;
+  delete result.cart;
+  delete result.raw_reference;
+
+  return result;
 }

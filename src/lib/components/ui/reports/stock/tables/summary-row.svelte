@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { flip } from 'svelte/animate';
   import Currency from '$lib/components/elements/labels/Currency.svelte';
   import type { ColumnType } from '$lib/components/elements/tables/table';
   import { t } from '$lib/i18n/translations';

@@ -11,11 +11,11 @@ export const columns: ColumnType[] = [
     responsive: 'tablet|desktop',
   },
   {
-    key: 'group.name',
-    title: 'group',
+    key: 'sku',
+    title: 'SKU',
     type: 'string',
+    responsive: 'tablet|desktop',
     sortable: true,
-    responsive: 'tablet',
   },
   {
     key: 'name',
@@ -23,13 +23,6 @@ export const columns: ColumnType[] = [
     type: 'component',
     sortable: true,
     render: () => Title,
-  },
-  {
-    key: 'sku',
-    title: 'SKU',
-    type: 'string',
-    responsive: 'tablet|desktop',
-    sortable: true,
   },
   {
     key: 'description',

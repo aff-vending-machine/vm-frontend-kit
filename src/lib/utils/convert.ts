@@ -34,3 +34,7 @@ export const parseBoolean = (str: string | null, _default: boolean = false): boo
   if (!str || !(str === 'true' || str === 'false')) return _default;
   return str === 'true';
 };
+
+export function clone<T>(a?: T[]): T[] {
+  return a?.map(o => ({ ...o })) || [];
+}

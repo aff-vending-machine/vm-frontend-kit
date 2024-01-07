@@ -1,5 +1,5 @@
 import type { ColumnType } from '$lib/components/elements/tables/table';
-import { Actions } from '$lib/components/ui/payment/tables';
+import { Status } from '$lib/components/ui/payment/tables';
 
 export const columns: ColumnType[] = [
   {
@@ -21,16 +21,9 @@ export const columns: ColumnType[] = [
     type: 'string',
   },
   {
-    key: 'is_enable',
-    title: 'Status',
-    type: 'string',
-  },
-  {
     key: '',
-    title: 'more',
+    title: 'Status',
     type: 'component',
-    responsive: 'tablet|desktop',
-    width: '64px',
-    render: () => Actions,
+    render: () => Status,
   },
 ];

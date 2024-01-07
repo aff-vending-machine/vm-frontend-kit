@@ -12,8 +12,13 @@
   "search-filter": "Search Filter",
   "search-command": "Commands",
   "unseleted-options": "Select an option",
-  "delete-message": " Are You Sure! Want to Delete",
+  "delete-message-header": "Are You Sure!",
+  "delete-message": "Want to Delete {{name}} ?",
+  "note-message-header": "Change status to '{{ status }}'",
+  "note-message-reason": "Please tell me why to change status",
+  "note-message-other-reason": "Note",
   "error": "An error occurred while loading the data.",
+  "temperature": "Temperature",
   "button": {
     "add-product": "Add Product",
     "add-slot": "Add Slot",
@@ -30,10 +35,17 @@
     "delete": "Delete",
     "stock": "Stock",
     "payment": "Payment",
+    "summary": "Summary",
+    "products": "Products",
     "date": "Date",
     "time": "Time",
     "done": "Done",
-    "export": "Export"
+    "export": "Export",
+    "slots": "Slots",
+    "payments": "Payments",
+    "confirm-delete": "Yes! delete it",
+    "export-excel": "Excel File",
+    "export-csv": "CSV File"
   },
   "field": {
     "start-date": "Start Date",
@@ -58,5 +70,8 @@
     "status": "Status",
     "changed": "Is edited",
     "image": "Image"
+  },
+  "unit": {
+    "baht": "Baht"
   }
 }

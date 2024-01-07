@@ -3,7 +3,7 @@
   import Button from '$lib/components/elements/buttons/Button.svelte';
   import Image from '$lib/components/elements/images/Image.svelte';
   import NumberInputField from '$lib/components/forms/inputs/NumberInputField.svelte';
-  import SelectField from '$lib/components/ui-common/forms/SelectField.svelte';
+  import SelectIDField from '$lib/components/ui-common/forms/SelectIDField.svelte';
   import TextInputField from '$lib/components/forms/inputs/TextInputField.svelte';
   import ToggleField from '$lib/components/forms/inputs/ToggleField.svelte';
   import { t } from '$lib/i18n/translations';
@@ -23,12 +23,28 @@
 
   const form = new EditorForm(slot);
 
-  async function handleGroup() {
-    if (productOptions.findIndex(p => p.data?.id === form.data.product_id) === -1) {
-      const firstProduct = productOptions.filter(p => p.filter === form.data.group_id)[0];
-      form.data.product_id = firstProduct.data?.id ?? 0;
+  let ts: number;
+  let hidden = $state(false);
+  let pOptions = $state(productOptions.filter(p => p.filter === form.data.group_id));
+  let image = $derived(pOptions.find(p => p.value === form.data.product_id)?.data?.image_url);
+
+  $effect(() => {
+    return () => {
+      if (!ts) clearTimeout(ts);
+    };
+  });
+
+  const onChangeGroup = (id: number) => {
+    hidden = true;
+    pOptions = productOptions.filter(p => p.filter === id);
+    if (pOptions.findIndex(p => p.value === form.data.product_id) === -1) {
+      const firstProduct = pOptions.filter(p => p.filter === id)[0];
+      form.data.product_id = firstProduct.value ?? 0;
     }
-  }
+    setTimeout(() => {
+      hidden = false;
+    }, 10);
+  };
 
   async function onsubmit(e: SubmitEvent) {
     e.preventDefault();
@@ -38,8 +54,9 @@
       code: form.data.code,
       stock: form.data.stock,
       capacity: form.data.capacity,
-      spiral: 1,
+      spiral: form.data.spiral,
       is_enable: form.data.is_enable,
+      product: pOptions.find(p => p.value === form.data.product_id)?.data,
     });
   }
 
@@ -49,12 +66,19 @@
 
   function onCancel(e: MouseEvent) {
     e.preventDefault();
+    oncancel && oncancel();
   }
+
+  $effect(() => {
+    if (pOptions.length === 1) {
+      form.data.product_id = pOptions[0].value;
+    }
+  });
 </script>
 
 <div class="mr-2 h-full overflow-y-auto">
   <div class="m-4 flex justify-center">
-    <Image class="mx-auto h-32 w-32 border object-contain" src={slot.product?.image_url} alt={form.data.code} />
+    <Image class="mx-auto h-32 w-32 border object-contain" src={image} alt={form.data.code} />
   </div>
   <form id={form.id} {onsubmit} class="space-y-4 rounded-md border border-neutral-light p-2 text-sm">
     <TextInputField
@@ -65,25 +89,38 @@
       disabled
     />
 
-    <SelectField
+    <SelectIDField
       id="group_id"
       label={$t('slot.field.product-group')}
       bind:value={form.data.group_id}
       error={form.errors['group_id']}
-      options={groupOptions}
       unselected={0}
       placeholder={$t('slot.all-group')}
-      on:change={handleGroup}
+      options={groupOptions}
+      onchange={onChangeGroup}
     />
+    {form.data.group_id}
+    {form.data.product_id}
+    [{pOptions.map(o => o.value).join(', ')}]
 
-    <SelectField
+    <SelectIDField
       id="product_id"
       label={$t('slot.field.product')}
       bind:value={form.data.product_id}
       error={form.errors['product_id']}
-      unselected={''}
-      placeholder="-"
-      options={productOptions.filter(p => form.data.group_id === 0 || p.filter === form.data.group_id)}
+      unselected={0}
+      {hidden}
+      placeholder="None"
+      bind:options={pOptions}
+    />
+
+    <NumberInputField
+      id="spiral"
+      label={$t('slot.field.spiral')}
+      bind:value={form.data.spiral}
+      min={1}
+      max={5}
+      error={form.errors['spiral']}
     />
 
     <NumberInputField
@@ -93,6 +130,7 @@
       max={form.data.capacity}
       error={form.errors['stock']}
     />
+
     <NumberInputField
       id="capacity"
       label={$t('slot.field.capacity')}

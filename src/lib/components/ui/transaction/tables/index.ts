@@ -1,3 +1,3 @@
-import Actions from './actions.svelte';
+import More from './more.svelte';
 
-export { Actions };
+export { More };

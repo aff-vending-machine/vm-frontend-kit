@@ -3,18 +3,23 @@
   import Button from '$lib/components/elements/buttons/Button.svelte';
   import Image from '$lib/components/elements/images/Image.svelte';
   import NumberInputField from '$lib/components/forms/inputs/NumberInputField.svelte';
-  import SelectField from '$lib/components/ui-common/forms/SelectField.svelte';
+  import SelectIDField from '$lib/components/ui-common/forms/SelectIDField.svelte';
   import TextInputField from '$lib/components/forms/inputs/TextInputField.svelte';
   import ToggleField from '$lib/components/forms/inputs/ToggleField.svelte';
   import { t } from '$lib/i18n/translations';
   import type { SelectOptionsType } from '$lib/utils/options';
-  import type { CatalogProductEntity, CatalogProductUpdateEntity } from '$lib/types/catalog_product';
+  import type {
+    CatalogProductCreateEntity,
+    CatalogProductEntity,
+    CatalogProductUpdateEntity,
+  } from '$lib/types/catalog_product';
   import type { CatalogGroupEntity } from '$lib/types/catalog_group';
   import { EditorForm } from './editor-form';
 
-  let { product, groupOptions, onupdate, oncancel } = $props<{
-    product: CatalogProductEntity;
+  let { product, groupOptions, oncreate, onupdate, oncancel } = $props<{
+    product?: CatalogProductEntity;
     groupOptions: SelectOptionsType<number, CatalogGroupEntity>[];
+    oncreate: (data: CatalogProductCreateEntity) => void;
     onupdate: (id: number, data: CatalogProductUpdateEntity) => void;
     oncancel: () => void;
   }>();
@@ -25,16 +30,29 @@
     e.preventDefault();
     if (form.invalid) return;
 
-    onupdate(product.id, {
-      group_id: form.data.group_id,
-      name: form.data.name,
-      description: '',
-      image_url: form.data.image_url,
-      barcode: '',
-      product_price: form.data.price,
-      sale_price: form.data.price,
-      is_enable: form.data.is_enable,
-    });
+    if (!product || !product.id) {
+      oncreate({
+        group_id: form.data.group_id,
+        name: form.data.name,
+        barcode: form.data.barcode,
+        description: form.data.description,
+        image_url: form.data.image_url,
+        product_price: form.data.price,
+        sale_price: form.data.price,
+        is_enable: form.data.is_enable,
+      });
+    } else {
+      onupdate(product.id, {
+        group_id: form.data.group_id,
+        name: form.data.name,
+        barcode: form.data.barcode,
+        description: form.data.description,
+        image_url: form.data.image_url,
+        product_price: form.data.price,
+        sale_price: form.data.price,
+        is_enable: form.data.is_enable,
+      });
+    }
   }
 
   function onclick(e: MouseEvent) {
@@ -48,15 +66,13 @@
     <Image class="mx-auto h-32 w-32 border object-contain" src={form.data.image_url} alt={form.data.name} />
   </div>
   <form id={form.id} {onsubmit} class="space-y-4 rounded-md border border-neutral-light p-2 text-sm">
-    <TextInputField id="sku" label={$t('product.field.sku')} bind:value={form.data.sku} error={form.errors['sku']} />
-
-    <SelectField
+    <SelectIDField
       id="group_id"
       label={$t('product.field.group')}
       bind:value={form.data.group_id}
       error={form.errors['group_id']}
       options={groupOptions}
-      unselected={false}
+      unselected={0}
     />
 
     <TextInputField
@@ -64,6 +80,20 @@
       label={$t('product.field.name')}
       bind:value={form.data.name}
       error={form.errors['name']}
+    />
+
+    <TextInputField
+      id="barcode"
+      label={$t('product.field.barcode')}
+      bind:value={form.data.barcode}
+      error={form.errors['barcode']}
+    />
+
+    <TextInputField
+      id="description"
+      label={$t('product.field.description')}
+      bind:value={form.data.description}
+      error={form.errors['description']}
     />
 
     <TextInputField

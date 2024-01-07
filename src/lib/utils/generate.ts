@@ -1,5 +1,4 @@
 import type { HttpError_1 } from '@sveltejs/kit';
-import dayjs from 'dayjs';
 
 export function genKey(input: string): string {
   // Convert to lowercase
@@ -40,17 +39,3 @@ export function genError(e: unknown): Error {
       return new Error('unexpected error type');
   }
 }
-
-export function clone<T>(a?: T[]): T[] {
-  return a?.map(o => ({ ...o })) || [];
-}
-
-const date = dayjs().set('millisecond', 0).set('second', 0).set('minute', 0).set('hour', 21);
-
-export const defaultForm = date.add(-1, 'day').toDate();
-export const defaultTo = date.toDate();
-
-export const showDate = (date?: Date) => {
-  if (!date) return '-';
-  return dayjs(date).format('DD MMM YYYY HH:mm:ss');
-};

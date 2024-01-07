@@ -41,7 +41,7 @@ export class OverlayState {
   };
 
   get data() {
-    return this.#data!;
+    return this.#data;
   }
 
   get mode() {

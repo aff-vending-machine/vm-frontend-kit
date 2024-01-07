@@ -21,7 +21,7 @@
 
     onupdate(group.id, {
       name: form.data.name,
-      description: '',
+      description: form.data.description,
       is_enable: form.data.is_enable,
     });
   }

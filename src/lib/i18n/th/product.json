@@ -1,0 +1,25 @@
+{
+  "title": "สินค้า",
+  "edit-title": "แก้ไขสินค้า",
+  "delete-title": "ลบสินค้า",
+  "status-on": "เปิดการใช้งาน",
+  "status-off": "ปิด",
+  "columns": {
+    "name": "ชื่อสินค้า",
+    "sku": "SKU",
+    "description": "รายละเอียด",
+    "status": "สถานะ",
+    "price": "ราคา",
+    "more": "เพิ่มเติม"
+  },
+  "field": {
+    "name": "ชื่อสินค้า",
+    "sku": "SKU",
+    "group": "กลุ่ม",
+    "description": "รายละเอียด",
+    "barcode": "Barcode",
+    "status": "สถานะ",
+    "image_url": "ลิ้งรูปภาพ",
+    "price": "ราคา"
+  }
+}

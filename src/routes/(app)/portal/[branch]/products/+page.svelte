@@ -54,17 +54,25 @@
 </Card>
 
 {#if overlay.mode.display === 'drawer'}
-  <Drawer title={overlay.data?.name} subtitle={overlay.data?.sku} mode={overlay.mode.view} onclose={overlay.onCancel}>
+  <Drawer
+    title={overlay.data?.name ?? 'New Product'}
+    subtitle={overlay.data?.sku ?? '-'}
+    mode={overlay.mode.view}
+    onclose={overlay.onCancel}
+  >
     {#snippet children({ Viewer, Editor })}
-      <Viewer
-        product={overlay.data}
-        onedit={overlay.onOpenEditor}
-        ondelete={overlay.onOpenEraser}
-        oncancel={overlay.onCancel}
-      />
+      {#if overlay.data}
+        <Viewer
+          product={overlay.data}
+          onedit={overlay.onOpenEditor}
+          ondelete={overlay.onOpenEraser}
+          oncancel={overlay.onCancel}
+        />
+      {/if}
       <Editor
         product={overlay.data}
         groupOptions={data.options.groups}
+        oncreate={state.onCreate}
         onupdate={state.onUpdate}
         oncancel={overlay.onCancel}
       />
@@ -72,6 +80,6 @@
   </Drawer>
 {/if}
 
-{#if overlay.mode.display === 'alert'}
+{#if overlay.mode.display === 'alert' && overlay.data}
   <Alert mode={overlay.mode.view} product={overlay.data} ondelete={state.onDelete} onclose={overlay.onCancel} />
 {/if}

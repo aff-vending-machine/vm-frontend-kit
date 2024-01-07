@@ -20,6 +20,26 @@ export const isMatched = (a?: unknown, b?: unknown) => {
   return JSON.stringify(a) === JSON.stringify(b);
 };
 
+export const isLink = (element: HTMLElement | null): boolean => {
+  while (element) {
+    if (element.tagName === 'A') {
+      return true;
+    }
+    element = element.parentElement;
+  }
+  return false;
+};
+
+export const isLinkOrButton = (element: HTMLElement | null): boolean => {
+  while (element) {
+    if (element.tagName === 'A' || element.tagName === 'BUTTON') {
+      return true;
+    }
+    element = element.parentElement;
+  }
+  return false;
+};
+
 export const filterColumns = (columns: ColumnType[]) =>
   columns.filter(c => {
     if (!c.responsive || c.responsive === 'all') return true;

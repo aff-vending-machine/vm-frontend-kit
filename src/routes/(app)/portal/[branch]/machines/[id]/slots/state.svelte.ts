@@ -9,7 +9,7 @@ import { MachineSlotService } from '$lib/services/machine_slot';
 import type { CatalogProductEntity } from '$lib/types/catalog_product';
 import type { MachineEntity } from '$lib/types/machine';
 import type { MachineSlotEntity, MachineSlotUpdateEntity } from '$lib/types/machine_slot';
-import { clone } from '$lib/utils/generate';
+import { clone } from '$lib/utils/convert';
 
 type BorderType = {
   rows: number;
@@ -92,11 +92,11 @@ export class SlotState {
     return { rows, cols };
   };
 
-  regroup = (): SlotType[] => {
-    if (this.#draft.length === 0) return [];
+  regroup = (data: MachineSlotEntity[]): SlotType[] => {
+    if (data.length === 0) return [];
     if (!this.#border) return [];
 
-    let slots = clone(this.#draft);
+    let slots = clone(data);
     const filteredSlots: SlotType[] = [];
 
     if (this.#action.stock !== '') {
@@ -175,16 +175,19 @@ export class SlotState {
 
   onAdjust = (id: number, stock: number) => {
     const idx = this.#draft.findIndex(d => d.id === id);
-    const slots = this.#draft;
+    const slots = clone(this.#draft);
     slots[idx].stock = stock;
     this.#draft = [...slots];
   };
 
   onUpdate = (id: number, data: MachineSlotUpdateEntity) => {
+    this.#loading = true;
     const idx = this.#draft.findIndex(d => d.id === id);
-    const slots = this.#draft;
+    const slots = clone(this.#draft);
     slots[idx] = { ...this.#draft[idx], ...data };
     this.#draft = [...slots];
+    this.#overlay.close();
+    this.#loading = false;
   };
 
   onRefresh = () => {
@@ -198,8 +201,8 @@ export class SlotState {
     try {
       const result = await slotAPI.bulkUpdate(this.#action.filter.machineID, this.#draft);
       if (result.status === 'error') throw generateError(result.message);
+      await this.#fetch();
       salert.success(`All slots has been saved`);
-      this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -224,7 +227,7 @@ export class SlotState {
   };
 
   get ready() {
-    return !this.#loading && !this.#error;
+    return !this.#loading || !this.#error;
   }
 
   get machine() {

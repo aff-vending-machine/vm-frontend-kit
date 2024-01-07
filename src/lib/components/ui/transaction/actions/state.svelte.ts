@@ -1,16 +1,12 @@
-import dayjs from 'dayjs';
-
 import { parseDate } from '$lib/utils/convert';
+import { defaultForm, defaultTo } from '$lib/utils/time';
 
 export class ActionState {
-  #defaultForm = dayjs().set('hour', 0).set('minute', 0).set('second', 0).toDate();
-  #defaultTo = dayjs().set('hour', 23).set('minute', 59).set('second', 59).toDate();
-
   #branchID = $state(0);
   #page = $state(1);
   #perPage = $state(10);
-  #startDate = $state(this.#defaultForm);
-  #endDate = $state(this.#defaultTo);
+  #startDate = $state(defaultForm);
+  #endDate = $state(defaultTo);
   #machineID = $state(0);
   #channelID = $state(0);
   #status = $state('');
@@ -20,8 +16,8 @@ export class ActionState {
     this.#branchID = branchID;
     this.#page = parseInt(query.get('page') ?? '1');
     this.#perPage = parseInt(query.get('per_page') ?? '10');
-    this.#startDate = parseDate(query.get('start_date'), this.#defaultForm);
-    this.#endDate = parseDate(query.get('end_date'), this.#defaultTo);
+    this.#startDate = parseDate(query.get('start_date'), defaultForm);
+    this.#endDate = parseDate(query.get('end_date'), defaultTo);
     this.#error = query.get('is_error') === 'true';
     this.#machineID = parseInt(query.get('machine_id') ?? '0');
     this.#channelID = parseInt(query.get('channel_id') ?? '0');

@@ -1,3 +1,3 @@
-import Actions from './actions.svelte';
+import Status from './status.svelte';
 
-export { Actions };
+export { Status };

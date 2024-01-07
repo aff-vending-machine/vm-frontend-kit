@@ -32,9 +32,19 @@ export class MachineState {
     });
   }
 
+  #healthz = async (machineID: number) => {
+    const result = await machineAPI.healthz(machineID);
+    if (result.status === 'error') {
+      return { status: 'offline' };
+    } else {
+      return result.data;
+    }
+  };
+
   #fetch = async () => {
     const query = new URLSearchParams(this.#action.query);
     query.set('preloads', 'Branch');
+    query.set('sort_by', 'branch_id:desc');
     query.sort();
 
     const result = await machineAPI.find(query.toString(), false);
@@ -44,8 +54,14 @@ export class MachineState {
       query.delete('page');
       return await goto(`?${query.toString()}`, { keepFocus: true });
     }
-
-    this.#machines = result.data;
+    const data = result.data.map(element => ({ ...element, ...this.#healthz(element.id) }));
+    this.#machines = data.sort((a: MachineEntity, b: MachineEntity) => {
+      if (a.branch_id < b.branch_id) return 1;
+      if (a.branch_id > b.branch_id) return -1;
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      return 0;
+    });
     this.#pagination = result.pagination!;
   };
 
@@ -54,7 +70,7 @@ export class MachineState {
     this.#error = undefined;
 
     try {
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -82,8 +98,8 @@ export class MachineState {
     try {
       const result = await machineAPI.updateByID(id, data);
       if (result.status === 'error') throw generateError(result.message);
-      salert.success(`User '${id}' has been deleted`);
-      this.#fetch();
+      salert.success(`Machine '${id}' has been updated`);
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -101,7 +117,7 @@ export class MachineState {
       const result = await machineAPI.deleteByID(id);
       if (result.status === 'error') throw generateError(result.message);
       salert.success(`Machine '${id}' has been deleted`);
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);

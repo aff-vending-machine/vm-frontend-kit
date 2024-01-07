@@ -1,7 +1,7 @@
 <!-- UserCreator -->
 <script lang="ts">
   import Button from '$lib/components/elements/buttons/Button.svelte';
-  import SelectField from '$lib/components/ui-common/forms/SelectField.svelte';
+  import SelectIDField from '$lib/components/ui-common/forms/SelectIDField.svelte';
   import TextInputField from '$lib/components/forms/inputs/TextInputField.svelte';
   import { t } from '$lib/i18n/translations';
   import type { AccountRoleEntity } from '$lib/types/account_role';
@@ -37,7 +37,7 @@
       error={form.errors['username']}
     />
 
-    <SelectField
+    <SelectIDField
       id="role_id"
       label={$t('user.field.role')}
       bind:value={form.data.role_id}

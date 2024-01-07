@@ -42,9 +42,9 @@ export abstract class CRUDService<T, U = unknown> {
     });
   }
 
-  async updateByID(id: number, payload: unknown): Promise<Result<void>> {
+  async updateByID(id: number, payload: unknown, query?: string): Promise<Result<void>> {
     return this.requestWrapper(async token => {
-      const result = await api.put<void>(`${this.ROOT_PATH}/${id}`, payload, { token });
+      const result = await api.put<void>(`${this.ROOT_PATH}/${id}`, payload, { query, token });
       return { ...result };
     });
   }

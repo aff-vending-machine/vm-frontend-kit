@@ -5,15 +5,16 @@
   let { mode, group, ondelete, onclose } = $props<{
     mode: string;
     group: CatalogGroupEntity;
-    ondelete: (id: number) => void;
+    ondelete: (id: number, name: string) => void;
     onclose: () => void;
   }>();
 
   $effect(() => {
     // prevent lost id on close
     const id = group.id;
+    const name = group.name;
     if (mode === 'eraser') {
-      salert.delete(`Are you sure to delete ${group.name} ?`, () => ondelete(id));
+      salert.delete(`Are you sure to delete ${name} ?`, () => ondelete(id, name));
     }
     onclose();
   });

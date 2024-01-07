@@ -35,6 +35,7 @@ export class GroupState {
   #fetch = async () => {
     const query = new URLSearchParams(this.#action.query);
     query.set('preloads', 'Products');
+    query.set('sort_by', 'name');
     query.sort();
 
     const result = await groupAPI.find(query.toString(), false);
@@ -54,7 +55,7 @@ export class GroupState {
     this.#error = undefined;
 
     try {
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -83,7 +84,7 @@ export class GroupState {
       const result = await groupAPI.create(data);
       if (result.status === 'error') throw generateError(result.message);
       salert.success(`New group has been created`);
-      this.#fetch();
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -100,8 +101,8 @@ export class GroupState {
     try {
       const result = await groupAPI.updateByID(id, data);
       if (result.status === 'error') throw generateError(result.message);
-      salert.success(`Group '${id}' has been updated`);
-      this.#fetch();
+      salert.success(`Group '${data.name}' has been updated`);
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);
@@ -111,15 +112,15 @@ export class GroupState {
     }
   };
 
-  onDelete = async (id: number) => {
+  onDelete = async (id: number, name: string) => {
     this.#loading = true;
     this.#error = undefined;
 
     try {
       const result = await groupAPI.deleteByID(id);
       if (result.status === 'error') throw generateError(result.message);
-      salert.success(`Group '${id}' has been deleted`);
-      this.#fetch();
+      salert.success(`Group '${name}' has been deleted`);
+      await this.#fetch();
     } catch (e) {
       this.#error = (e as Error).message;
       salert.failure(this.#error);

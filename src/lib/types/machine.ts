@@ -13,6 +13,8 @@ export type MachineEntity = {
   vendor: string;
   status: string;
   register_count: number;
+  test_mode?: boolean;
+  version?: string;
   temperature?: number;
   sync_time?: Date;
   sync_slot_time?: Date;
@@ -28,3 +30,9 @@ export type MachineUpdateEntity = Omit<
   MachineEntity,
   'id' | 'branch' | 'slots' | 'created_at' | 'updated_at' | 'register_count' | 'serial_number'
 >;
+
+export type Healthz = {
+  status: string;
+  version: string;
+  temperature: number;
+};

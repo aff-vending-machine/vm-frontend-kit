@@ -31,7 +31,7 @@
       </Block>
       <Block>
         <Header>{$t('common.search-command')}</Header>
-        <Command />
+        <Command onexport={internal.onDownload} />
       </Block>
     </Content>
     <Content>

@@ -18,7 +18,7 @@ export const viewOptions: SelectOptionsType<number>[] = [
   { label: '100', value: 100 },
 ];
 
-export const stockOptions: SelectOptionsTypeFunction = (t: TranslationType) => [
+export const stockOptions: SelectOptionsTypeFunction<string> = (t: TranslationType) => [
   { label: t('options.stock.all'), value: '' },
   { label: t('options.stock.avaialble'), value: '>:0' },
   { label: t('options.stock.out-of-stocks'), value: '<:.01' },
@@ -26,24 +26,24 @@ export const stockOptions: SelectOptionsTypeFunction = (t: TranslationType) => [
   { label: t('options.stock.full-stocks'), value: '>:.99' },
 ];
 
-export const statusOptions: SelectOptionsTypeFunction = (t: TranslationType) => [
+export const statusOptions: SelectOptionsTypeFunction<string> = (t: TranslationType) => [
   { label: t('options.status.all'), value: '' },
   { label: t('options.status.enable'), value: 'true' },
   { label: t('options.status.disable'), value: 'false' },
 ];
 
-export const editOptions: SelectOptionsTypeFunction = (t: TranslationType) => [
+export const editOptions: SelectOptionsTypeFunction<string> = (t: TranslationType) => [
   { label: t('options.changed.all'), value: '' },
   { label: t('options.changed.changed'), value: 'true' },
   { label: t('options.changed.not-changed'), value: 'false' },
 ];
 
-export const displayOptions: SelectOptionsTypeFunction = (t: TranslationType) => [
+export const displayOptions: SelectOptionsTypeFunction<string> = (t: TranslationType) => [
   { label: t('options.display.hidden'), value: '' },
   { label: t('options.display.show'), value: 'show' },
 ];
 
-export const orderStatusOptions: SelectOptionsTypeFunction = (t: TranslationType) => [
+export const orderStatusOptions: SelectOptionsTypeFunction<string> = (t: TranslationType) => [
   { label: t('options.status.all'), value: '' },
   { label: 'ORDERED', value: 'ORDERED' },
   { label: 'PAID', value: 'PAID' },

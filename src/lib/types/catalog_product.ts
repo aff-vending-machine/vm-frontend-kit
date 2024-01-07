@@ -17,6 +17,6 @@ export type CatalogProductEntity = {
   group?: CatalogGroupEntity;
 };
 
-export type CatalogProductCreateEntity = Omit<CatalogProductEntity, 'id' | 'created_at' | 'updated_at'>;
+export type CatalogProductCreateEntity = Omit<CatalogProductEntity, 'id' | 'created_at' | 'updated_at' | 'sku'>;
 
 export type CatalogProductUpdateEntity = Omit<CatalogProductEntity, 'id' | 'created_at' | 'updated_at' | 'sku'>;

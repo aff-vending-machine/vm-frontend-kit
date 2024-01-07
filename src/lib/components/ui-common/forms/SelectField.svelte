@@ -14,12 +14,12 @@
     onchange,
   } = $props<{
     id: string;
-    value: unknown;
-    options: SelectOptionsType[];
+    value: string;
+    options: SelectOptionsType<string>[];
     label?: string | null;
     error?: string | null;
     placeholder?: string;
-    unselected?: unknown;
+    unselected?: string;
     disabled?: boolean;
     hidden?: boolean;
     onchange?: (value: string) => void;
@@ -34,7 +34,7 @@
   async function onChange(event: Event) {
     const newValue = (event.target as HTMLSelectElement).value;
     value = newValue;
-    onchange && onchange(newValue);
+    onchange && onchange(value);
   }
 </script>
 

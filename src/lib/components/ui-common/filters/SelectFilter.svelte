@@ -6,12 +6,12 @@
 
   let { key, ...restProps } = $props<{
     key: string;
-    value: unknown;
-    options: SelectOptionsType[];
+    value: string;
+    options: SelectOptionsType<string>[];
     label?: string | null;
     error?: string | null;
     placeholder?: string;
-    unselected?: unknown;
+    unselected?: string;
     disabled?: boolean;
     hidden?: boolean;
     onchange?: (e: Event) => void;

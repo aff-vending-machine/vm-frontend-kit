@@ -5,6 +5,7 @@ export class ActionState {
   #status = $state('');
   #changed = $state('');
   #image = $state('');
+  #size = $state('');
 
   constructor(machineID: number) {
     this.#machineID = machineID;
@@ -61,5 +62,13 @@ export class ActionState {
 
   get image() {
     return this.#image;
+  }
+
+  set size(size: string) {
+    this.#size = size;
+  }
+
+  get size() {
+    return this.#size;
   }
 }

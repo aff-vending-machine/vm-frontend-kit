@@ -22,5 +22,9 @@
   "display": {
     "hidden": "ซ่อน",
     "show": "แสดง"
+  },
+  "size": {
+    "normal": "ปกติ",
+    "compact": "เล็ก"
   }
 }

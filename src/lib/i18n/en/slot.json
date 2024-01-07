@@ -17,6 +17,7 @@
     "product": "Product",
     "stock": "Stock",
     "capacity": "Capacity",
+    "spiral": "Spiral",
     "active": "Active"
   }
 }

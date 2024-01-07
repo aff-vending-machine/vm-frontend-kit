@@ -43,6 +43,11 @@ export const displayOptions: SelectOptionsTypeFunction<string> = (t: Translation
   { label: t('options.display.show'), value: 'show' },
 ];
 
+export const sizeOptions: SelectOptionsTypeFunction<string> = (t: TranslationType) => [
+  { label: t('options.size.normal'), value: '' },
+  { label: t('options.size.compact'), value: 'compact' },
+];
+
 export const orderStatusOptions: SelectOptionsTypeFunction<string> = (t: TranslationType) => [
   { label: t('options.status.all'), value: '' },
   { label: 'ORDERED', value: 'ORDERED' },

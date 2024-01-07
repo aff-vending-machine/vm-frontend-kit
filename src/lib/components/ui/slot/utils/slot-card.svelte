@@ -11,10 +11,11 @@
   import 'tippy.js/animations/shift-away.css';
   import { isLinkOrButton } from '$lib/utils/check';
 
-  let { slot, editing, image, onstock, onselect } = $props<{
+  let { slot, editing, image, minimal, onstock, onselect } = $props<{
     slot: MachineSlotEntity;
     editing: boolean;
     image: boolean;
+    minimal: boolean;
     onstock?: (id: number, value: number) => void;
     onselect?: (value: MachineSlotEntity) => void;
   }>();
@@ -23,7 +24,7 @@
   const code = $derived(slot.code);
   const stock = $derived(slot.stock);
   const capacity = $derived(slot.capacity);
-  const spiral = $derived(slot.spiral);
+  const spiral = $derived(slot.spiral || 1);
   const isEnable = $derived(slot.is_enable);
   const productName = $derived(slot.product?.name);
   const productPrice = $derived(slot.product?.sale_price);
@@ -31,7 +32,7 @@
   const tooltip = $derived(`
     <div class="m-1 flex flex-col justify-center">
       <span class="text-center">${code}: ${productName}</span>
-      <img class="border h-24 w-24 mt-1 mx-auto object-contain bg-white" src=${productImage} />
+      <img class="border h-24 w-24 mt-1 mx-auto object-contain bg-white" src="${productImage}" onerror="this.onerror=null; this.src='https://placehold.co/512x512?text=No+Image';" />
       <span class="text-center">price: ${productPrice}</span>
     </div>
   `);
@@ -103,50 +104,65 @@
 <div
   role="button"
   tabindex="0"
-  class="flex h-48 w-40 flex-col items-center rounded-md p-2 {color} relative transition-all"
-  style="grid-column: span {spiral || 1} / span {spiral || 1};"
+  class="flex flex-col items-center rounded-md p-2 {color} relative justify-center transition-all"
+  style="grid-column: span {spiral} / span {spiral};"
+  class:h-40={!minimal}
+  class:h-20={minimal}
+  class:w-40={!minimal && spiral < 2}
   onclick={onSelect}
   {onkeydown}
   use:tippy={{ allowHTML: true, content: tooltip, placement: 'top', animation: 'shift-away' }}
 >
-  {#if image}
-    <div class="absolute top-8 flex justify-center opacity-20">
-      <Image class="max-h-24 max-w-24" src={productImage} alt={productName} />
+  {#if !minimal}
+    {#if image}
+      <div class="absolute top-8 flex justify-center opacity-20">
+        <Image class="max-h-24 max-w-24" src={productImage} alt={productName} />
+      </div>
+    {/if}
+    <div class="font-bold">{code}</div>
+    <div class="z-10 bg-neutral-lightest bg-opacity-50 text-center">
+      <span class="overflow-hidden text-ellipsis text-xs">
+        {truncate(productName || '', 40, false)}
+      </span>
     </div>
-  {/if}
-  <div class="font-bold">{code}</div>
-  <div class="z-10 bg-neutral-lightest bg-opacity-50 text-center text-sm">
-    <span class="overflow-hidden text-ellipsis">
-      {truncate(productName || '', 40, false)}
-    </span>
-  </div>
-  <div class="flex-grow" />
-  <div class="text-center text-sm">
-    {$t('slot.price')}: <span class="font-semibold text-danger">{productPrice}</span>
-  </div>
-  <div class="flex w-full items-center justify-between rounded-md border border-neutral-light bg-white p-1">
-    <button
-      class="
+    <div class="flex-grow" />
+    <div class="text-center text-sm">
+      {$t('slot.price')}: <span class="font-semibold text-danger">{productPrice}</span>
+    </div>
+    <div class="flex w-full items-center justify-between rounded-md border border-neutral-light bg-white p-1">
+      <button
+        class="
         h-6 w-6 rounded-sm border border-info bg-info-light text-sm text-white
         hover:border-info-dark hover:bg-info
         disabled:border-neutral-light disabled:bg-neutral-light
       "
-      onclick={onDecrease}
-      disabled={stock === 0}
-    >
-      -
-    </button>
-    <div class="mx-auto text-center text-sm">{stock}</div>
-    <button
-      class="
+        onclick={onDecrease}
+        disabled={stock === 0}
+      >
+        -
+      </button>
+      <div class="mx-auto p-1 text-center text-sm">{stock}</div>
+      <button
+        class="
         h-6 w-6 rounded-sm border border-info bg-info-light text-sm text-white
         hover:border-info-dark hover:bg-info
       disabled:border-neutral-light disabled:bg-neutral-light
       "
-      onclick={onIncrease}
-      disabled={stock === capacity}
-    >
-      +
-    </button>
-  </div>
+        onclick={onIncrease}
+        disabled={stock === capacity}
+      >
+        +
+      </button>
+    </div>
+  {:else}
+    <div class="self-center text-xl font-bold">{code}</div>
+    <div class="text-center">
+      {#if spiral > 1}
+        <span class="mr-2 overflow-hidden text-ellipsis text-sm max-lg:hidden">
+          {truncate(productName || '', 40, false)}:
+        </span>
+      {/if}
+      <span class="text-md font-semibold text-danger">{productPrice} .-</span>
+    </div>
+  {/if}
 </div>

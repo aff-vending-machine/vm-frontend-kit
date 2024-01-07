@@ -2,14 +2,15 @@
   import TextInputField from '$lib/components/forms/inputs/TextInputField.svelte';
   import SelectField from '$lib/components/ui-common/forms/SelectField.svelte';
   import { t } from '$lib/i18n/translations';
-  import { displayOptions, editOptions, statusOptions, stockOptions } from '$lib/utils/options';
+  import { displayOptions, editOptions, statusOptions, stockOptions, sizeOptions } from '$lib/utils/options';
 
-  let { search, stock, status, changed, image } = $props<{
+  let { search, stock, status, changed, image, size } = $props<{
     search: string;
     stock: string;
     status: string;
     changed: string;
     image: string;
+    size: string;
   }>();
 </script>
 
@@ -30,4 +31,6 @@
   <SelectField id="changed" label={$t('common.field.changed')} bind:value={changed} options={editOptions($t)} />
 
   <SelectField id="image" label={$t('common.field.image')} bind:value={image} options={displayOptions($t)} />
+
+  <SelectField id="size" label={$t('common.field.size')} bind:value={size} options={sizeOptions($t)} />
 </div>

@@ -41,6 +41,7 @@
           bind:status={action.status}
           bind:changed={action.changed}
           bind:image={action.image}
+          bind:size={action.size}
         />
       </Block>
       <Block>
@@ -63,7 +64,10 @@
         {/if}
 
         {#if internal.ready}
-          <div class="grid w-full gap-6" style="grid-template-columns: repeat({internal.border?.cols ?? 10}, auto);">
+          <div
+            class="grid {action.size === 'compact' ? 'gap-4' : 'gap-6'}"
+            style="grid-template-columns: repeat({internal.border?.cols ?? 10}, auto);"
+          >
             {#each slots as slot}
               {#if slot.id > 0}
                 <SlotCard
@@ -72,9 +76,10 @@
                   image={action.image === 'show'}
                   onselect={internal.onSelect}
                   onstock={internal.onAdjust}
+                  minimal={action.size === 'compact'}
                 />
               {:else}
-                <SlotEmpty code={slot.code} isExist={true} on:create />
+                <SlotEmpty code={slot.code} isExist={true} minimal={action.size === 'compact'} />
               {/if}
             {/each}
           </div>

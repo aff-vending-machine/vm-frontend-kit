@@ -69,7 +69,8 @@
     "role": "Role",
     "status": "Status",
     "changed": "Is edited",
-    "image": "Image"
+    "image": "Image",
+    "size": "Size"
   },
   "unit": {
     "baht": "Baht"

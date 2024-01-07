@@ -68,7 +68,7 @@ export class SlotState {
     const result = await machineAPI.findByID(this.#action.filter.machineID, query.toString(), false);
     if (result.status === 'error') throw generateError(result.message);
     this.#machine = result.data;
-    this.#slots = result.data.slots;
+    this.#slots = result.data.slots!;
     this.#draft = clone(this.#slots);
     this.#border = this.#findBorder();
   };

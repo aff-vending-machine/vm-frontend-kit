@@ -11,7 +11,8 @@
   let { data } = $props();
 
   const action = new ActionState(data.machineID, data.query);
-  const internal = new PaymentState(action);
+
+  const state = new PaymentState(action);
 </script>
 
 <Card>
@@ -23,25 +24,25 @@
       </Block>
       <Block>
         <Header>{$t('common.search-command')}</Header>
-        <Command onsync={internal.onSync} />
+        <Command onsync={state.onSync} />
       </Block>
     </Content>
     <Content>
       <Table>
         {#snippet children({ Header, Body, Footer, Loading })}
           <Header {columns} />
-          {#if internal.loading}
+          {#if state.loading}
             <Loading {columns} />
           {/if}
 
-          {#if internal.error}
-            <div>{internal.error}</div>
+          {#if state.error}
+            <div>{state.error}</div>
           {/if}
 
-          {#if internal.ready}
-            <Body {columns} bind:source={internal.data} onaction={internal.onAction} />
+          {#if state.ready}
+            <Body {columns} bind:source={state.data} onaction={state.onAction} />
             <Footer>
-              <SharePaginationTable {...internal.pagination} colspan={columns.length} />
+              <SharePaginationTable {...state.pagination} colspan={columns.length} />
             </Footer>
           {/if}
         {/snippet}

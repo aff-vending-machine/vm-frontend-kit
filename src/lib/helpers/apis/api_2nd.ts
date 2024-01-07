@@ -4,7 +4,7 @@ import { getAccessTokenWithAuthRefresh } from './jwt';
 
 import api, { type Result } from '$lib/helpers/apis/api';
 
-export abstract class CRUDService<T, P = unknown> {
+export abstract class CRUDService<T, C = unknown, U = unknown> {
   constructor(
     protected ROOT_PATH: string,
     protected SUB_PATH: string,
@@ -37,7 +37,7 @@ export abstract class CRUDService<T, P = unknown> {
     });
   }
 
-  async create(rootID: number, payload: P): Promise<Result<number>> {
+  async create(rootID: number, payload: C): Promise<Result<number>> {
     return this.requestWrapper(async token => {
       const result = await api.post<number>(`${this.ROOT_PATH}/${rootID}/${this.SUB_PATH}`, payload, { token });
       if (result.status === 'error') return result;
@@ -45,7 +45,7 @@ export abstract class CRUDService<T, P = unknown> {
     });
   }
 
-  async updateByID(rootID: number, id: number, payload: unknown): Promise<Result<void>> {
+  async updateByID(rootID: number, id: number, payload: U): Promise<Result<void>> {
     return this.requestWrapper(async token => {
       const result = await api.put<void>(`${this.ROOT_PATH}/${rootID}/${this.SUB_PATH}/${id}`, payload, { token });
       return { ...result };

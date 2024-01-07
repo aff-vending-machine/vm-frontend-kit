@@ -16,13 +16,11 @@ export class PortalState {
     this.#route = route ?? '';
     const id = parseInt(machineID ?? '0') ?? 0;
 
-    {
-      $effect(() => {
-        if (id !== 0) {
-          this.#fetch(id);
-        }
-      });
-    }
+    $effect(() => {
+      if (id !== 0) {
+        this.#fetch(id);
+      }
+    });
   }
 
   #fetch = async (id: number) => {

@@ -22,8 +22,8 @@ export type MachineEntity = {
   sync_transaction_time?: Date;
 
   // relations
-  branch: StoreBranch;
-  slots: MachineSlotEntity[];
+  branch?: StoreBranch;
+  slots?: MachineSlotEntity[];
 };
 
 export type MachineUpdateEntity = Omit<
